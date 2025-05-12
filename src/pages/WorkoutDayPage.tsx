@@ -1,3 +1,4 @@
+
 import React, { useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { workoutData } from "@/data/workoutData";
@@ -116,8 +117,10 @@ const WorkoutDayPage: React.FC = () => {
               continues with progressive training, deeper somatic awareness, and complete mind-body integration.
             </p>
             <div className="text-center">
-              <Button className="bg-burnt-orange hover:bg-burnt-orange/90 text-lg py-6 px-8">
-                Unlock Your Full Potential <ArrowRight className="ml-2 h-5 w-5" />
+              <Button asChild className="bg-burnt-orange hover:bg-burnt-orange/90 text-lg py-6 px-8">
+                <a href="https://www.harmonizedfitness.com" target="_blank" rel="noopener noreferrer">
+                  Unlock Your Full Potential <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </Button>
             </div>
           </div>
