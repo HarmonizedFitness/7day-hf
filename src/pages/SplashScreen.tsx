@@ -1,13 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
   const [fadeOut, setFadeOut] = useState(false);
-
   const handleGetStarted = () => {
     setFadeOut(true);
     setTimeout(() => navigate('/home'), 500);
@@ -15,17 +12,9 @@ const SplashScreen: React.FC = () => {
 
   // Logo would normally be imported from an assets folder
   const logoUrl = "https://page1.genspark.site/v1/base64_upload/e38a9a9ad0cc9927f71da3fdfefcd838";
-
-  return (
-    <div 
-      className={`min-h-screen flex flex-col items-center justify-center bg-off-white transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
-    >
+  return <div className={`min-h-screen flex flex-col items-center justify-center bg-off-white transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
       <div className="w-full max-w-md text-center animate-fade-in">
-        <img 
-          src={logoUrl} 
-          alt="Harmonized Fitness Logo" 
-          className="w-32 h-32 mx-auto mb-8"
-        />
+        <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
         
         <h1 className="text-4xl font-bold text-burnt-orange mb-4">Harmonized Fitness</h1>
         <h2 className="text-2xl font-medium text-charcoal mb-8">12-Week Transformational Program</h2>
@@ -42,16 +31,10 @@ const SplashScreen: React.FC = () => {
           </p>
         </div>
         
-        <Button 
-          onClick={handleGetStarted} 
-          size="lg" 
-          className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8"
-        >
+        <Button onClick={handleGetStarted} size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8">
           Begin Your Journey <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default SplashScreen;
