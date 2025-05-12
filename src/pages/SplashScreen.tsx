@@ -10,11 +10,9 @@ const SplashScreen: React.FC = () => {
     setTimeout(() => navigate('/home'), 500);
   };
 
-  // Logo would normally be imported from an assets folder
-  const logoUrl = "https://page1.genspark.site/v1/base64_upload/e38a9a9ad0cc9927f71da3fdfefcd838";
-  return <div className={`min-h-screen flex flex-col items-center justify-center bg-off-white transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
+  return <div className={`min-h-screen flex flex-col items-center justify-center bg-[#D3E4FD] transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
       <div className="w-full max-w-md text-center animate-fade-in">
-        <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
+        <img src="/lovable-uploads/2c432daf-478a-4742-9bb5-6b7b0d759e54.png" alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
         
         <h1 className="text-4xl font-bold text-burnt-orange mb-4">Harmonized Fitness</h1>
         <h2 className="text-2xl font-medium text-charcoal mb-8">12-Week Transformational Program</h2>
