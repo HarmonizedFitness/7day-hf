@@ -3,10 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import WeekProgress from "@/components/WeekProgress";
+
 const HomePage: React.FC = () => {
   // Logo would normally be imported from an assets folder
-  const logoUrl = "/lovable-uploads/f278d815-4b87-43b7-a10a-958e0cd955e9.png";
-  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
+  const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
+  
+  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#C0AEA0]">
       <header className="text-center mb-12">
         <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
         <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
@@ -14,7 +16,7 @@ const HomePage: React.FC = () => {
         <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
       </header>
 
-      <section className="bg-[#D3E4FD]-lg shadow-md p-6 mb-8">
+      <section className="bg-[#C0AEA0]-lg shadow-md p-6 mb-8">
         <h3 className="text-xl font-semibold mb-4">Week 1: Establishing Foundations</h3>
         <p className="mb-6 leading-relaxed">
           This week is all about building awareness, establishing proper movement patterns, and 
@@ -60,4 +62,5 @@ const HomePage: React.FC = () => {
       </section>
     </div>;
 };
+
 export default HomePage;
