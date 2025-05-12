@@ -22,11 +22,11 @@ const WorkoutDayPage: React.FC = () => {
     return <Navigate to="/home" />;
   }
 
-  const logoUrl = "https://page1.genspark.site/v1/base64_upload/e38a9a9ad0cc9927f71da3fdfefcd838";
+  const logoUrl = "/lovable-uploads/f278d815-4b87-43b7-a10a-958e0cd955e9.png";
   const isLastDay = dayIdNumber === 7;
   
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8">
+    <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
       <header className="flex items-center justify-between mb-8">
         <div className="flex items-center">
           <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />

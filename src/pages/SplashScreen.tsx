@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ const SplashScreen: React.FC = () => {
 
   return <div className={`min-h-screen flex flex-col items-center justify-center bg-[#D3E4FD] transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
       <div className="w-full max-w-md text-center animate-fade-in">
-        <img src="/lovable-uploads/2c432daf-478a-4742-9bb5-6b7b0d759e54.png" alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
+        <img src="/lovable-uploads/f278d815-4b87-43b7-a10a-958e0cd955e9.png" alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
         
         <h1 className="text-4xl font-bold text-burnt-orange mb-4">Harmonized Fitness</h1>
         <h2 className="text-2xl font-medium text-charcoal mb-8">12-Week Transformational Program</h2>

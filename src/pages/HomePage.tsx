@@ -1,10 +1,11 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import WeekProgress from "@/components/WeekProgress";
 const HomePage: React.FC = () => {
   // Logo would normally be imported from an assets folder
-  const logoUrl = "/lovable-uploads/2c432daf-478a-4742-9bb5-6b7b0d759e54.png";
+  const logoUrl = "/lovable-uploads/f278d815-4b87-43b7-a10a-958e0cd955e9.png";
   return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
       <header className="text-center mb-12">
         <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
