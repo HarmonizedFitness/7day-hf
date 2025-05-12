@@ -1,4 +1,3 @@
-
 import React, { useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { workoutData } from "@/data/workoutData";
@@ -26,7 +25,7 @@ const WorkoutDayPage: React.FC = () => {
   const isLastDay = dayIdNumber === 7;
   
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#C0AEA0]">
+    <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
       <header className="flex items-center justify-between mb-8">
         <div className="flex items-center">
           <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />

@@ -13,7 +13,7 @@ const SplashScreen: React.FC = () => {
     setTimeout(() => navigate('/home'), 500);
   };
 
-  return <div className={`min-h-screen flex flex-col items-center justify-center bg-[#C0AEA0] transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
+  return <div className={`min-h-screen flex flex-col items-center justify-center bg-[#D3E4FD] transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
       <div className="w-full max-w-md text-center animate-fade-in">
         <img src="/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png" alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" />
         
