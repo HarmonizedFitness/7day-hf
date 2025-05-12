@@ -2,25 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import WeekProgress from "@/components/WeekProgress";
-
 const HomePage: React.FC = () => {
   // Logo would normally be imported from an assets folder
   const logoUrl = "/lovable-uploads/2c432daf-478a-4742-9bb5-6b7b0d759e54.png";
-
-  return (
-    <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
+  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
       <header className="text-center mb-12">
-        <img 
-          src={logoUrl} 
-          alt="Harmonized Fitness Logo" 
-          className="w-24 h-24 mx-auto mb-4"
-        />
+        <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
         <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
         <h2 className="text-xl md:text-2xl font-medium text-charcoal mb-4">12-Week Transformational Program</h2>
         <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
       </header>
 
-      <section className="bg-white rounded-lg shadow-md p-6 mb-8">
+      <section className="bg-[#D3E4FD]-lg shadow-md p-6 mb-8">
         <h3 className="text-xl font-semibold mb-4">Week 1: Establishing Foundations</h3>
         <p className="mb-6 leading-relaxed">
           This week is all about building awareness, establishing proper movement patterns, and 
@@ -60,16 +53,10 @@ const HomePage: React.FC = () => {
 
       <section className="text-center">
         <p className="italic mb-4">Ready to start your transformational journey?</p>
-        <Button 
-          asChild
-          size="lg" 
-          className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8"
-        >
+        <Button asChild size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8">
           <Link to="/day/1">Start Day 1</Link>
         </Button>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default HomePage;
