@@ -2,15 +2,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LogIn, UserPlus } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
   const [fadeOut, setFadeOut] = useState(false);
+  const { user } = useAuth();
+  
+  useEffect(() => {
+    // If user is already logged in, redirect to home
+    if (user) {
+      navigate('/home');
+    }
+  }, [user, navigate]);
   
   const handleGetStarted = () => {
     setFadeOut(true);
     setTimeout(() => navigate('/home'), 500);
+  };
+
+  const handleLoginSignup = (path: string) => {
+    setFadeOut(true);
+    setTimeout(() => navigate(path), 500);
   };
 
   return <div className={`min-h-screen flex flex-col items-center justify-center bg-[#D3E4FD] transition-opacity duration-500 p-4 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
@@ -32,9 +46,34 @@ const SplashScreen: React.FC = () => {
           </p>
         </div>
         
-        <Button onClick={handleGetStarted} size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8">
-          Begin Your Journey <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="space-y-4">
+          <Button onClick={handleGetStarted} size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 w-full">
+            Preview as Guest <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          
+          <div className="flex gap-4">
+            <Button onClick={() => handleLoginSignup('/auth')} variant="outline" size="lg" className="flex-1">
+              <LogIn className="mr-2 h-4 w-4" /> Login
+            </Button>
+            <Button 
+              onClick={() => handleLoginSignup('/auth')} 
+              variant="outline" 
+              size="lg" 
+              className="flex-1"
+              onClick={() => {
+                navigate('/auth');
+                setTimeout(() => {
+                  const signupTab = document.querySelector('[value="signup"]');
+                  if (signupTab) {
+                    (signupTab as HTMLButtonElement).click();
+                  }
+                }, 100);
+              }}
+            >
+              <UserPlus className="mr-2 h-4 w-4" /> Sign Up
+            </Button>
+          </div>
+        </div>
       </div>
     </div>;
 };

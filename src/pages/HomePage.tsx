@@ -2,18 +2,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import WeekProgress from "@/components/WeekProgress";
+import { User } from "lucide-react";
 
 const HomePage: React.FC = () => {
+  const { user } = useAuth();
+  
   // Logo would normally be imported from an assets folder
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
   
   return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
-      <header className="text-center mb-12">
-        <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
-        <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
-        <h2 className="text-xl md:text-2xl font-medium text-charcoal mb-4">12-Week Transformational Program</h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
+      <header className="flex justify-between items-center mb-6">
+        <div className="text-center flex-grow">
+          <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
+          <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
+          <h2 className="text-xl md:text-2xl font-medium text-charcoal mb-4">12-Week Transformational Program</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
+        </div>
+        
+        {user && (
+          <Link to="/profile" className="absolute top-8 right-8">
+            <Button variant="outline" className="rounded-full w-10 h-10 p-0">
+              <User className="h-5 w-5" />
+            </Button>
+          </Link>
+        )}
       </header>
 
       <section className="bg-[#D3E4FD]-lg shadow-md p-6 mb-8">
