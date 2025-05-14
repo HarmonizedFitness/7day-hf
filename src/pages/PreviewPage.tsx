@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,16 +6,13 @@ import { Progress } from "@/components/ui/progress";
 import { ExternalLink, ArrowLeft, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { workoutData } from "@/data/workoutData";
-
 const PreviewPage: React.FC = () => {
   const navigate = useNavigate();
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
-  
+
   // Calculate overall progress (all at 0% for preview)
   const overallProgress = 0;
-
-  return (
-    <div className="min-h-screen flex flex-col items-center bg-[#D3E4FD] p-4 py-8">
+  return <div className="min-h-screen flex flex-col items-center bg-[#D3E4FD] p-4 py-8">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
@@ -49,13 +45,7 @@ const PreviewPage: React.FC = () => {
               </div>
               
               <div className="grid grid-cols-1 gap-4">
-                {workoutData.map((day) => (
-                  <div 
-                    key={day.id}
-                    className={cn(
-                      "p-4 rounded-lg border border-gray-200 flex items-center bg-white hover:bg-gray-50 transition-all"
-                    )}
-                  >
+                {workoutData.map(day => <div key={day.id} className={cn("p-4 rounded-lg border border-gray-200 flex items-center bg-white hover:bg-gray-50 transition-all")}>
                     <div className="mr-4 text-2xl">
                       <Circle className="h-8 w-8 text-gray-300" />
                     </div>
@@ -68,8 +58,7 @@ const PreviewPage: React.FC = () => {
                         <span className="text-xs text-gray-500">0%</span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
           </CardContent>
@@ -80,33 +69,22 @@ const PreviewPage: React.FC = () => {
             <CardTitle className="text-center">Ready for Complete Transformation?</CardTitle>
           </CardHeader>
           <CardContent className="text-center">
-            <p className="mb-6">
-              This 7-day program is just the beginning. Discover our comprehensive 
-              12-week program for a complete mind-body transformation.
-            </p>
+            <p className="mb-6">This 7-day program is just the beginning. Discover the full experience
+Below! 👇🏻</p>
           </CardContent>
           <CardFooter className="flex justify-center">
-            <Button 
-              className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 py-6 text-lg"
-              onClick={() => window.open('https://www.ptdistinction.com/harmonizedfitness', '_blank')}
-            >
+            <Button className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 py-6 text-lg" onClick={() => window.open('https://www.ptdistinction.com/harmonizedfitness', '_blank')}>
               12 Week Route <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
           </CardFooter>
         </Card>
 
         <div className="flex justify-center mt-4">
-          <Button 
-            variant="outline"
-            className="flex items-center"
-            onClick={() => navigate('/auth')}
-          >
+          <Button variant="outline" className="flex items-center" onClick={() => navigate('/auth')}>
             <ArrowLeft className="mr-2 h-4 w-4" /> Return to Login
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PreviewPage;
