@@ -3,50 +3,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { ExternalLink, ArrowLeft } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { ExternalLink, ArrowLeft, Circle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { workoutData } from "@/data/workoutData";
 
 const PreviewPage: React.FC = () => {
   const navigate = useNavigate();
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
-
-  const programDays = [
-    {
-      day: 1,
-      title: "Foundations of Mindful Movement",
-      description: "Begin your journey with foundational strength training and breathwork."
-    },
-    {
-      day: 2,
-      title: "Building Body Awareness",
-      description: "Focus on form and sensation through targeted exercises."
-    },
-    {
-      day: 3,
-      title: "Emotional Integration",
-      description: "Connect movement with emotional awareness and regulation."
-    },
-    {
-      day: 4,
-      title: "Strength & Centering",
-      description: "Develop physical strength while maintaining mental centeredness."
-    },
-    {
-      day: 5,
-      title: "Dynamic Fluidity",
-      description: "Explore movement patterns that enhance flexibility and coordination."
-    },
-    {
-      day: 6,
-      title: "Deep Integration",
-      description: "Combine all elements into a harmonious practice."
-    },
-    {
-      day: 7,
-      title: "Reflection & Progress",
-      description: "Assess your journey and prepare for continued growth."
-    }
-  ];
+  
+  // Calculate overall progress (all at 0% for preview)
+  const overallProgress = 0;
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-[#D3E4FD] p-4 py-8">
@@ -72,24 +39,39 @@ const PreviewPage: React.FC = () => {
               your relationship with fitness and wellbeing.
             </p>
             
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-16">Day</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead className="hidden md:table-cell">Description</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {programDays.map((day) => (
-                  <TableRow key={day.day}>
-                    <TableCell className="font-medium">{day.day}</TableCell>
-                    <TableCell>{day.title}</TableCell>
-                    <TableCell className="hidden md:table-cell">{day.description}</TableCell>
-                  </TableRow>
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-2 text-sm">
+                  <span className="font-medium">Week 1 Overall Progress</span>
+                  <span>{overallProgress}% Complete</span>
+                </div>
+                <Progress value={overallProgress} className="h-2" />
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                {workoutData.map((day) => (
+                  <div 
+                    key={day.id}
+                    className={cn(
+                      "p-4 rounded-lg border border-gray-200 flex items-center bg-white hover:bg-gray-50 transition-all"
+                    )}
+                  >
+                    <div className="mr-4 text-2xl">
+                      <Circle className="h-8 w-8 text-gray-300" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium">
+                        Day {day.id}: {day.title}
+                      </h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Progress value={0} className="h-1.5 flex-1" />
+                        <span className="text-xs text-gray-500">0%</span>
+                      </div>
+                    </div>
+                  </div>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
