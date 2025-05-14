@@ -28,7 +28,7 @@ const UserProfilePage: React.FC = () => {
       </div>
 
       <footer className="text-center text-sm text-gray-500 mt-12">
-        <p>© Harmonized Fitness - 12-Week Transformational Training Program</p>
+        <p>© 7 Days of Harmony - Transformational Training Program</p>
         <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
       </footer>
     </div>

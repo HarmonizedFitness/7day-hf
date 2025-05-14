@@ -16,8 +16,8 @@ const HomePage: React.FC = () => {
       <header className="flex justify-between items-center mb-6">
         <div className="text-center flex-grow">
           <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
-          <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
-          <h2 className="text-xl md:text-2xl font-medium text-charcoal mb-4">12-Week Transformational Program</h2>
+          <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">7 Days of Harmony</h1>
+          <h2 className="text-xl md:text-2xl font-medium text-charcoal mb-4">Transformational Program</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
         </div>
         

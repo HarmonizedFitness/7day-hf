@@ -30,7 +30,7 @@ const WorkoutDayPage: React.FC = () => {
       <header className="flex items-center justify-between mb-8">
         <div className="flex items-center">
           <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />
-          <h1 className="text-2xl font-bold">Harmonized Fitness</h1>
+          <h1 className="text-2xl font-bold">7 Days of Harmony</h1>
         </div>
         <DayProgress dayId={day.id} />
       </header>
@@ -113,7 +113,7 @@ const WorkoutDayPage: React.FC = () => {
           <div className="mt-10 p-6 bg-gradient-to-r from-burnt-orange/10 to-charcoal/10 rounded-lg border-2 border-burnt-orange">
             <h3 className="text-xl font-bold text-center mb-4">Ready for the Complete Transformation?</h3>
             <p className="text-center mb-6">
-              You've completed Week 1 of your journey! The full 12-week Harmonized Fitness program 
+              You've completed the 7 Days of Harmony program! The full transformational program 
               continues with progressive training, deeper somatic awareness, and complete mind-body integration.
             </p>
             <div className="text-center">
@@ -130,7 +130,7 @@ const WorkoutDayPage: React.FC = () => {
       <DayNavigation currentDayId={day.id} />
       
       <footer className="text-center text-sm text-gray-500 mt-12">
-        <p>© Harmonized Fitness - 12-Week Transformational Training Program</p>
+        <p>© 7 Days of Harmony - Transformational Training Program</p>
         <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
       </footer>
     </div>
