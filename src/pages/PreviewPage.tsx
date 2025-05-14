@@ -6,13 +6,16 @@ import { Progress } from "@/components/ui/progress";
 import { ExternalLink, ArrowLeft, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { workoutData } from "@/data/workoutData";
+
 const PreviewPage: React.FC = () => {
   const navigate = useNavigate();
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
 
   // Calculate overall progress (all at 0% for preview)
   const overallProgress = 0;
-  return <div className="min-h-screen flex flex-col items-center bg-[#D3E4FD] p-4 py-8">
+  
+  return (
+    <div className="min-h-screen flex flex-col items-center bg-[#D3E4FD] p-4 py-8">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
@@ -74,7 +77,7 @@ Below! 👇🏻</p>
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 py-6 text-lg" onClick={() => window.open('https://www.ptdistinction.com/harmonizedfitness', '_blank')}>
-              12 Week Route <ExternalLink className="ml-2 h-4 w-4" />
+              Full HF App <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
           </CardFooter>
         </Card>
@@ -85,6 +88,8 @@ Below! 👇🏻</p>
           </Button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default PreviewPage;
