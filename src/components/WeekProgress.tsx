@@ -7,9 +7,15 @@ import { workoutData } from "@/data/workoutData";
 import { CheckCircle, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Define a type that includes both number keys and the 'overall' string key
+interface AnimateValues {
+  [key: number]: number;
+  overall?: number;
+}
+
 const WeekProgress: React.FC = () => {
   const { completedExercises } = useProgress();
-  const [animateValues, setAnimateValues] = useState<Record<number, number>>({});
+  const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
 
   const dayProgress = useMemo(() => {
@@ -48,10 +54,13 @@ const WeekProgress: React.FC = () => {
   
   useEffect(() => {
     // Set initial values to zero
-    const initialValues = dayProgress.reduce((acc, day) => {
+    const initialValues: AnimateValues = dayProgress.reduce((acc, day) => {
       acc[day.dayId] = 0;
       return acc;
-    }, {} as Record<number, number>);
+    }, {} as AnimateValues);
+    
+    // Also initialize the overall progress
+    initialValues.overall = 0;
     setAnimateValues(initialValues);
     
     // Trigger loaded state for fade-in animations
@@ -61,14 +70,16 @@ const WeekProgress: React.FC = () => {
 
     // Animate progress values after a small delay
     setTimeout(() => {
-      setAnimateValues(
-        dayProgress.reduce((acc, day) => {
-          acc[day.dayId] = day.percentComplete;
-          return acc;
-        }, {} as Record<number, number>)
-      );
+      const updatedValues: AnimateValues = dayProgress.reduce((acc, day) => {
+        acc[day.dayId] = day.percentComplete;
+        return acc;
+      }, {} as AnimateValues);
+      
+      // Also animate the overall progress
+      updatedValues.overall = overallProgress;
+      setAnimateValues(updatedValues);
     }, 500);
-  }, [dayProgress]);
+  }, [dayProgress, overallProgress]);
   
   return (
     <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
@@ -81,7 +92,7 @@ const WeekProgress: React.FC = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 staggered-fade-in">
-        {dayProgress.map((day) => (
+        {dayProgress.map((day, index) => (
           <Link 
             to={`/day/${day.dayId}`} 
             key={day.dayId}
@@ -89,6 +100,9 @@ const WeekProgress: React.FC = () => {
               "p-4 rounded-lg border border-gray-200 flex items-center hover:bg-gray-50 transition-all card-hover",
               day.isComplete && "border-green-500 bg-green-50 hover:bg-green-50/80"
             )}
+            style={{
+              animationDelay: `${index * 0.1}s` // Staggered animation
+            }}
           >
             <div className="mr-4 text-2xl">
               {day.isComplete ? (
