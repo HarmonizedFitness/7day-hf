@@ -19,7 +19,7 @@ const SplashScreen: React.FC = () => {
   
   const handleGetStarted = () => {
     setFadeOut(true);
-    setTimeout(() => navigate('/home'), 500);
+    setTimeout(() => navigate('/preview'), 500);
   };
 
   const handleLoginSignup = (path: string) => {
@@ -58,7 +58,7 @@ const SplashScreen: React.FC = () => {
         
         <div className="space-y-4">
           <Button onClick={handleGetStarted} size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 w-full">
-            Preview as Guest <ArrowRight className="ml-2 h-4 w-4" />
+            Preview <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           
           <div className="flex gap-4">

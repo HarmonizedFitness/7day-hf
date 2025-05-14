@@ -1,4 +1,5 @@
 
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +13,7 @@ import HomePage from "@/pages/HomePage";
 import WorkoutDayPage from "@/pages/WorkoutDayPage";
 import AuthPage from "@/pages/AuthPage";
 import UserProfilePage from "@/pages/UserProfilePage";
+import PreviewPage from "@/pages/PreviewPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<SplashScreen />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/preview" element={<PreviewPage />} />
               <Route path="/home" element={
                 <ProtectedRoute>
                   <HomePage />
@@ -52,3 +55,4 @@ const App = () => (
 );
 
 export default App;
+
