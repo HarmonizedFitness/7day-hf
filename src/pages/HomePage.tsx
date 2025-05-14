@@ -1,17 +1,16 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import WeekProgress from "@/components/WeekProgress";
 import { User } from "lucide-react";
-
 const HomePage: React.FC = () => {
-  const { user } = useAuth();
-  
+  const {
+    user
+  } = useAuth();
+
   // Logo would normally be imported from an assets folder
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
-  
   return <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
       <header className="flex justify-between items-center mb-6">
         <div className="text-center flex-grow">
@@ -21,13 +20,11 @@ const HomePage: React.FC = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
         </div>
         
-        {user && (
-          <Link to="/profile" className="absolute top-8 right-8">
+        {user && <Link to="/profile" className="absolute top-8 right-8">
             <Button variant="outline" className="rounded-full w-10 h-10 p-0">
               <User className="h-5 w-5" />
             </Button>
-          </Link>
-        )}
+          </Link>}
       </header>
 
       <section className="bg-[#D3E4FD]-lg shadow-md p-6 mb-8">
@@ -41,7 +38,7 @@ const HomePage: React.FC = () => {
         <WeekProgress />
       </section>
 
-      <section className="bg-white rounded-lg shadow-md p-6 mb-8">
+      <section className="bg- grey rounded-lg shadow-md p-6 mb-8">
         <h3 className="text-xl font-semibold mb-4">Program Features</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 border rounded-md border-gray-200">
@@ -76,5 +73,4 @@ const HomePage: React.FC = () => {
       </section>
     </div>;
 };
-
 export default HomePage;
