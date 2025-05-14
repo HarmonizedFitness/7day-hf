@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import { extendedAnimations } from "./src/lib/extendedAnimations";
 
 export default {
 	darkMode: ["class"],
@@ -147,7 +148,8 @@ export default {
 					to: {
 						backgroundPosition: '0% 0'
 					}
-				}
+				},
+				...extendedAnimations.keyframes,
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -157,7 +159,11 @@ export default {
 				'pulse-soft': 'pulse-soft 2s infinite ease-in-out',
 				'progress-fill': 'progress-fill 1.5s ease-out forwards',
 				'float': 'float 6s infinite ease-in-out',
-				'background-shine': 'background-shine 2s linear infinite'
+				'background-shine': 'background-shine 2s linear infinite',
+				...extendedAnimations.animation,
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			}
 		}
 	},
