@@ -88,7 +88,7 @@ const PreviewPage: React.FC = () => {
           <CardFooter className="flex justify-center">
             <Button 
               className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 py-6 text-lg"
-              onClick={() => window.open('https://www.harmonizedfitness.com', '_blank')}
+              onClick={() => window.open('https://www.ptdistinction.com/harmonizedfitness', '_blank')}
             >
               12 Week Route <ExternalLink className="ml-2 h-4 w-4" />
             </Button>
