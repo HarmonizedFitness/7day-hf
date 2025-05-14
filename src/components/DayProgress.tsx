@@ -1,5 +1,5 @@
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { useProgress } from "@/contexts/ProgressContext";
 import { workoutData } from "@/data/workoutData";
@@ -10,6 +10,7 @@ interface DayProgressProps {
 
 const DayProgress: React.FC<DayProgressProps> = ({ dayId }) => {
   const { completedExercises } = useProgress();
+  const [animateValue, setAnimateValue] = useState(0);
   
   const { total, completed } = useMemo(() => {
     const day = workoutData.find(d => d.id === dayId);
@@ -33,13 +34,24 @@ const DayProgress: React.FC<DayProgressProps> = ({ dayId }) => {
   
   const percentComplete = total > 0 ? Math.round((completed / total) * 100) : 0;
   
+  useEffect(() => {
+    // Animate progress value after component mount
+    const timer = setTimeout(() => {
+      setAnimateValue(percentComplete);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [percentComplete]);
+  
   return (
-    <div className="my-4">
+    <div className="my-4 animate-fade-in">
       <div className="flex justify-between items-center mb-2 text-sm">
-        <span>Progress</span>
-        <span>{percentComplete}% Complete</span>
+        <span className="font-opensans">Progress</span>
+        <span className="font-opensans">{animateValue}% Complete</span>
       </div>
-      <Progress value={percentComplete} className="h-2" />
+      <div className="animated-progress">
+        <Progress value={animateValue} className="h-2" />
+      </div>
     </div>
   );
 };
