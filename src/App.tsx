@@ -1,5 +1,4 @@
 
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -30,21 +29,13 @@ const App = () => (
               <Route path="/" element={<SplashScreen />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/preview" element={<PreviewPage />} />
-              <Route path="/home" element={
-                <ProtectedRoute>
-                  <HomePage />
-                </ProtectedRoute>
-              } />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <UserProfilePage />
                 </ProtectedRoute>
               } />
-              <Route path="/day/:dayId" element={
-                <ProtectedRoute>
-                  <WorkoutDayPage />
-                </ProtectedRoute>
-              } />
+              <Route path="/day/:dayId" element={<WorkoutDayPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
@@ -55,4 +46,3 @@ const App = () => (
 );
 
 export default App;
-
