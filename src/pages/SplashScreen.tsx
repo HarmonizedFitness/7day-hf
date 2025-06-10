@@ -24,19 +24,13 @@ const SplashScreen: React.FC = () => {
     setTimeout(() => navigate('/preview'), 500);
   };
 
-  const handleLoginSignup = (path: string) => {
+  const handleLoginClick = () => {
     setFadeOut(true);
-    setTimeout(() => navigate(path), 500);
+    setTimeout(() => navigate('/auth'), 500);
   };
 
   const handleSignUpClick = () => {
     navigate('/auth');
-    setTimeout(() => {
-      const signupTab = document.querySelector('[value="signup"]');
-      if (signupTab) {
-        (signupTab as HTMLButtonElement).click();
-      }
-    }, 100);
   };
 
   const containerVariants = {
@@ -126,7 +120,7 @@ const SplashScreen: React.FC = () => {
             
             <div className="flex gap-4">
               <Button 
-                onClick={() => handleLoginSignup('/auth')} 
+                onClick={handleLoginClick} 
                 variant="outline" 
                 size="lg" 
                 className="flex-1 bg-white/70 backdrop-blur-sm hover:bg-white/90"
