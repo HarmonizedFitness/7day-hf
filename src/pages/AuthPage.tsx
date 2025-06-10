@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 const AuthPage: React.FC = () => {
   const { user, loading } = useAuth();
 
-  // If user is already logged in, redirect to home page
   if (user && !loading) {
     return <Navigate to="/home" />;
   }
@@ -20,25 +19,26 @@ const AuthPage: React.FC = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.1
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: "easeOut"
       }
     }
   };
 
   return (
-    <AnimatedBackground variant="auth" disableParallax={false}>
+    <AnimatedBackground variant="auth">
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <motion.div 
           className="w-full max-w-md"
@@ -51,13 +51,21 @@ const AuthPage: React.FC = () => {
               src={logoUrl} 
               alt="Harmonized Fitness Logo" 
               className="w-24 h-24 mx-auto mb-4"
+              initial={{ scale: 0.8, opacity: 0 }}
               animate={{ 
-                y: [0, -8, 0],
+                scale: 1, 
+                opacity: 1,
+                y: [0, -4, 0]
               }}
               transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
+                scale: { duration: 0.5, ease: "easeOut" },
+                opacity: { duration: 0.5, ease: "easeOut" },
+                y: { 
+                  duration: 6, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: 1
+                }
               }}
             />
             <h1 className="text-3xl font-bold text-burnt-orange">Harmonized Fitness</h1>

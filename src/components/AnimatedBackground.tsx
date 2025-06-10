@@ -33,7 +33,7 @@ const generateShapes = (
   colors: string[]
 ): Shape[] => {
   const area = width * height;
-  const shapeCount = Math.max(3, Math.min(15, Math.floor(area / 2000 * density))); // Reduced max shapes
+  const shapeCount = Math.max(2, Math.min(8, Math.floor(area / 3000 * density)));
   
   return Array.from({ length: shapeCount }).map((_, i) => ({
     id: i,
@@ -41,13 +41,13 @@ const generateShapes = (
     y: Math.random() * height,
     size: minSize + Math.random() * (maxSize - minSize),
     color: colors[Math.floor(Math.random() * colors.length)],
-    speed: 0.2 + Math.random() * 0.5, // Reduced speed range
-    opacity: 0.02 + Math.random() * 0.08, // Reduced opacity range
+    speed: 0.1 + Math.random() * 0.3,
+    opacity: 0.01 + Math.random() * 0.04,
     type: ["circle", "square", "triangle"][Math.floor(Math.random() * 3)] as "circle" | "square" | "triangle",
   }));
 };
 
-const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: boolean }> = ({ 
+const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: boolean }> = React.memo(({ 
   shape, 
   parallaxY, 
   disableParallax 
@@ -55,7 +55,7 @@ const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: 
   const y = useTransform(
     parallaxY,
     [0, 1],
-    [0, disableParallax ? 0 : -shape.speed * 50]
+    [0, disableParallax ? 0 : -shape.speed * 30]
   );
   
   const renderShape = () => {
@@ -103,6 +103,7 @@ const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: 
         top: shape.y,
         y,
         pointerEvents: "none",
+        willChange: "transform",
       }}
     >
       <svg
@@ -114,13 +115,15 @@ const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: 
       </svg>
     </motion.div>
   );
-};
+});
+
+ShapeComponent.displayName = "ShapeComponent";
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   className = "",
-  density = 0.08, // Reduced default density
-  minSize = 15, // Reduced min size
-  maxSize = 80, // Reduced max size
+  density = 0.05,
+  minSize = 12,
+  maxSize = 60,
   children,
   colors = ["#2d3033", "#D35400", "#F5F5F5"],
   disableParallax = false,
@@ -131,33 +134,32 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   
-  // Normalize scroll for parallax effect
   const scrollProgress = useTransform(scrollY, [0, 1000], [0, 1]);
   
   const variantStyles = useMemo(() => ({
     auth: {
       background: "bg-gradient-to-b from-[#E9F2FE] via-[#D3E4FD] to-[#E9F2FE]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.06,
+      density: 0.02,
+      disableParallax: true,
     },
     home: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.05,
+      density: 0.04,
     },
     workout: {
       background: "bg-gradient-to-b from-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.04,
+      density: 0.03,
     },
     default: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.05,
+      density: 0.04,
     }
   }), []);
 
-  // Throttled resize handler
   const handleResize = useCallback(() => {
     if (!containerRef.current) return;
     
@@ -165,7 +167,6 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     setDimensions({ width, height });
   }, []);
 
-  // Generate shapes when dimensions change
   useEffect(() => {
     if (dimensions.width === 0 || dimensions.height === 0) return;
     
@@ -181,18 +182,15 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     setShapes(shapesData);
   }, [dimensions, density, minSize, maxSize, colors, variant, variantStyles]);
 
-  // Set up resize observer
   useEffect(() => {
     if (!containerRef.current) return;
     
-    // Initial measurement
     handleResize();
     
-    // Throttled resize listener
     let timeoutId: NodeJS.Timeout;
     const throttledResize = () => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleResize, 100);
+      timeoutId = setTimeout(handleResize, 150);
     };
     
     window.addEventListener('resize', throttledResize);
@@ -202,10 +200,13 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       clearTimeout(timeoutId);
     };
   }, [handleResize]);
+
+  const variantConfig = variantStyles[variant];
+  const shouldDisableParallax = disableParallax || variantConfig.disableParallax;
   
   return (
     <div 
-      className={`relative min-h-screen overflow-hidden ${variantStyles[variant].background} ${className}`}
+      className={`relative min-h-screen overflow-hidden ${variantConfig.background} ${className}`}
       ref={containerRef}
     >
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -214,7 +215,7 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
             key={shape.id} 
             shape={shape} 
             parallaxY={scrollProgress}
-            disableParallax={disableParallax}
+            disableParallax={shouldDisableParallax}
           />
         ))}
       </div>
