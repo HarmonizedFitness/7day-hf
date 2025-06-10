@@ -1,4 +1,3 @@
-
 import { WorkoutDay } from '../types';
 
 export const day4: WorkoutDay = {
@@ -39,7 +38,7 @@ export const day4: WorkoutDay = {
             title: "Cable Front Raise Form",
             instructor: "Max Euceda",
             duration: "1:30",
-            url: "https://www.youtube.com/watch?v=front-raise-demo"
+            url: "https://www.youtube.com/results?search_query=Dumbbell+front+raise"
           }
         },
         {
@@ -119,7 +118,7 @@ export const day4: WorkoutDay = {
             title: "Plate Front Raise Technique",
             instructor: "Davis Diley",
             duration: "3:10",
-            url: "https://www.youtube.com/watch?v=plate-front-raise-demo"
+            url: "https://www.youtube.com/results?search_query=Dumbbell+front+raise"
           }
         }
       ]
