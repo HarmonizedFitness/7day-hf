@@ -1,4 +1,3 @@
-
 import { WorkoutDay } from '../types';
 
 export const day1: WorkoutDay = {
@@ -99,7 +98,7 @@ export const day1: WorkoutDay = {
             title: "How to do the CABLE TRICEP PUSHDOWN! | 2 Minute Tutorial",
             instructor: "Max Euceda",
             duration: "2:00",
-            url: "https://www.youtube.com/watch?v=-zLxcsIN4T4"
+            url: "https://www.youtube.com/watch?v=-xa-6cQaZKY"
           }
         },
         {
