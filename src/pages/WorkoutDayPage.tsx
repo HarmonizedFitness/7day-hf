@@ -85,6 +85,7 @@ const WorkoutDayPage: React.FC = () => {
                   name={exercise.name}
                   technicalCue={exercise.technicalCue}
                   somaticCue={exercise.somaticCue}
+                  videoInfo={exercise.videoInfo}
                 />
               ))}
             </div>

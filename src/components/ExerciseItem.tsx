@@ -10,6 +10,12 @@ interface ExerciseItemProps {
   name: string;
   technicalCue?: string;
   somaticCue?: string;
+  videoInfo?: {
+    title: string;
+    instructor: string;
+    duration: string;
+    url: string;
+  };
 }
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({ 
@@ -17,7 +23,8 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   circuitTitle, 
   name, 
   technicalCue, 
-  somaticCue 
+  somaticCue,
+  videoInfo
 }) => {
   const { toggleExercise, isExerciseCompleted } = useProgress();
   const completed = isExerciseCompleted(dayId, circuitTitle, name);
@@ -52,6 +59,31 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         <p className="somatic-cue">
           <em>Somatic cue:</em> {somaticCue}
         </p>
+      )}
+
+      {videoInfo && (
+        <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-blue-600">📹</span>
+            <span className="font-semibold text-blue-800">INSTRUCTIONAL VIDEO</span>
+          </div>
+          <div className="space-y-1 text-sm">
+            <p><strong>Title:</strong> {videoInfo.title}</p>
+            <p><strong>Instructor:</strong> {videoInfo.instructor}</p>
+            <p><strong>Duration:</strong> {videoInfo.duration}</p>
+            <p>
+              <strong>URL:</strong>{" "}
+              <a 
+                href={videoInfo.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                {videoInfo.url}
+              </a>
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
