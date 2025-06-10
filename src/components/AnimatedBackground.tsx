@@ -140,23 +140,26 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     auth: {
       background: "bg-gradient-to-b from-[#E9F2FE] via-[#D3E4FD] to-[#E9F2FE]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.02,
+      density: 0.01,
       disableParallax: true,
     },
     home: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
       density: 0.04,
+      disableParallax: false,
     },
     workout: {
       background: "bg-gradient-to-b from-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
       density: 0.03,
+      disableParallax: false,
     },
     default: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
       density: 0.04,
+      disableParallax: false,
     }
   }), []);
 
