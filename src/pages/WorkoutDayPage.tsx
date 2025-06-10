@@ -26,11 +26,11 @@ const WorkoutDayPage: React.FC = () => {
   const isLastDay = dayIdNumber === 7;
   
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8 bg-[#D3E4FD]">
+    <div className="container max-w-4xl mx-auto px-4 py-8 bg-stone-800">
       <header className="flex items-center justify-between mb-8">
         <div className="flex items-center">
           <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />
-          <h1 className="text-2xl font-bold">7 Days of Harmony</h1>
+          <h1 className="text-2xl font-bold text-white">7 Days of Harmony</h1>
         </div>
         <DayProgress dayId={day.id} />
       </header>
@@ -130,7 +130,7 @@ const WorkoutDayPage: React.FC = () => {
       
       <DayNavigation currentDayId={day.id} />
       
-      <footer className="text-center text-sm text-gray-500 mt-12">
+      <footer className="text-center text-sm text-gray-400 mt-12">
         <p>© 7 Days of Harmony - Transformational Training Program</p>
         <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
       </footer>

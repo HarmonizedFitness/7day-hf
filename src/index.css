@@ -101,7 +101,7 @@
   }
   
   .animated-gradient-bg {
-    @apply bg-gradient-to-r from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD] bg-[length:200%_100%] animate-background-shine;
+    @apply bg-gradient-to-r from-stone-800 via-stone-700 to-stone-800 bg-[length:200%_100%] animate-background-shine;
   }
   
   .staggered-fade-in > * {
