@@ -1,6 +1,6 @@
 
-import React, { useEffect, useRef } from "react";
-import { useMotionValue, motion, useTransform, useScroll, animate } from "framer-motion";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { useMotionValue, motion, useTransform, useScroll } from "framer-motion";
 
 interface Shape {
   id: number;
@@ -15,7 +15,7 @@ interface Shape {
 
 interface AnimatedBackgroundProps {
   className?: string;
-  density?: number; // Number of shapes per 1000px²
+  density?: number;
   minSize?: number;
   maxSize?: number;
   children?: React.ReactNode;
@@ -33,7 +33,7 @@ const generateShapes = (
   colors: string[]
 ): Shape[] => {
   const area = width * height;
-  const shapeCount = Math.max(5, Math.floor(area / 1000 * density));
+  const shapeCount = Math.max(3, Math.min(15, Math.floor(area / 2000 * density))); // Reduced max shapes
   
   return Array.from({ length: shapeCount }).map((_, i) => ({
     id: i,
@@ -41,54 +41,53 @@ const generateShapes = (
     y: Math.random() * height,
     size: minSize + Math.random() * (maxSize - minSize),
     color: colors[Math.floor(Math.random() * colors.length)],
-    speed: 0.3 + Math.random() * 0.7, // Random speed between 0.3 and 1
-    opacity: 0.03 + Math.random() * 0.15, // Random opacity between 0.03 and 0.18
+    speed: 0.2 + Math.random() * 0.5, // Reduced speed range
+    opacity: 0.02 + Math.random() * 0.08, // Reduced opacity range
     type: ["circle", "square", "triangle"][Math.floor(Math.random() * 3)] as "circle" | "square" | "triangle",
   }));
 };
 
-const ShapeComponent: React.FC<{ shape: Shape; moveY: number }> = ({ shape, moveY }) => {
-  const y = useMotionValue(shape.y);
-  
-  useEffect(() => {
-    const yMotion = shape.y - moveY * shape.speed * 5;
-    animate(y, yMotion, {
-      duration: 0.8,
-      ease: "easeOut",
-    });
-  }, [moveY, shape.speed, shape.y, y]);
+const ShapeComponent: React.FC<{ shape: Shape; parallaxY: any; disableParallax: boolean }> = ({ 
+  shape, 
+  parallaxY, 
+  disableParallax 
+}) => {
+  const y = useTransform(
+    parallaxY,
+    [0, 1],
+    [0, disableParallax ? 0 : -shape.speed * 50]
+  );
   
   const renderShape = () => {
+    const shapeProps = {
+      fill: shape.color,
+      opacity: shape.opacity,
+    };
+
     switch (shape.type) {
       case "circle":
         return (
-          <motion.circle
+          <circle
             cx={shape.size / 2}
             cy={shape.size / 2}
             r={shape.size / 2}
-            fill={shape.color}
-            opacity={shape.opacity}
-            style={{ y }}
+            {...shapeProps}
           />
         );
       case "square":
         return (
-          <motion.rect
+          <rect
             width={shape.size}
             height={shape.size}
-            fill={shape.color}
-            opacity={shape.opacity}
-            style={{ y }}
+            {...shapeProps}
           />
         );
       case "triangle":
         const points = `${shape.size / 2},0 ${shape.size},${shape.size} 0,${shape.size}`;
         return (
-          <motion.polygon
+          <polygon
             points={points}
-            fill={shape.color}
-            opacity={shape.opacity}
-            style={{ y }}
+            {...shapeProps}
           />
         );
       default:
@@ -97,80 +96,112 @@ const ShapeComponent: React.FC<{ shape: Shape; moveY: number }> = ({ shape, move
   };
 
   return (
-    <svg
-      width={shape.size}
-      height={shape.size}
+    <motion.div
       style={{
         position: "absolute",
         left: shape.x,
-        top: 0,
+        top: shape.y,
+        y,
         pointerEvents: "none",
       }}
     >
-      {renderShape()}
-    </svg>
+      <svg
+        width={shape.size}
+        height={shape.size}
+        style={{ display: "block" }}
+      >
+        {renderShape()}
+      </svg>
+    </motion.div>
   );
 };
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   className = "",
-  density = 0.15,
-  minSize = 20,
-  maxSize = 120,
+  density = 0.08, // Reduced default density
+  minSize = 15, // Reduced min size
+  maxSize = 80, // Reduced max size
   children,
   colors = ["#2d3033", "#D35400", "#F5F5F5"],
   disableParallax = false,
   variant = "default",
 }) => {
-  const [shapes, setShapes] = React.useState<Shape[]>([]);
+  const [shapes, setShapes] = useState<Shape[]>([]);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const moveY = useTransform(scrollY, [0, 1000], [0, 100]);
   
-  const variantStyles = {
+  // Normalize scroll for parallax effect
+  const scrollProgress = useTransform(scrollY, [0, 1000], [0, 1]);
+  
+  const variantStyles = useMemo(() => ({
     auth: {
       background: "bg-gradient-to-b from-[#E9F2FE] via-[#D3E4FD] to-[#E9F2FE]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.15,
+      density: 0.06,
     },
     home: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.12,
+      density: 0.05,
     },
     workout: {
       background: "bg-gradient-to-b from-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.1,
+      density: 0.04,
     },
     default: {
       background: "bg-gradient-to-b from-[#D3E4FD] via-[#E9F2FE] to-[#D3E4FD]",
       colors: ["#2d3033", "#D35400", "#F5F5F5"],
-      density: 0.12,
+      density: 0.05,
     }
-  };
-  
+  }), []);
+
+  // Throttled resize handler
+  const handleResize = useCallback(() => {
+    if (!containerRef.current) return;
+    
+    const { width, height } = containerRef.current.getBoundingClientRect();
+    setDimensions({ width, height });
+  }, []);
+
+  // Generate shapes when dimensions change
   useEffect(() => {
-    const updateShapes = () => {
-      if (!containerRef.current) return;
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      const variantConfig = variantStyles[variant];
-      const shapesData = generateShapes(
-        width, 
-        height, 
-        variantConfig.density || density, 
-        minSize, 
-        maxSize, 
-        variantConfig.colors || colors
-      );
-      setShapes(shapesData);
+    if (dimensions.width === 0 || dimensions.height === 0) return;
+    
+    const variantConfig = variantStyles[variant];
+    const shapesData = generateShapes(
+      dimensions.width, 
+      dimensions.height, 
+      variantConfig.density || density, 
+      minSize, 
+      maxSize, 
+      variantConfig.colors || colors
+    );
+    setShapes(shapesData);
+  }, [dimensions, density, minSize, maxSize, colors, variant, variantStyles]);
+
+  // Set up resize observer
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    // Initial measurement
+    handleResize();
+    
+    // Throttled resize listener
+    let timeoutId: NodeJS.Timeout;
+    const throttledResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
     };
     
-    updateShapes();
-    window.addEventListener('resize', updateShapes);
+    window.addEventListener('resize', throttledResize);
     
-    return () => window.removeEventListener('resize', updateShapes);
-  }, [density, minSize, maxSize, colors, variant]);
+    return () => {
+      window.removeEventListener('resize', throttledResize);
+      clearTimeout(timeoutId);
+    };
+  }, [handleResize]);
   
   return (
     <div 
@@ -182,7 +213,8 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
           <ShapeComponent 
             key={shape.id} 
             shape={shape} 
-            moveY={disableParallax ? 0 : moveY.get()} 
+            parallaxY={scrollProgress}
+            disableParallax={disableParallax}
           />
         ))}
       </div>
