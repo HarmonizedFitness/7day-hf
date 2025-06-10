@@ -39,7 +39,7 @@ export const day1: WorkoutDay = {
             title: "Stop Doing Chest Flys Like This",
             instructor: "Jeff Nippard",
             duration: "8:22",
-            url: "https://www.youtube.com/watch?v=nTTPQM7A6Qw"
+            url: "https://www.youtube.com/watch?v=JSDpq14vCZ8"
           }
         },
         {
