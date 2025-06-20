@@ -15,20 +15,19 @@ const DayNavigation: React.FC<DayNavigationProps> = ({ currentDayId }) => {
 
   return (
     <div className="flex justify-between items-center w-full my-6">
-      {prevDay ? (
+      <div className="flex items-center space-x-4">
         <Button variant="outline" asChild>
-          <Link to={`/day/${prevDay.id}`} className="flex items-center space-x-1">
-            <ChevronLeft className="h-4 w-4" />
-            <span>Day {prevDay.id}</span>
-          </Link>
+          <Link to="/" className="px-4">Home</Link>
         </Button>
-      ) : (
-        <div></div>
-      )}
-
-      <Button variant="outline" asChild>
-        <Link to="/" className="px-4">Home</Link>
-      </Button>
+        {prevDay && (
+          <Button variant="outline" asChild>
+            <Link to={`/day/${prevDay.id}`} className="flex items-center space-x-1">
+              <ChevronLeft className="h-4 w-4" />
+              <span>Day {prevDay.id}</span>
+            </Link>
+          </Button>
+        )}
+      </div>
 
       {nextDay ? (
         <Button variant="outline" asChild>
