@@ -62,15 +62,13 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       )}
 
       {videoInfo && (
-        <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="mt-3 p-2 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="flex items-center gap-2 mb-1">
             <span className="text-blue-600">📹</span>
-            <span className="font-semibold text-blue-800">INSTRUCTIONAL VIDEO</span>
+            <span className="font-semibold text-blue-800 text-sm">INSTRUCTIONAL VIDEO</span>
           </div>
           <div className="space-y-1 text-sm">
             <p><strong>Title:</strong> {videoInfo.title}</p>
-            <p><strong>Instructor:</strong> {videoInfo.instructor}</p>
-            <p><strong>Duration:</strong> {videoInfo.duration}</p>
             <p>
               <strong>URL:</strong>{" "}
               <a 
