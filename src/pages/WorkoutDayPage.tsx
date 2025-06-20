@@ -7,11 +7,11 @@ import JournalPrompt from "@/components/JournalPrompt";
 import DayProgress from "@/components/DayProgress";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+
 const WorkoutDayPage: React.FC = () => {
-  const {
-    dayId
-  } = useParams();
+  const { dayId } = useParams();
   const dayIdNumber = dayId ? parseInt(dayId) : 0;
+  
   const day = useMemo(() => {
     return workoutData.find(d => d.id === dayIdNumber);
   }, [dayIdNumber]);
@@ -20,14 +20,17 @@ const WorkoutDayPage: React.FC = () => {
   if (!day) {
     return <Navigate to="/home" />;
   }
+
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
   const isLastDay = dayIdNumber === 7;
-  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-stone-800">
+
+  return (
+    <div className="container max-w-4xl mx-auto px-4 py-8 bg-stone-800">
       <header className="flex justify-between items-center mb-6">
         <div className="text-center flex-grow">
           <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
           <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">7 Days of Harmony</h1>
-          <h2 className="text-xl md:text-2xl font-medium text-gray-200 mb-4">Week 1, Day {day.id}: {day.title}</h2>
+          <h2 className="text-xl md:text-2xl font-medium text-gray-200 mb-4">Day {day.id}: {day.title}</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
         </div>
         
@@ -112,6 +115,8 @@ const WorkoutDayPage: React.FC = () => {
         <p>© 7 Days of Harmony - Transformational Training Program</p>
         <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default WorkoutDayPage;
