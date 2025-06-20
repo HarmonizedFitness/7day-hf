@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useProgress } from "@/contexts/ProgressContext";
@@ -44,15 +45,13 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           <em>Somatic cue:</em> {somaticCue}
         </p>}
 
-      {videoInfo && <div className="mt-3 p-3 bg-blue-50 border border-blue-200 px-[79px] py-0 my-[16px] rounded-none">
+      {videoInfo && <div className="mt-3 p-2 bg-blue-50 border border-blue-200 rounded-none">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-blue-600">📹</span>
             <span className="font-semibold text-blue-800">INSTRUCTIONAL VIDEO</span>
           </div>
           <div className="space-y-1 text-sm">
             <p><strong>Title:</strong> {videoInfo.title}</p>
-            <p><strong>Instructor:</strong> {videoInfo.instructor}</p>
-            <p><strong>Duration:</strong> {videoInfo.duration}</p>
             <p>
               <strong>URL:</strong>{" "}
               <a href={videoInfo.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
