@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -12,17 +11,16 @@ interface AnimateValues {
   [key: number]: number;
   overall?: number;
 }
-
 const WeekProgress: React.FC = () => {
-  const { completedExercises } = useProgress();
+  const {
+    completedExercises
+  } = useProgress();
   const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
-
   const dayProgress = useMemo(() => {
     return workoutData.map(day => {
       let totalExercises = 0;
       let completedCount = 0;
-      
       day.circuits.forEach(circuit => {
         circuit.exercises.forEach(exercise => {
           totalExercises++;
@@ -32,11 +30,7 @@ const WeekProgress: React.FC = () => {
           }
         });
       });
-      
-      const percentComplete = totalExercises > 0 
-        ? Math.round((completedCount / totalExercises) * 100) 
-        : 0;
-      
+      const percentComplete = totalExercises > 0 ? Math.round(completedCount / totalExercises * 100) : 0;
       return {
         dayId: day.id,
         title: day.title,
@@ -45,24 +39,22 @@ const WeekProgress: React.FC = () => {
       };
     });
   }, [completedExercises]);
-  
   const overallProgress = useMemo(() => {
     if (dayProgress.length === 0) return 0;
     const totalPercent = dayProgress.reduce((sum, day) => sum + day.percentComplete, 0);
     return Math.round(totalPercent / dayProgress.length);
   }, [dayProgress]);
-  
   useEffect(() => {
     // Set initial values to zero
     const initialValues: AnimateValues = dayProgress.reduce((acc, day) => {
       acc[day.dayId] = 0;
       return acc;
     }, {} as AnimateValues);
-    
+
     // Also initialize the overall progress
     initialValues.overall = 0;
     setAnimateValues(initialValues);
-    
+
     // Trigger loaded state for fade-in animations
     setTimeout(() => {
       setLoaded(true);
@@ -74,45 +66,30 @@ const WeekProgress: React.FC = () => {
         acc[day.dayId] = day.percentComplete;
         return acc;
       }, {} as AnimateValues);
-      
+
       // Also animate the overall progress
       updatedValues.overall = overallProgress;
       setAnimateValues(updatedValues);
     }, 500);
   }, [dayProgress, overallProgress]);
-  
-  return (
-    <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
+  return <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
       <div className="animated-progress">
         <div className="flex justify-between items-center mb-2 text-sm">
-          <span className="font-medium">Week 1 Overall Progress</span>
-          <span>{animateValues.overall || overallProgress}% Complete</span>
+          <span className="font-medium text-zinc-100">Week 1 Overall Progress</span>
+          <span className="text-zinc-100">{animateValues.overall || overallProgress}% Complete</span>
         </div>
         <Progress value={animateValues.overall || overallProgress} className="h-2" />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 staggered-fade-in">
-        {dayProgress.map((day, index) => (
-          <Link 
-            to={`/day/${day.dayId}`} 
-            key={day.dayId}
-            className={cn(
-              "p-4 rounded-lg border border-gray-200 flex items-center hover:bg-gray-50 transition-all card-hover",
-              day.isComplete && "border-green-500 bg-green-50 hover:bg-green-50/80"
-            )}
-            style={{
-              animationDelay: `${index * 0.1}s` // Staggered animation
-            }}
-          >
+        {dayProgress.map((day, index) => <Link to={`/day/${day.dayId}`} key={day.dayId} className={cn("p-4 rounded-lg border border-gray-200 flex items-center hover:bg-gray-50 transition-all card-hover", day.isComplete && "border-green-500 bg-green-50 hover:bg-green-50/80")} style={{
+        animationDelay: `${index * 0.1}s` // Staggered animation
+      }}>
             <div className="mr-4 text-2xl">
-              {day.isComplete ? (
-                <CheckCircle className="h-8 w-8 text-green-500" />
-              ) : (
-                <Circle className="h-8 w-8 text-gray-300" />
-              )}
+              {day.isComplete ? <CheckCircle className="h-8 w-8 text-green-500" /> : <Circle className="h-8 w-8 text-gray-300" />}
             </div>
             <div className="flex-1">
-              <h3 className="font-playfair font-medium">
+              <h3 className="font-playfair text-orange-400 text-lg font-normal">
                 Day {day.dayId}: {day.title}
               </h3>
               <div className="flex items-center space-x-2 mt-1">
@@ -120,11 +97,8 @@ const WeekProgress: React.FC = () => {
                 <span className="text-xs text-gray-500">{animateValues[day.dayId] || day.percentComplete}%</span>
               </div>
             </div>
-          </Link>
-        ))}
+          </Link>)}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default WeekProgress;
