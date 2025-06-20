@@ -75,7 +75,7 @@ const WeekProgress: React.FC = () => {
   return <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
       <div className="animated-progress">
         <div className="flex justify-between items-center mb-2 text-sm">
-          <span className="font-medium text-zinc-100">Week 1 Overall Progress</span>
+          <span className="font-medium text-zinc-100">Overall Progress</span>
           <span className="text-zinc-100">{animateValues.overall || overallProgress}% Complete</span>
         </div>
         <Progress value={animateValues.overall || overallProgress} className="h-2" />
