@@ -27,19 +27,23 @@ const WorkoutDayPage: React.FC = () => {
   
   return (
     <div className="container max-w-4xl mx-auto px-4 py-8 bg-stone-800">
-      <header className="flex items-center justify-between mb-8">
-        <div className="flex items-center">
-          <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />
-          <h1 className="text-2xl font-bold text-white">7 Days of Harmony</h1>
+      <header className="flex justify-between items-center mb-6">
+        <div className="text-center flex-grow">
+          <img src={logoUrl} alt="Harmonized Fitness Logo" className="w-24 h-24 mx-auto mb-4" />
+          <h1 className="text-3xl md:text-4xl font-bold text-burnt-orange mb-2">7 Days of Harmony</h1>
+          <h2 className="text-xl md:text-2xl font-medium text-gray-200 mb-4">Week 1, Day {day.id}: {day.title}</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-burnt-orange to-charcoal mx-auto"></div>
         </div>
-        <DayProgress dayId={day.id} />
+        
+        <div className="absolute top-8 right-8">
+          <DayProgress dayId={day.id} />
+        </div>
       </header>
       
       <DayNavigation currentDayId={day.id} />
       
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-1">Week 1, Day {day.id}: {day.title}</h2>
-        <h3 className="text-xl font-medium mb-6 text-gray-700">{day.subtitle}</h3>
+      <div className="bg-stone-700 rounded-lg shadow-md p-6 mb-8">
+        <h3 className="text-xl font-medium mb-6 text-gray-200">{day.subtitle}</h3>
         
         <div className="message-box">
           <h3 className="text-xl font-semibold mb-2">Message from Dr. U:</h3>
@@ -48,34 +52,34 @@ const WorkoutDayPage: React.FC = () => {
         
         {day.warmup.breathwork && (
           <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">✨ Harmonize Your Body (10 Minutes)</h3>
+            <h3 className="text-xl font-semibold mb-4 text-white">✨ Harmonize Your Body (10 Minutes)</h3>
             
             <div className="ml-4">
-              <p className="font-medium mb-2">Breathwork:</p>
-              <p className="ml-4 mb-4">{day.warmup.breathwork}</p>
+              <p className="font-medium mb-2 text-gray-200">Breathwork:</p>
+              <p className="ml-4 mb-4 text-gray-200">{day.warmup.breathwork}</p>
               
-              <p className="font-medium mb-2">Mobility:</p>
-              <ul className="list-disc ml-8 mb-4">
+              <p className="font-medium mb-2 text-gray-200">Mobility:</p>
+              <ul className="list-disc ml-8 mb-4 text-gray-200">
                 {day.warmup.mobilityItems.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
               
-              <p className="font-medium mb-2">Intention:</p>
+              <p className="font-medium mb-2 text-gray-200">Intention:</p>
               <p className="intention ml-4 mb-4">{day.warmup.intention}</p>
               
-              <p className="font-medium mb-2">Somatic Cue:</p>
-              <p className="ml-4">{day.warmup.somaticCue}</p>
+              <p className="font-medium mb-2 text-gray-200">Somatic Cue:</p>
+              <p className="ml-4 text-gray-200">{day.warmup.somaticCue}</p>
             </div>
           </div>
         )}
         
         <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">🏋️‍♂️ Strength & Movement Circuits (40 Minutes)</h3>
+          <h3 className="text-xl font-semibold mb-4 text-white">🏋️‍♂️ Strength & Movement Circuits (40 Minutes)</h3>
           
           {day.circuits.map((circuit, idx) => (
             <div key={idx} className="mb-6">
-              <h4 className="text-lg font-medium mb-3">{circuit.title}</h4>
+              <h4 className="text-lg font-medium mb-3 text-burnt-orange">{circuit.title}</h4>
               
               {circuit.exercises.map((exercise, eIdx) => (
                 <ExerciseItem
@@ -94,9 +98,9 @@ const WorkoutDayPage: React.FC = () => {
         
         {day.cooldown.items.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">🧘 Cool Down & Reflect (10 Minutes)</h3>
+            <h3 className="text-xl font-semibold mb-4 text-white">🧘 Cool Down & Reflect (10 Minutes)</h3>
             
-            <ul className="list-disc ml-6 mb-6">
+            <ul className="list-disc ml-6 mb-6 text-gray-200">
               {day.cooldown.items.map((item, index) => (
                 <li key={index} className="mb-1">{item}</li>
               ))}
@@ -112,8 +116,8 @@ const WorkoutDayPage: React.FC = () => {
         
         {isLastDay && (
           <div className="mt-10 p-6 bg-gradient-to-r from-burnt-orange/10 to-charcoal/10 rounded-lg border-2 border-burnt-orange">
-            <h3 className="text-xl font-bold text-center mb-4">Ready for the Complete Transformation?</h3>
-            <p className="text-center mb-6">
+            <h3 className="text-xl font-bold text-center mb-4 text-white">Ready for the Complete Transformation?</h3>
+            <p className="text-center mb-6 text-gray-200">
               You've completed the 7 Days of Harmony program! The full transformational program 
               continues with progressive training, deeper somatic awareness, and complete mind-body integration.
             </p>
