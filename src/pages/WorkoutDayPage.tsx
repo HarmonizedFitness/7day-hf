@@ -1,3 +1,4 @@
+
 import React, { useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { workoutData } from "@/data/workoutData";
@@ -42,55 +43,71 @@ const WorkoutDayPage: React.FC = () => {
       <DayNavigation currentDayId={day.id} />
       
       <div className="bg-stone-700 rounded-lg shadow-md p-6 mb-8">
-        <h3 className="font-medium mb-6 text-gray-200 text-center text-5xl">{day.subtitle}</h3>
+        <h3 className="font-medium mb-6 text-gray-200 text-center text-3xl md:text-5xl">{day.subtitle}</h3>
         
-        <div className="message-box bg-cyan-800">
+        <div className="message-box bg-cyan-800 p-4 rounded-lg mb-8">
           <h3 className="text-xl font-semibold mb-2 text-center text-zinc-50">Message from Dr. U:</h3>
-          <p className="leading-relaxed text-center">{day.message}</p>
+          <p className="leading-relaxed text-center text-gray-200">{day.message}</p>
         </div>
         
         {day.warmup.breathwork && <div className="mt-8">
-            <h3 className="font-semibold mb-4 text-white text-center text-4xl">✨ Harmonize Your Body (10 Minutes)</h3>
+            <h3 className="font-semibold mb-4 text-white text-center text-2xl md:text-4xl">✨ Harmonize Your Body (10 Minutes)</h3>
             
-            <div className="ml-4">
-              <p className="font-medium mb-2 text-gray-200 text-center">Breathwork:</p>
-              <p className="ml-4 mb-4 text-gray-200 text-center">{day.warmup.breathwork}</p>
+            <div className="space-y-4">
+              <div className="text-center">
+                <p className="font-medium mb-2 text-gray-200">Breathwork:</p>
+                <p className="mb-4 text-gray-200">{day.warmup.breathwork}</p>
+              </div>
               
-              <p className="font-medium mb-2 text-gray-200 text-center">Mobility:</p>
-              <ul className="list-disc ml-8 mb-4 text-gray-200">
-                {day.warmup.mobilityItems.map((item, index) => <li key={index} className="mx-[240px]">{item}</li>)}
-              </ul>
+              <div className="text-center">
+                <p className="font-medium mb-2 text-gray-200">Mobility:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-2xl mx-auto">
+                  {day.warmup.mobilityItems.map((item, index) => (
+                    <div key={index} className="bg-stone-600 p-3 rounded text-gray-200 text-sm">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
               
-              <p className="mb-2 mx-0 text-amber-400 font-thin text-left">Set Your Intention:</p>
-              <p className="intention ml-4 mb-4 text-lime-200 font-medium text-left">{day.warmup.intention}</p>
-              
-              <p className="font-medium mb-2 text-gray-200 text-left">Somatic Cue:</p>
-              <p className="ml-4 text-gray-200 text-left">{day.warmup.somaticCue}</p>
+              <div className="text-center mt-6">
+                <p className="mb-2 text-amber-400 font-medium">Set Your Intention:</p>
+                <p className="mb-4 text-lime-200 font-medium">{day.warmup.intention}</p>
+                
+                <p className="font-medium mb-2 text-gray-200">Somatic Cue:</p>
+                <p className="text-gray-200">{day.warmup.somaticCue}</p>
+              </div>
             </div>
           </div>}
         
         <div className="mt-8">
-          <h3 className="font-semibold mb-4 text-white text-center text-4xl">🏋️‍♂️ Strength & Movement Circuits (40 Minutes)</h3>
+          <h3 className="font-semibold mb-4 text-white text-center text-2xl md:text-4xl">🏋️‍♂️ Strength & Movement Circuits (40 Minutes)</h3>
           
           {day.circuits.map((circuit, idx) => <div key={idx} className="mb-6">
-              <h4 className="font-medium mb-3 text-burnt-orange text-3xl text-center text-lime-200 my-[52px]">{circuit.title}</h4>
+              <h4 className="font-medium mb-3 text-lime-200 text-xl md:text-3xl text-center my-6">{circuit.title}</h4>
               
               {circuit.exercises.map((exercise, eIdx) => <ExerciseItem key={eIdx} dayId={day.id} circuitTitle={circuit.title} name={exercise.name} technicalCue={exercise.technicalCue} somaticCue={exercise.somaticCue} videoInfo={exercise.videoInfo} />)}
             </div>)}
         </div>
         
         {day.cooldown.items.length > 0 && <div className="mt-8">
-            <h3 className="font-semibold mb-4 text-white text-center text-4xl">🧘 Cool Down & Reflect (10 Minutes)</h3>
+            <h3 className="font-semibold mb-4 text-white text-center text-2xl md:text-4xl">🧘 Cool Down & Reflect (10 Minutes)</h3>
             
-            <ul className="list-disc ml-6 mb-6 text-gray-200 bg-gray-300 mx-[92px]">
-              {day.cooldown.items.map((item, index) => <li key={index} className="mb-1 rounded-none bg-stone-700 mx-0 px-0">{item}</li>)}
-            </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 max-w-3xl mx-auto">
+              {day.cooldown.items.map((item, index) => (
+                <div key={index} className="bg-stone-600 p-3 rounded text-gray-200">
+                  {item}
+                </div>
+              ))}
+            </div>
             
             <JournalPrompt dayId={day.id} prompt={day.cooldown.journalPrompt} />
           </div>}
         
-        <div className="hidden-hint mt-10 bg-sky-900">
-          <strong>🎭 Dr. U's Hidden Hint:</strong> {day.hiddenHint}
+        <div className="mt-10 p-4 bg-sky-900 rounded-lg">
+          <p className="text-gray-200 text-center">
+            <strong>🎭 Dr. U's Hidden Hint:</strong> {day.hiddenHint}
+          </p>
         </div>
         
         {isLastDay && <div className="mt-10 p-6 bg-gradient-to-r from-burnt-orange/10 to-charcoal/10 rounded-lg border-2 border-burnt-orange">
