@@ -49,7 +49,7 @@ export const day2: WorkoutDay = {
             title: "How To Do The PERFECT Straight Arm Pulldown",
             instructor: "Jeff Nippard",
             duration: "4:15",
-            url: "https://www.youtube.com/watch?v=perfect-pulldown"
+            url: "https://youtube.com/shorts/lnec6DdscJU?si=GjZzA-PGSMUUYuZG"
           }
         }
       ]
@@ -74,7 +74,7 @@ export const day2: WorkoutDay = {
             title: "How to do the INCLINE DUMBBELL CURL! | 2 Minute Tutorial",
             instructor: "Max Euceda",
             duration: "2:00",
-            url: "https://www.youtube.com/watch?v=incline-curl-demo"
+            url: "https://youtube.com/shorts/XhIsIcjIbCw?si=aUcxCiU0Rg-k7v1P"
           }
         },
         {
@@ -99,7 +99,7 @@ export const day2: WorkoutDay = {
             title: "How To Do A Renegade Row",
             instructor: "Calisthenic Movement",
             duration: "2:24",
-            url: "https://www.youtube.com/watch?v=renegade-demo"
+            url: "https://youtu.be/Q28cLuweLv4?si=wlg04zXKVam_em4r"
           }
         },
         {

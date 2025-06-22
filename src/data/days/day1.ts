@@ -119,7 +119,7 @@ export const day1: WorkoutDay = {
             title: "Plate Front Raise with Hold",
             instructor: "Max Euceda",
             duration: "1:30",
-            url: "https://www.youtube.com/watch?v=plate-hold-demo"
+            url: "https://youtu.be/Oj9_huufPGQ?si=yVs2bt06zmMUiVff"
           }
         }
       ]

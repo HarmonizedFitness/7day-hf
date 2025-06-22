@@ -29,7 +29,7 @@ export const day5: WorkoutDay = {
             title: "How To Do Dumbbell Squat to Press",
             instructor: "FitnessBlender",
             duration: "2:45",
-            url: "https://www.youtube.com/watch?v=squat-press-demo"
+            url: "https://youtube.com/shorts/uUF1fkvyqco?si=uO0hakQSwaez8m7_"
           }
         },
         {
@@ -39,7 +39,7 @@ export const day5: WorkoutDay = {
             title: "Renegade Row Push Up Combo",
             instructor: "Calisthenic Movement",
             duration: "3:20",
-            url: "https://www.youtube.com/watch?v=renegade-pushup-demo"
+            url: "https://youtu.be/731lQp2shpY?si=2sjliQvd4PiOTKMm"
           }
         },
         {
@@ -49,7 +49,7 @@ export const day5: WorkoutDay = {
             title: "How To Do Medicine Ball Slams",
             instructor: "Athlean-X",
             duration: "4:30",
-            url: "https://www.youtube.com/watch?v=med-ball-slam-demo"
+            url: "https://youtu.be/QxYhFwMd1Ks?si=76QhxrQaoNJNAAYY"
           }
         }
       ]
@@ -64,7 +64,7 @@ export const day5: WorkoutDay = {
             title: "Lunge with Bicep Curl",
             instructor: "FitnessBlender",
             duration: "2:20",
-            url: "https://www.youtube.com/watch?v=lunge-curl-demo"
+            url: "https://youtube.com/shorts/s7qcUKSeDf4?si=li0iBA4LB2U_fheG"
           }
         },
         {
@@ -74,7 +74,7 @@ export const day5: WorkoutDay = {
             title: "How To Do Hanging Knee Raises",
             instructor: "Calisthenic Movement",
             duration: "3:45",
-            url: "https://www.youtube.com/watch?v=knee-raise-demo"
+            url: "https://youtu.be/sqDdHFC1KYk?si=PCbgmIgy7s5t-bfR"
           }
         },
         {
@@ -84,7 +84,7 @@ export const day5: WorkoutDay = {
             title: "Battle Rope Training",
             instructor: "Onnit Academy",
             duration: "5:15",
-            url: "https://www.youtube.com/watch?v=battle-rope-demo"
+            url: "https://youtu.be/z4ySEjuaYh8?si=k9E422KpbG0WurRS"
           }
         }
       ]
@@ -99,7 +99,7 @@ export const day5: WorkoutDay = {
             title: "How To Do A Burpee (Perfect Form)",
             instructor: "Calisthenic Movement",
             duration: "3:45",
-            url: "https://www.youtube.com/watch?v=burpee-demo"
+            url: "https://youtu.be/xQdyIrSSFnE?si=KWcLEbe9OncTNp_e"
           }
         },
         {
@@ -109,7 +109,7 @@ export const day5: WorkoutDay = {
             title: "Bear Crawl Exercise",
             instructor: "FunctionalMovement",
             duration: "2:30",
-            url: "https://www.youtube.com/watch?v=bear-crawl-demo"
+            url: "https://youtu.be/4d52Y9W2M0g?si=AwzHE0F9BnHXvq3X"
           }
         },
         {

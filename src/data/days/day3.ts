@@ -49,7 +49,7 @@ export const day3: WorkoutDay = {
             title: "How to do Split Squats (Perfect Form)",
             instructor: "Calisthenic Movement",
             duration: "3:12",
-            url: "https://www.youtube.com/watch?v=split-squat-demo"
+            url: "https://youtu.be/-aMgxO760L4?si=8UynAXSLxaM-L6C9"
           }
         }
       ]
@@ -64,7 +64,7 @@ export const day3: WorkoutDay = {
             title: "How To Do Step Ups",
             instructor: "ScottHermanFitness",
             duration: "4:45",
-            url: "https://www.youtube.com/watch?v=step-up-demo"
+            url: "https://youtu.be/9ZknEYboBOQ?si=_hMMqW7NzFD484yp"
           }
         },
         {
@@ -74,7 +74,7 @@ export const day3: WorkoutDay = {
             title: "How To Hip Thrust",
             instructor: "Bret Contreras",
             duration: "8:30",
-            url: "https://www.youtube.com/watch?v=glute-bridge-demo"
+            url: "https://youtu.be/OUgsJ8-Vi0E?si=H6JTwVY4E9SUhnyH"
           }
         },
         {
@@ -84,7 +84,7 @@ export const day3: WorkoutDay = {
             title: "How to do Standing Calf Raises",
             instructor: "Max Euceda",
             duration: "1:45",
-            url: "https://www.youtube.com/watch?v=calf-raise-demo"
+            url: "https://youtube.com/shorts/baEXLy09Ncc?si=XegZQeIWclhdVvx9"
           }
         }
       ]
@@ -109,7 +109,7 @@ export const day3: WorkoutDay = {
             title: "How To Do A Lateral Lunge",
             instructor: "FitnessBlender",
             duration: "2:30",
-            url: "https://www.youtube.com/watch?v=lateral-lunge-demo"
+            url: "https://youtube.com/shorts/pwqnnNwu-0s?si=euYFtFTLZ1ekviUX"
           }
         },
         {

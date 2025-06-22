@@ -1,3 +1,4 @@
+
 import { WorkoutDay } from '../types';
 
 export const day4: WorkoutDay = {
@@ -28,7 +29,7 @@ export const day4: WorkoutDay = {
             title: "How To Do Lateral Raises (PERFECT FORM!)",
             instructor: "Davis Diley",
             duration: "4:20",
-            url: "https://www.youtube.com/watch?v=lateral-raise-demo"
+            url: "https://youtu.be/PzsMitRdI_8?si=wVhbH-MBXCl9XjAl"
           }
         },
         {
@@ -38,7 +39,7 @@ export const day4: WorkoutDay = {
             title: "Cable Front Raise Form",
             instructor: "Max Euceda",
             duration: "1:30",
-            url: "https://www.youtube.com/results?search_query=Dumbbell+front+raise"
+            url: "https://youtu.be/vtH93qBItdk?si=qY57ziazuhhJa7fR"
           }
         },
         {
@@ -48,7 +49,7 @@ export const day4: WorkoutDay = {
             title: "How To Do Reverse Flys",
             instructor: "ScottHermanFitness",
             duration: "5:15",
-            url: "https://www.youtube.com/watch?v=reverse-fly-demo"
+            url: "https://youtu.be/JoCRRZ3zRtI?si=I1EZRp_MfRU6W_u2"
           }
         }
       ]
@@ -63,7 +64,7 @@ export const day4: WorkoutDay = {
             title: "How To Do Tricep Dips",
             instructor: "Calisthenic Movement",
             duration: "3:30",
-            url: "https://www.youtube.com/watch?v=tricep-dip-demo"
+            url: "https://youtu.be/5XkOdAtPn2Y?si=TEBWTld_jnqHGldK"
           }
         },
         {
@@ -73,7 +74,7 @@ export const day4: WorkoutDay = {
             title: "How To Do Hammer Curls",
             instructor: "Max Euceda",
             duration: "1:50",
-            url: "https://www.youtube.com/watch?v=hammer-curl-demo"
+            url: "https://youtu.be/OPqe0kCxmR8?si=EM5667L6PaYkhMVs"
           }
         },
         {
@@ -83,7 +84,7 @@ export const day4: WorkoutDay = {
             title: "Overhead Tricep Extension Form",
             instructor: "Jeff Nippard",
             duration: "6:45",
-            url: "https://www.youtube.com/watch?v=overhead-tricep-demo"
+            url: "https://youtube.com/shorts/NTk0Igxqcsk?si=BJBWl7Xb8zV1nEzN"
           }
         }
       ]
@@ -98,7 +99,7 @@ export const day4: WorkoutDay = {
             title: "Cable External Rotation",
             instructor: "Squat University",
             duration: "2:15",
-            url: "https://www.youtube.com/watch?v=external-rotation-demo"
+            url: "https://youtu.be/PVdgjHqAes8?si=hmbiTz8d1oP-Qs0i"
           }
         },
         {
@@ -108,7 +109,7 @@ export const day4: WorkoutDay = {
             title: "How To Do Concentration Curls",
             instructor: "Max Euceda",
             duration: "2:00",
-            url: "https://www.youtube.com/watch?v=concentration-curl-demo"
+            url: "https://youtube.com/shorts/cHxRJdSVIkA?si=Lb8uDJwWP4el60S1"
           }
         },
         {
@@ -118,7 +119,7 @@ export const day4: WorkoutDay = {
             title: "Plate Front Raise Technique",
             instructor: "Davis Diley",
             duration: "3:10",
-            url: "https://www.youtube.com/results?search_query=Dumbbell+front+raise"
+            url: "https://youtube.com/shorts/VaXm6lxW8Hs?si=_FzY90AQX6Vti4P8"
           }
         }
       ]
