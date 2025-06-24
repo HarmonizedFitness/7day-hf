@@ -7,6 +7,8 @@ export interface Profile {
   full_name: string | null;
   avatar_url: string | null;
   email: string | null;
+  workout_type: string | null;
+  subscription_tier: string | null;
   created_at: string | null;
   updated_at: string | null;
 }
@@ -31,6 +33,16 @@ export interface JournalEntry {
   updated_at: string;
 }
 
+export interface WorkoutAccess {
+  id: string;
+  user_id: string;
+  workout_type: string;
+  has_access: boolean | null;
+  granted_at: string | null;
+  expires_at: string | null;
+  created_at: string | null;
+}
+
 export type Database = GeneratedDatabase & {
   public: {
     Tables: {
@@ -42,6 +54,8 @@ export type Database = GeneratedDatabase & {
           full_name?: string | null;
           avatar_url?: string | null;
           email?: string | null;
+          workout_type?: string | null;
+          subscription_tier?: string | null;
           created_at?: string | null;
           updated_at?: string | null;
         };
@@ -51,6 +65,8 @@ export type Database = GeneratedDatabase & {
           full_name?: string | null;
           avatar_url?: string | null;
           email?: string | null;
+          workout_type?: string | null;
+          subscription_tier?: string | null;
           created_at?: string | null;
           updated_at?: string | null;
         };
@@ -96,6 +112,33 @@ export type Database = GeneratedDatabase & {
           created_at?: string;
           updated_at?: string;
         };
+      };
+      workout_access: {
+        Row: WorkoutAccess;
+        Insert: {
+          id?: string;
+          user_id: string;
+          workout_type: string;
+          has_access?: boolean | null;
+          granted_at?: string | null;
+          expires_at?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          workout_type?: string;
+          has_access?: boolean | null;
+          granted_at?: string | null;
+          expires_at?: string | null;
+          created_at?: string | null;
+        };
+      };
+    };
+    Functions: {
+      has_workout_access: {
+        Args: { user_uuid: string; workout_type_name: string };
+        Returns: boolean;
       };
     };
   };

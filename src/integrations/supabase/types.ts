@@ -43,8 +43,10 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          subscription_tier: string | null
           updated_at: string
           username: string | null
+          workout_type: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -52,8 +54,10 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          subscription_tier?: string | null
           updated_at?: string
           username?: string | null
+          workout_type?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -61,8 +65,10 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          subscription_tier?: string | null
           updated_at?: string
           username?: string | null
+          workout_type?: string | null
         }
         Relationships: []
       }
@@ -99,12 +105,45 @@ export type Database = {
         }
         Relationships: []
       }
+      workout_access: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          granted_at: string | null
+          has_access: boolean | null
+          id: string
+          user_id: string
+          workout_type: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          has_access?: boolean | null
+          id?: string
+          user_id: string
+          workout_type: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          granted_at?: string | null
+          has_access?: boolean | null
+          id?: string
+          user_id?: string
+          workout_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_workout_access: {
+        Args: { user_uuid: string; workout_type_name: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
