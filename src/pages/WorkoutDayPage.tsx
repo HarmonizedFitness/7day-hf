@@ -1,21 +1,36 @@
 
 import React, { useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { workoutData } from "@/data/workoutData";
+import { getAdaptiveWorkoutDay } from "@/data/adaptiveWorkoutData";
+import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
 import DayNavigation from "@/components/DayNavigation";
 import ExerciseItem from "@/components/ExerciseItem";
 import JournalPrompt from "@/components/JournalPrompt";
 import DayProgress from "@/components/DayProgress";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 const WorkoutDayPage: React.FC = () => {
   const { dayId } = useParams();
   const dayIdNumber = dayId ? parseInt(dayId) : 0;
+  const { workoutAccess, loading } = useWorkoutAccessContext();
   
   const day = useMemo(() => {
-    return workoutData.find(d => d.id === dayIdNumber);
-  }, [dayIdNumber]);
+    if (loading) return null;
+    return getAdaptiveWorkoutDay(dayIdNumber, workoutAccess.workoutType);
+  }, [dayIdNumber, workoutAccess.workoutType, loading]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-stone-800">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin text-burnt-orange mx-auto" />
+          <p className="mt-4 text-gray-200">Loading your personalized workout...</p>
+        </div>
+      </div>
+    );
+  }
 
   // If invalid day id, redirect to home
   if (!day) {
