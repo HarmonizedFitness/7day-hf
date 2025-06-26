@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProgressProvider } from "@/contexts/ProgressContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { WorkoutAccessProvider } from "@/contexts/WorkoutAccessContext";
+import ThemeProvider from "@/components/ThemeProvider";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import SplashScreen from "@/pages/SplashScreen";
 import HomePage from "@/pages/HomePage";
@@ -31,27 +32,29 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <WorkoutAccessProvider>
-          <ProgressProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<SplashScreen />} />
-                  <Route path="/auth" element={<AuthPage />} />
-                  <Route path="/preview" element={<PreviewPage />} />
-                  <Route path="/home" element={<HomePage />} />
-                  <Route path="/profile" element={
-                    <ProtectedRoute>
-                      <UserProfilePage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/day/:dayId" element={<WorkoutDayPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </BrowserRouter>
-            </TooltipProvider>
-          </ProgressProvider>
+          <ThemeProvider>
+            <ProgressProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<SplashScreen />} />
+                    <Route path="/auth" element={<AuthPage />} />
+                    <Route path="/preview" element={<PreviewPage />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/profile" element={
+                      <ProtectedRoute>
+                        <UserProfilePage />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/day/:dayId" element={<WorkoutDayPage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+              </TooltipProvider>
+            </ProgressProvider>
+          </ThemeProvider>
         </WorkoutAccessProvider>
       </AuthProvider>
     </QueryClientProvider>
