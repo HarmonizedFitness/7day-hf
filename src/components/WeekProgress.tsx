@@ -88,63 +88,97 @@ const WeekProgress: React.FC = () => {
     }, 500);
   }, [dayProgress, overallProgress]);
 
-  // Determine if we're on a dark theme background
-  const isDarkTheme = theme.background.includes('stone') || theme.background.includes('slate') || theme.background.includes('gray');
+  // Get theme colors for styling
+  const getThemeAccent = () => {
+    if (theme.background.includes('red')) return 'text-red-400';
+    if (theme.background.includes('blue')) return 'text-blue-400';
+    if (theme.background.includes('green')) return 'text-green-400';
+    return 'text-orange-400'; // Default burnt orange
+  };
+
+  const getThemeProgress = () => {
+    if (theme.background.includes('red')) return 'bg-red-500';
+    if (theme.background.includes('blue')) return 'bg-blue-500';
+    if (theme.background.includes('green')) return 'bg-green-500';
+    return 'bg-orange-500'; // Default burnt orange
+  };
   
   return (
     <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
-      <div className="animated-progress">
-        <div className="flex justify-between items-center mb-2 text-sm">
-          <span className="font-medium text-zinc-100">Overall Progress</span>
-          <span className="text-zinc-100">{animateValues.overall || overallProgress}% Complete</span>
+      {/* Overall Progress with Glassmorphism */}
+      <div className="glass-card p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-inter font-semibold text-lg text-white text-shadow-soft">
+            {theme.name} Program
+          </h3>
+          <span className="font-inter font-medium text-white text-shadow-soft">
+            {animateValues.overall || overallProgress}% Complete
+          </span>
         </div>
-        <Progress value={animateValues.overall || overallProgress} className="h-2" />
+        <div className="relative">
+          <Progress 
+            value={animateValues.overall || overallProgress} 
+            className="h-3 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden"
+          />
+          <div 
+            className={`absolute top-0 left-0 h-full ${getThemeProgress()} rounded-full transition-all duration-700`}
+            style={{ width: `${animateValues.overall || overallProgress}%` }}
+          />
+        </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 staggered-fade-in">
+      {/* Day Progress Grid with Glassmorphism */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 staggered-fade-in">
         {dayProgress.map((day, index) => (
           <Link
             to={`/day/${day.dayId}`}
             key={day.dayId}
             className={cn(
-              "p-4 rounded-lg border border-gray-200/30 flex items-center hover:bg-gray-50/10 transition-all card-hover backdrop-blur-sm",
-              "bg-white/70",
-              day.isComplete && "border-green-500/50 bg-green-50/80 hover:bg-green-50/90"
+              "glass-card p-4 flex flex-col items-center text-center hover:glass-card-hover transition-all duration-300 mobile-tap group",
+              day.isComplete && "border-green-400/30"
             )}
             style={{
               animationDelay: `${index * 0.1}s`
             }}
           >
-            <div className="mr-4 text-2xl flex-shrink-0">
+            {/* Icon */}
+            <div className="mb-3 flex-shrink-0">
               {day.isComplete ? (
-                <CheckCircle className="h-8 w-8 text-green-500" />
+                <CheckCircle className="h-8 w-8 text-green-400 drop-shadow-lg" />
               ) : (
-                <Circle className="h-8 w-8 text-gray-300" />
+                <Circle className="h-8 w-8 text-white/60 drop-shadow-lg" />
               )}
             </div>
-            <div className="flex-1 min-w-0 text-center">
-              <div className="mb-2">
-                <h3 className={cn(
-                  "workout-day-title",
-                  isDarkTheme && "workout-day-title-dark"
-                )}>
-                  DAY {day.dayId}: {day.mainTitle}
-                </h3>
-                {day.subtitle && (
-                  <p className={cn(
-                    "workout-day-title text-sm mt-1",
-                    isDarkTheme && "workout-day-title-dark"
-                  )}>
-                    {day.subtitle}
-                  </p>
-                )}
+            
+            {/* Title */}
+            <div className="mb-3 min-h-0">
+              <h4 className="font-inter font-semibold text-sm sm:text-base text-white text-shadow-soft leading-tight">
+                DAY {day.dayId}
+              </h4>
+              <p className="font-inter font-medium text-xs sm:text-sm text-white/90 text-shadow-soft mt-1 leading-tight">
+                {day.mainTitle}
+              </p>
+              {day.subtitle && (
+                <p className="font-inter font-normal text-xs text-white/70 text-shadow-soft mt-1">
+                  {day.subtitle}
+                </p>
+              )}
+            </div>
+            
+            {/* Progress */}
+            <div className="w-full space-y-2">
+              <div className="relative bg-white/20 rounded-full h-2 overflow-hidden backdrop-blur-sm">
+                <div 
+                  className={`absolute top-0 left-0 h-full ${getThemeProgress()} rounded-full transition-all duration-700`}
+                  style={{ width: `${animateValues[day.dayId] || 0}%` }}
+                />
               </div>
-              <div className="flex items-center space-x-2">
-                <Progress value={animateValues[day.dayId] || 0} className="h-1.5 flex-1" />
-                <span className="text-xs text-gray-500 whitespace-nowrap font-inter font-medium">
-                  {animateValues[day.dayId] || day.percentComplete}%
-                </span>
-              </div>
+              <span className={cn(
+                "font-inter font-medium text-xs text-shadow-soft",
+                getThemeAccent()
+              )}>
+                {animateValues[day.dayId] || day.percentComplete}%
+              </span>
             </div>
           </Link>
         ))}
