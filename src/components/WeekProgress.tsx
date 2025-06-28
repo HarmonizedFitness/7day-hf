@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -7,7 +6,6 @@ import { getAdaptiveWorkoutData } from "@/data/adaptiveWorkoutData";
 import { CheckCircle, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
-import { useAdmin } from "@/contexts/AdminContext";
 import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
 
 // Define a type that includes both number keys and the 'overall' string key
@@ -19,13 +17,12 @@ interface AnimateValues {
 const WeekProgress: React.FC = () => {
   const { completedExercises } = useProgress();
   const theme = useWorkoutTheme();
-  const { isAdminMode, currentAdminProgram } = useAdmin();
   const { workoutAccess } = useWorkoutAccessContext();
   const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
   
-  // Get the current program type (admin mode takes precedence)
-  const currentProgramType = isAdminMode ? currentAdminProgram : workoutAccess.workoutType;
+  // Get the current program type from workout access
+  const currentProgramType = workoutAccess.workoutType;
   
   // Get dynamic workout data based on current program
   const workoutData = useMemo(() => {

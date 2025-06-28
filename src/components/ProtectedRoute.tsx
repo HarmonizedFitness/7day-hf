@@ -2,7 +2,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAdmin } from "@/contexts/AdminContext";
 import { Loader2 } from "lucide-react";
 
 interface ProtectedRouteProps {
@@ -11,12 +10,6 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user, loading } = useAuth();
-  const { isAdminMode } = useAdmin();
-
-  // Admin mode bypasses authentication
-  if (isAdminMode) {
-    return <>{children}</>;
-  }
 
   if (loading) {
     return (

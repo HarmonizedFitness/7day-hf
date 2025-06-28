@@ -2,27 +2,19 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { useAdmin } from '@/contexts/AdminContext';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import { Button } from '@/components/ui/button';
 
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const { isAdminMode } = useAdmin();
 
   useEffect(() => {
-    // If admin mode is active, bypass authentication and go to home
-    if (isAdminMode) {
-      navigate('/home');
-      return;
-    }
-
     // If user is authenticated, go to home
     if (!loading && user) {
       navigate('/home');
     }
-  }, [user, loading, isAdminMode, navigate]);
+  }, [user, loading, navigate]);
 
   const handleGetStarted = () => {
     navigate('/auth');
