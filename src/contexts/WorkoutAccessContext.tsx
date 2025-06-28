@@ -1,12 +1,12 @@
 
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useWorkoutAccess, WorkoutAccess } from '@/hooks/useWorkoutAccess';
-import { WorkoutType } from '@/data/exercises';
+import { ProgramType } from '@/data/programs';
 
 interface WorkoutAccessContextType {
   workoutAccess: WorkoutAccess;
   loading: boolean;
-  checkWorkoutAccess: (workoutType: WorkoutType) => Promise<boolean>;
+  checkWorkoutAccess: (workoutType: ProgramType) => Promise<boolean>;
 }
 
 const WorkoutAccessContext = createContext<WorkoutAccessContextType | undefined>(undefined);

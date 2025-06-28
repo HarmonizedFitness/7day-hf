@@ -1,17 +1,14 @@
 
-import { workoutData } from './index';
-import { WorkoutTemplateEngine } from './workoutTemplates';
-import { WorkoutType } from './exercises';
+import { getProgramById, ProgramType } from './programs';
+import { ProgramDay } from './programs/types';
 
-export const getAdaptiveWorkoutData = (workoutType: WorkoutType = 'bodyweight') => {
-  return workoutData.map(day => 
-    WorkoutTemplateEngine.generateWorkoutForType(day, workoutType)
-  );
+export const getAdaptiveWorkoutData = (programType: ProgramType = 'bodyweight'): ProgramDay[] => {
+  const program = getProgramById(programType);
+  return program.days;
 };
 
-export const getAdaptiveWorkoutDay = (dayId: number, workoutType: WorkoutType = 'bodyweight') => {
-  const day = workoutData.find(d => d.id === dayId);
-  if (!day) return null;
-  
-  return WorkoutTemplateEngine.generateWorkoutForType(day, workoutType);
+export const getAdaptiveWorkoutDay = (dayId: number, programType: ProgramType = 'bodyweight'): ProgramDay | null => {
+  const program = getProgramById(programType);
+  const day = program.days.find(d => d.id === dayId);
+  return day || null;
 };

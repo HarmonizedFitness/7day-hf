@@ -41,6 +41,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           email: string | null
+          first_program: string | null
           full_name: string | null
           id: string
           subscription_tier: string | null
@@ -52,6 +53,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          first_program?: string | null
           full_name?: string | null
           id: string
           subscription_tier?: string | null
@@ -63,12 +65,40 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           email?: string | null
+          first_program?: string | null
           full_name?: string | null
           id?: string
           subscription_tier?: string | null
           updated_at?: string
           username?: string | null
           workout_type?: string | null
+        }
+        Relationships: []
+      }
+      program_purchases: {
+        Row: {
+          amount_paid: number | null
+          created_at: string | null
+          id: string
+          program_type: string
+          purchased_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_paid?: number | null
+          created_at?: string | null
+          id?: string
+          program_type: string
+          purchased_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount_paid?: number | null
+          created_at?: string | null
+          id?: string
+          program_type?: string
+          purchased_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }

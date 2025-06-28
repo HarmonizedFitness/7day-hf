@@ -9,6 +9,7 @@ export interface Profile {
   email: string | null;
   workout_type: string | null;
   subscription_tier: string | null;
+  first_program: string | null;
   created_at: string | null;
   updated_at: string | null;
 }
@@ -43,6 +44,15 @@ export interface WorkoutAccess {
   created_at: string | null;
 }
 
+export interface ProgramPurchase {
+  id: string;
+  user_id: string;
+  program_type: string;
+  purchased_at: string | null;
+  amount_paid: number | null;
+  created_at: string | null;
+}
+
 export type Database = GeneratedDatabase & {
   public: {
     Tables: {
@@ -56,6 +66,7 @@ export type Database = GeneratedDatabase & {
           email?: string | null;
           workout_type?: string | null;
           subscription_tier?: string | null;
+          first_program?: string | null;
           created_at?: string | null;
           updated_at?: string | null;
         };
@@ -67,6 +78,7 @@ export type Database = GeneratedDatabase & {
           email?: string | null;
           workout_type?: string | null;
           subscription_tier?: string | null;
+          first_program?: string | null;
           created_at?: string | null;
           updated_at?: string | null;
         };
@@ -131,6 +143,25 @@ export type Database = GeneratedDatabase & {
           has_access?: boolean | null;
           granted_at?: string | null;
           expires_at?: string | null;
+          created_at?: string | null;
+        };
+      };
+      program_purchases: {
+        Row: ProgramPurchase;
+        Insert: {
+          id?: string;
+          user_id: string;
+          program_type: string;
+          purchased_at?: string | null;
+          amount_paid?: number | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          program_type?: string;
+          purchased_at?: string | null;
+          amount_paid?: number | null;
           created_at?: string | null;
         };
       };

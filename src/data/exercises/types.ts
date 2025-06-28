@@ -1,20 +1,16 @@
 
-export interface ExerciseVariation {
+// Update to use new ProgramType
+export type WorkoutType = 'bodyweight' | 'gym' | 'trx' | 'stretching';
+
+export interface Exercise {
   name: string;
-  technicalCue?: string;
-  somaticCue?: string;
-  videoInfo?: {
-    title: string;
-    instructor: string;
-    duration: string;
-    url: string;
-  };
-  equipment?: string[];
-  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  muscleGroups: string[];
+  equipment: string[];
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  instructions: string;
+  tips?: string[];
 }
 
 export interface ExerciseDatabase {
-  [exerciseName: string]: ExerciseVariation;
+  [category: string]: Exercise[];
 }
-
-export type WorkoutType = 'bodyweight' | 'trx' | 'gym' | 'resistance-bands' | 'home-minimal';

@@ -2,12 +2,13 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { WorkoutType } from '@/data/exercises';
+import { ProgramType } from '@/data/programs';
 
 export interface WorkoutAccess {
-  workoutType: WorkoutType;
+  workoutType: ProgramType;
   hasAccess: boolean;
   subscriptionTier: 'free' | 'premium';
+  firstProgram?: ProgramType;
 }
 
 export const useWorkoutAccess = () => {
@@ -34,16 +35,17 @@ export const useWorkoutAccess = () => {
       try {
         const { data: profile, error } = await supabase
           .from('profiles')
-          .select('workout_type, subscription_tier')
+          .select('workout_type, subscription_tier, first_program')
           .eq('id', user.id)
           .single();
 
         if (error) throw error;
 
         setWorkoutAccess({
-          workoutType: (profile?.workout_type as WorkoutType) || 'bodyweight',
+          workoutType: (profile?.workout_type as ProgramType) || 'bodyweight',
           hasAccess: true,
-          subscriptionTier: (profile?.subscription_tier as 'free' | 'premium') || 'free'
+          subscriptionTier: (profile?.subscription_tier as 'free' | 'premium') || 'free',
+          firstProgram: profile?.first_program as ProgramType
         });
       } catch (error) {
         console.error('Error fetching workout access:', error);
@@ -60,7 +62,7 @@ export const useWorkoutAccess = () => {
     fetchWorkoutAccess();
   }, [user]);
 
-  const checkWorkoutAccess = async (workoutType: WorkoutType): Promise<boolean> => {
+  const checkWorkoutAccess = async (workoutType: ProgramType): Promise<boolean> => {
     if (!user) return workoutType === 'bodyweight';
 
     try {

@@ -2,16 +2,14 @@
 import { bodyweigtExercises } from './bodyweight';
 import { trxExercises } from './trx';
 import { gymExercises } from './gym';
-import { resistanceBandsExercises } from './resistanceBands';
-import { homeMinimalExercises } from './homeMinimal';
+import { stretchingExercises } from './stretching';
 import { WorkoutType, ExerciseDatabase } from './types';
 
 export const exerciseDatabases: Record<WorkoutType, ExerciseDatabase> = {
   'bodyweight': bodyweigtExercises,
   'trx': trxExercises,
   'gym': gymExercises,
-  'resistance-bands': resistanceBandsExercises,
-  'home-minimal': homeMinimalExercises
+  'stretching': stretchingExercises
 };
 
 export * from './types';

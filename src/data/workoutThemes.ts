@@ -1,5 +1,5 @@
 
-import { WorkoutType } from './exercises';
+import { ProgramType } from './programs';
 
 export interface WorkoutTheme {
   primary: string;
@@ -10,7 +10,7 @@ export interface WorkoutTheme {
   name: string;
 }
 
-export const workoutThemes: Record<WorkoutType, WorkoutTheme> = {
+export const workoutThemes: Record<ProgramType, WorkoutTheme> = {
   'bodyweight': {
     primary: '#D35400', // burnt-orange (default)
     secondary: '#2d3033', // charcoal
@@ -33,26 +33,18 @@ export const workoutThemes: Record<WorkoutType, WorkoutTheme> = {
     accent: '#5DADE2',
     background: 'from-blue-900 via-blue-800 to-blue-900',
     text: '#F5F5F5',
-    name: 'Full Gym Equipment'
+    name: 'In The Gym'
   },
-  'resistance-bands': {
-    primary: '#9B59B6', // purple theme
-    secondary: '#2C3E50',
-    accent: '#BB8FCE',
-    background: 'from-purple-900 via-purple-800 to-purple-900',
-    text: '#F5F5F5',
-    name: 'Resistance Bands'
-  },
-  'home-minimal': {
+  'stretching': {
     primary: '#27AE60', // green theme
     secondary: '#2C3E50',
     accent: '#58D68D',
     background: 'from-green-900 via-green-800 to-green-900',
     text: '#F5F5F5',
-    name: 'Minimal Home Equipment'
+    name: 'Foundational Stretching'
   }
 };
 
-export const getWorkoutTheme = (workoutType: WorkoutType): WorkoutTheme => {
+export const getWorkoutTheme = (workoutType: ProgramType): WorkoutTheme => {
   return workoutThemes[workoutType];
 };
