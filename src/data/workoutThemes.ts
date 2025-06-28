@@ -31,7 +31,7 @@ export const workoutThemes: Record<ProgramType, WorkoutTheme> = {
     primary: '#3498DB', // blue theme
     secondary: '#2C3E50',
     accent: '#5DADE2',
-    background: 'from-sky-50 via-blue-50 to-sky-100',
+    background: 'from-slate-200 via-blue-100 to-slate-100',
     text: '#1F2937',
     name: 'In The Gym'
   },

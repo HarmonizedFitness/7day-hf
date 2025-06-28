@@ -19,6 +19,16 @@ const UserProfilePage: React.FC = () => {
           zIndex: 0
         }}
       />
+
+      {/* Logo Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('${logoUrl}')`,
+          filter: 'blur(1px)',
+          zIndex: 1
+        }}
+      />
       
       <div className="container max-w-4xl mx-auto px-4 py-8 relative z-10 my-[121px]">
         <header className="flex items-center mb-8">

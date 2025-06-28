@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,16 @@ const PreviewPage: React.FC = () => {
           backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
           filter: 'blur(2px)',
           zIndex: 0
+        }}
+      />
+
+      {/* Logo Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('${logoUrl}')`,
+          filter: 'blur(1px)',
+          zIndex: 1
         }}
       />
       
