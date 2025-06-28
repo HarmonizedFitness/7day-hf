@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
           <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
             {/* Header with Compact Program Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div className="text-center lg:text-left px-2">
+              <div className="text-center lg:text-left px-0">
                 <h1 className="text-3xl sm:text-4xl font-playfair mb-3 sm:mb-4 leading-tight text-zinc-950 md:text-6xl">
                   Your Fitness Journey
                 </h1>
@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
                     Weekly Progress
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0 my-0">
+                <CardContent className="pt-0 my-0 bg-transparent">
                   <WeekProgress />
                 </CardContent>
               </div>

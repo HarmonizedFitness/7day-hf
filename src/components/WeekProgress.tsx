@@ -128,7 +128,7 @@ const WeekProgress: React.FC = () => {
       </div>
       
       {/* Day Progress Grid with Glassmorphism */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 staggered-fade-in my-[27px]">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 staggered-fade-in my-[27px] bg-inherit">
         {dayProgress.map((day, index) => <Link to={`/day/${day.dayId}`} key={day.dayId} className={cn("glass-card p-4 flex flex-col items-center text-center hover:glass-card-hover transition-all duration-300 mobile-tap group bg-blue-900/20 backdrop-blur-sm", day.isComplete && "border-green-400/30")} style={{
         animationDelay: `${index * 0.1}s`,
         backgroundColor: 'rgba(30, 58, 138, 0.15)' // transparent light dark blue
