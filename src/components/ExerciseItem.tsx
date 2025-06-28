@@ -120,7 +120,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
               >
                 {videoInfo.url}
               </a>
-            </div>
+            </p>
           </div>
         </div>
       )}
