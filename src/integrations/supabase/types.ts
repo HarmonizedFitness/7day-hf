@@ -176,6 +176,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_user_tier: {
+        Args: { user_uuid: string }
+        Returns: number
+      }
+      get_user_tier_name: {
+        Args: { user_uuid: string }
+        Returns: string
+      }
       has_workout_access: {
         Args: { user_uuid: string; workout_type_name: string }
         Returns: boolean

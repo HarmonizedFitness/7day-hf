@@ -1,151 +1,213 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Loader2, User } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-interface Profile {
-  username: string;
-  full_name: string;
-  avatar_url: string | null;
+
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { User, Mail, Calendar, LogOut } from "lucide-react";
+import ProgramSwitcher from "./ProgramSwitcher";
+import UserTierDisplay from "./UserTierDisplay";
+
+interface UserProfile {
+  id: string;
+  username: string | null;
+  full_name: string | null;
+  email: string | null;
+  workout_type: string | null;
+  created_at: string;
 }
+
 const UserProfile: React.FC = () => {
-  const {
-    user,
-    updateProfile,
-    signOut
-  } = useAuth();
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
-    full_name: ''
+    full_name: '',
   });
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!user) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const {
-          data,
-          error
-        } = await supabase.from('profiles').select('username, full_name, avatar_url').eq('id', user.id).single();
-        if (error) throw error;
-        setProfile(data);
-        setFormData({
-          username: data.username || '',
-          full_name: data.full_name || ''
-        });
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchProfile();
   }, [user]);
-  const handleEditToggle = () => {
-    setEditing(!editing);
-    if (!editing && profile) {
-      setFormData({
-        username: profile.username || '',
-        full_name: profile.full_name || ''
-      });
-    }
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+
+  const fetchProfile = async () => {
     if (!user) return;
-    setLoading(true);
+
     try {
-      await updateProfile({
-        username: formData.username,
-        full_name: formData.full_name
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+
+      setProfile(data);
+      setFormData({
+        username: data.username || '',
+        full_name: data.full_name || '',
       });
-      setProfile({
-        ...profile!,
-        username: formData.username,
-        full_name: formData.full_name
-      });
-      setEditing(false);
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('Error fetching profile:', error);
+      toast({
+        title: "Error loading profile",
+        description: "Failed to load your profile information",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+
+  const updateProfile = async () => {
+    if (!user) return;
+
+    setUpdating(true);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          username: formData.username,
+          full_name: formData.full_name,
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully",
+      });
+
+      fetchProfile();
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: "Update failed",
+        description: "Failed to update your profile",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdating(false);
+    }
   };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully",
+      });
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast({
+        title: "Sign out failed",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
-    return <div className="flex items-center justify-center p-4">
-        <Loader2 className="h-8 w-8 animate-spin text-burnt-orange" />
-      </div>;
-  }
-  if (!user || !profile) {
-    return <div className="text-center p-4">
-        <p>Please log in to view your profile</p>
-      </div>;
-  }
-  return <div className="bg-white rounded-lg shadow p-6 px-[25px] mx-[120px]">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          <Avatar className="h-16 w-16">
-            {profile.avatar_url ? <AvatarImage src={profile.avatar_url} alt={profile.username} /> : <AvatarFallback className="bg-burnt-orange text-white">
-                {profile.full_name ? profile.full_name[0].toUpperCase() : <User />}
-              </AvatarFallback>}
-          </Avatar>
-          <div className="ml-4">
-            <h3 className="font-bold text-xl">{profile.full_name || 'User'}</h3>
-            <p className="text-gray-500">@{profile.username || 'username'}</p>
-          </div>
-        </div>
-
-        <Button variant="outline" onClick={handleEditToggle} className="ml-auto">
-          {editing ? 'Cancel' : 'Edit Profile'}
-        </Button>
+    return (
+      <div className="space-y-6">
+        <Card className="bg-stone-700/40 border-stone-600">
+          <CardContent className="p-6">
+            <div className="text-center text-gray-400">Loading profile...</div>
+          </CardContent>
+        </Card>
       </div>
+    );
+  }
 
-      {editing ? <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium mb-1">
-              Username
-            </label>
-            <Input id="username" name="username" value={formData.username} onChange={handleChange} className="max-w-md" />
+  return (
+    <div className="space-y-6">
+      {/* User Tier Display */}
+      <UserTierDisplay />
+
+      {/* Profile Information */}
+      <Card className="bg-stone-700/40 border-stone-600">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-white font-playfair text-xl flex items-center gap-2">
+            <User className="h-6 w-6 text-burnt-orange" />
+            Profile Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="username" className="text-gray-300">Username</Label>
+              <Input
+                id="username"
+                value={formData.username}
+                onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+                className="bg-stone-800/50 border-stone-600 text-white"
+                placeholder="Enter username"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="full_name" className="text-gray-300">Full Name</Label>
+              <Input
+                id="full_name"
+                value={formData.full_name}
+                onChange={(e) => setFormData(prev => ({ ...prev, full_name: e.target.value }))}
+                className="bg-stone-800/50 border-stone-600 text-white"
+                placeholder="Enter full name"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="full_name" className="block text-sm font-medium mb-1">
-              Full Name
-            </label>
-            <Input id="full_name" name="full_name" value={formData.full_name} onChange={handleChange} className="max-w-md" />
+          <div className="flex items-center gap-2 text-gray-300">
+            <Mail className="h-4 w-4" />
+            <span>{profile?.email}</span>
           </div>
 
-          <div className="pt-2">
-            <Button type="submit" className="bg-burnt-orange hover:bg-burnt-orange/90">
-              {loading ? <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </> : 'Save Changes'}
+          <div className="flex items-center gap-2 text-gray-300">
+            <Calendar className="h-4 w-4" />
+            <span>Member since {new Date(profile?.created_at || '').toLocaleDateString()}</span>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button 
+              onClick={updateProfile}
+              disabled={updating}
+              className="bg-burnt-orange hover:bg-burnt-orange/80"
+            >
+              {updating ? 'Updating...' : 'Update Profile'}
+            </Button>
+            
+            <Button 
+              onClick={handleSignOut}
+              variant="outline"
+              className="border-red-500 text-red-400 hover:bg-red-500/10"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
             </Button>
           </div>
-        </form> : <div className="space-y-4">
-          <div>
-            <p className="text-sm font-medium mb-1">Email</p>
-            <p>{user.email}</p>
-          </div>
+        </CardContent>
+      </Card>
 
-          <Button onClick={() => signOut()} variant="outline" className="mt-4 text-red-600 border-red-600 hover:bg-red-50">
-            Sign Out
-          </Button>
-        </div>}
-    </div>;
+      {/* Program Selection */}
+      <Card className="bg-stone-700/40 border-stone-600">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-white font-playfair text-xl">
+            Program Selection
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ProgramSwitcher />
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
+
 export default UserProfile;
