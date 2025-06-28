@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,24 +40,20 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Progress Overview with HF Logo Background */}
-            <Card className="bg-stone-700/85 border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden">
+            <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden bg-transparent">
               {/* HF Logo Background */}
               <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
                 style={{
                   backgroundImage: `url('/lovable-uploads/9b19f095-04a9-4443-a090-cc8de580477d.png')`,
-                  filter: 'blur(1px)',
                   zIndex: 0
                 }}
               />
               
-              {/* Dark Overlay for Readability */}
-              <div className="absolute inset-0 bg-stone-800/40 z-10" />
-              
               {/* Card Content */}
               <div className="relative z-20">
                 <CardHeader className="pb-4 sm:pb-6">
-                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center">
+                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center drop-shadow-lg">
                     Weekly Progress
                   </CardTitle>
                 </CardHeader>
