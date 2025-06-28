@@ -2,7 +2,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { useProgress } from "@/contexts/ProgressContext";
-import { workoutData } from "@/data/workoutData";
+import { getAdaptiveWorkoutDay } from "@/data/adaptiveWorkoutData";
+import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
 
 interface DayProgressProps {
   dayId: number;
@@ -10,10 +11,13 @@ interface DayProgressProps {
 
 const DayProgress: React.FC<DayProgressProps> = ({ dayId }) => {
   const { completedExercises } = useProgress();
+  const { workoutAccess } = useWorkoutAccessContext();
   const [animateValue, setAnimateValue] = useState(0);
   
+  const currentProgramType = workoutAccess.workoutType;
+  
   const { total, completed } = useMemo(() => {
-    const day = workoutData.find(d => d.id === dayId);
+    const day = getAdaptiveWorkoutDay(dayId, currentProgramType);
     if (!day) return { total: 0, completed: 0 };
     
     let totalExercises = 0;
@@ -22,7 +26,8 @@ const DayProgress: React.FC<DayProgressProps> = ({ dayId }) => {
     day.circuits.forEach(circuit => {
       circuit.exercises.forEach(exercise => {
         totalExercises++;
-        const key = `day-${dayId}-${circuit.title}-${exercise.name}`;
+        // Use program-prefixed key for consistency with WeekProgress
+        const key = `${currentProgramType}-day-${dayId}-${circuit.title}-${exercise.name}`;
         if (completedExercises[key]) {
           completedCount++;
         }
@@ -30,7 +35,7 @@ const DayProgress: React.FC<DayProgressProps> = ({ dayId }) => {
     });
     
     return { total: totalExercises, completed: completedCount };
-  }, [dayId, completedExercises]);
+  }, [dayId, completedExercises, currentProgramType]);
   
   const percentComplete = total > 0 ? Math.round((completed / total) * 100) : 0;
   

@@ -9,6 +9,24 @@ export const useProgressStorage = (user: User | null, currentProgram: string) =>
   const [completedExercises, setCompletedExercises] = useState<CompletedExercises>({});
   const [journalEntries, setJournalEntries] = useState<JournalEntries>({});
 
+  // Migration function to convert old keys to new program-prefixed format
+  const migrateLocalStorageKeys = useCallback((oldData: CompletedExercises, programType: string): CompletedExercises => {
+    const migratedData: CompletedExercises = {};
+    
+    Object.keys(oldData).forEach(oldKey => {
+      // Check if key already has program prefix
+      if (oldKey.startsWith(`${programType}-`)) {
+        migratedData[oldKey] = oldData[oldKey];
+      } else if (oldKey.startsWith('day-')) {
+        // Convert old format to new format
+        const newKey = `${programType}-${oldKey}`;
+        migratedData[newKey] = oldData[oldKey];
+      }
+    });
+    
+    return migratedData;
+  }, []);
+
   const loadUserProgress = useCallback(async () => {
     if (user) {
       try {
@@ -25,7 +43,8 @@ export const useProgressStorage = (user: User | null, currentProgram: string) =>
         
         const exercisesMap: CompletedExercises = {};
         progressData?.forEach(item => {
-          const key = `day-${item.day_id}-${item.circuit_title}-${item.exercise_name}`;
+          // Use program-prefixed key format for consistency
+          const key = `${currentProgram}-day-${item.day_id}-${item.circuit_title}-${item.exercise_name}`;
           exercisesMap[key] = item.completed;
         });
         
@@ -62,14 +81,22 @@ export const useProgressStorage = (user: User | null, currentProgram: string) =>
       const savedEntries = localStorage.getItem(`journalEntries_${currentProgram}`);
       
       if (savedExercises) {
-        setCompletedExercises(JSON.parse(savedExercises));
+        const parsedExercises = JSON.parse(savedExercises);
+        // Migrate old keys to new format if needed
+        const migratedExercises = migrateLocalStorageKeys(parsedExercises, currentProgram);
+        setCompletedExercises(migratedExercises);
+        
+        // Save migrated data back to localStorage if migration occurred
+        if (Object.keys(migratedExercises).length !== Object.keys(parsedExercises).length) {
+          localStorage.setItem(`completedExercises_${currentProgram}`, JSON.stringify(migratedExercises));
+        }
       }
       
       if (savedEntries) {
         setJournalEntries(JSON.parse(savedEntries));
       }
     }
-  }, [user, currentProgram]);
+  }, [user, currentProgram, migrateLocalStorageKeys]);
 
   return {
     completedExercises,

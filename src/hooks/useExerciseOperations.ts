@@ -12,7 +12,8 @@ export const useExerciseOperations = (
   setCompletedExercises: React.Dispatch<React.SetStateAction<CompletedExercises>>
 ) => {
   const toggleExercise = useCallback(async (dayId: number, circuitTitle: string, exerciseName: string) => {
-    const key = `day-${dayId}-${circuitTitle}-${exerciseName}`;
+    // Use program-prefixed key for consistency across all components
+    const key = `${currentProgram}-day-${dayId}-${circuitTitle}-${exerciseName}`;
     const isCompleted = !completedExercises[key];
     
     // Update local state immediately for responsive UI
@@ -55,17 +56,19 @@ export const useExerciseOperations = (
       }
     } else {
       // User is not authenticated, save to localStorage with program scope
-      localStorage.setItem(`completedExercises_${currentProgram}`, JSON.stringify({
+      const updatedExercises = {
         ...completedExercises,
         [key]: isCompleted
-      }));
+      };
+      localStorage.setItem(`completedExercises_${currentProgram}`, JSON.stringify(updatedExercises));
     }
   }, [user, currentProgram, completedExercises, setCompletedExercises]);
 
   const isExerciseCompleted = useCallback((dayId: number, circuitTitle: string, exerciseName: string) => {
-    const key = `day-${dayId}-${circuitTitle}-${exerciseName}`;
+    // Use program-prefixed key for consistency
+    const key = `${currentProgram}-day-${dayId}-${circuitTitle}-${exerciseName}`;
     return !!completedExercises[key];
-  }, [completedExercises]);
+  }, [completedExercises, currentProgram]);
 
   return {
     toggleExercise,
