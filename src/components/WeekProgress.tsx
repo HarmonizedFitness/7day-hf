@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -142,11 +143,12 @@ const WeekProgress: React.FC = () => {
             to={`/day/${day.dayId}`}
             key={day.dayId}
             className={cn(
-              "glass-card p-4 flex flex-col items-center text-center hover:glass-card-hover transition-all duration-300 mobile-tap group",
+              "glass-card p-4 flex flex-col items-center text-center hover:glass-card-hover transition-all duration-300 mobile-tap group bg-blue-900/20 backdrop-blur-sm",
               day.isComplete && "border-green-400/30"
             )}
             style={{
-              animationDelay: `${index * 0.1}s`
+              animationDelay: `${index * 0.1}s`,
+              backgroundColor: 'rgba(30, 58, 138, 0.15)' // transparent light dark blue
             }}
           >
             {/* Icon */}
