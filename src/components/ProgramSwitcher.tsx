@@ -108,7 +108,7 @@ const ProgramSwitcher: React.FC<ProgramSwitcherProps> = ({
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">
-          Active Program
+          {isAdminMode ? 'Preview Program' : 'Active Program'}
         </h3>
         {isAdminMode && (
           <Badge variant="outline" className="border-orange-400 text-orange-400">
@@ -155,11 +155,12 @@ const ProgramSwitcher: React.FC<ProgramSwitcherProps> = ({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {!isAdminMode && (
-        <div className="text-sm text-gray-400">
-          Select a program to make it your active workout program
-        </div>
-      )}
+      <div className="text-sm text-gray-400">
+        {isAdminMode 
+          ? "Temporarily preview different programs (changes won't be saved)" 
+          : "Select a program to make it your active workout program"
+        }
+      </div>
     </div>
   );
 };

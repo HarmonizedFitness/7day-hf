@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-6 sm:py-8">
           <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
-            {/* Header with Program Switcher */}
+            {/* Header with Compact Program Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="text-center lg:text-left px-2">
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-playfair text-white mb-3 sm:mb-4 leading-tight">
@@ -49,28 +49,29 @@ const HomePage: React.FC = () => {
                 </p>
               </div>
               
-              {/* Compact Program Switcher for Admin Mode */}
-              {isAdminMode && (
-                <div className="flex justify-center lg:justify-end">
-                  <ProgramSwitcher variant="compact" />
-                </div>
-              )}
+              {/* Compact Program Switcher - Always Available */}
+              <div className="flex justify-center lg:justify-end">
+                <ProgramSwitcher variant="compact" />
+              </div>
             </div>
 
-            {/* Program Management Card (only show in admin mode) */}
-            {isAdminMode && (
-              <Card className="border-orange-400/30 backdrop-blur-sm mx-2 sm:mx-0 bg-orange-900/20">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl flex items-center gap-2">
-                    <Settings className="h-6 w-6 text-orange-400" />
-                    Program Management
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ProgramSwitcher />
-                </CardContent>
-              </Card>
-            )}
+            {/* Program Management Card - Always Available */}
+            <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 bg-stone-700/40">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-white font-playfair text-xl sm:text-2xl flex items-center gap-2">
+                  <Settings className="h-6 w-6 text-burnt-orange" />
+                  Program Selection
+                  {isAdminMode && (
+                    <span className="text-orange-400 text-sm font-normal ml-2">
+                      (Admin Mode Active)
+                    </span>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ProgramSwitcher />
+              </CardContent>
+            </Card>
 
             {/* Progress Overview with HF Logo Background */}
             <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden bg-transparent">
