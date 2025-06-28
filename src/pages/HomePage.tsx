@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,22 +7,18 @@ import WeekProgress from "@/components/WeekProgress";
 import ProgramSwitcher from "@/components/ProgramSwitcher";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
 import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
-
 const HomePage: React.FC = () => {
   const theme = useWorkoutTheme();
-  const { workoutAccess } = useWorkoutAccessContext();
-
-  return (
-    <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
+  const {
+    workoutAccess
+  } = useWorkoutAccessContext();
+  return <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
       {/* Background Image with Subtle Blur */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
-        style={{
-          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
-          filter: 'blur(2px)',
-          zIndex: 0
-        }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15" style={{
+      backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+      filter: 'blur(2px)',
+      zIndex: 0
+    }} />
       
       {/* Content Layer */}
       <div className="relative z-10">
@@ -32,10 +27,10 @@ const HomePage: React.FC = () => {
             {/* Header with Compact Program Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="text-center lg:text-left px-2">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-playfair text-white mb-3 sm:mb-4 leading-tight">
+                <h1 className="text-3xl sm:text-4xl font-playfair mb-3 sm:mb-4 leading-tight text-zinc-950 md:text-6xl">
                   Your Fitness Journey
                 </h1>
-                <p className="text-lg sm:text-xl text-gray-300 font-opensans px-2">
+                <p className="text-lg sm:text-xl font-opensans px-2 text-zinc-950">
                   Currently training with: <span className="text-burnt-orange font-semibold block sm:inline mt-1 sm:mt-0">
                     {workoutAccess.workoutType.charAt(0).toUpperCase() + workoutAccess.workoutType.slice(1)} Program
                   </span>
@@ -51,22 +46,19 @@ const HomePage: React.FC = () => {
             {/* Progress Overview with HF Logo Background */}
             <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden bg-transparent">
               {/* HF Logo Background */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
-                style={{
-                  backgroundImage: `url('/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png')`,
-                  zIndex: 0
-                }}
-              />
+              <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60" style={{
+              backgroundImage: `url('/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png')`,
+              zIndex: 0
+            }} />
               
               {/* Card Content */}
               <div className="relative z-20">
                 <CardHeader className="pb-4 sm:pb-6">
-                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center drop-shadow-lg">
+                  <CardTitle className="font-playfair text-xl text-center drop-shadow-lg text-zinc-950 font-semibold my-0 sm:text-6xl">
                     Weekly Progress
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0">
+                <CardContent className="pt-0 my-0">
                   <WeekProgress />
                 </CardContent>
               </div>
@@ -85,10 +77,7 @@ const HomePage: React.FC = () => {
                   <p className="text-gray-300 mb-4 text-sm sm:text-base px-2">
                     Continue your fitness journey with today's scheduled workout.
                   </p>
-                  <Button 
-                    asChild 
-                    className="bg-burnt-orange hover:bg-burnt-orange/80 w-full sm:w-auto text-sm sm:text-base px-4 py-2"
-                  >
+                  <Button asChild className="bg-burnt-orange hover:bg-burnt-orange/80 w-full sm:w-auto text-sm sm:text-base px-4 py-2">
                     <Link to="/day/1">Start Workout</Link>
                   </Button>
                 </CardContent>
@@ -105,11 +94,7 @@ const HomePage: React.FC = () => {
                   <p className="text-gray-300 mb-4 text-sm sm:text-base px-2">
                     Manage your profile, preferences, and program selection.
                   </p>
-                  <Button 
-                    asChild 
-                    variant="outline"
-                    className="border-burnt-orange text-burnt-orange hover:bg-burnt-orange hover:text-white w-full sm:w-auto text-sm sm:text-base px-4 py-2"
-                  >
+                  <Button asChild variant="outline" className="border-burnt-orange text-burnt-orange hover:bg-burnt-orange hover:text-white w-full sm:w-auto text-sm sm:text-base px-4 py-2">
                     <Link to="/profile">View Profile</Link>
                   </Button>
                 </CardContent>
@@ -126,11 +111,7 @@ const HomePage: React.FC = () => {
                   <p className="text-gray-300 mb-4 text-sm sm:text-base px-2">
                     Explore all available programs and see what's coming next.
                   </p>
-                  <Button 
-                    asChild 
-                    variant="outline"
-                    className="border-burnt-orange text-burnt-orange hover:bg-burnt-orange hover:text-white w-full sm:w-auto text-sm sm:text-base px-4 py-2"
-                  >
+                  <Button asChild variant="outline" className="border-burnt-orange text-burnt-orange hover:bg-burnt-orange hover:text-white w-full sm:w-auto text-sm sm:text-base px-4 py-2">
                     <Link to="/preview">Explore Programs</Link>
                   </Button>
                 </CardContent>
@@ -139,8 +120,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default HomePage;
