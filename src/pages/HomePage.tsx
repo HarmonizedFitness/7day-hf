@@ -3,17 +3,15 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Calendar, User, BookOpen, Settings } from "lucide-react";
+import { Calendar, User, BookOpen } from "lucide-react";
 import WeekProgress from "@/components/WeekProgress";
 import ProgramSwitcher from "@/components/ProgramSwitcher";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
 import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
-import { useAdmin } from "@/contexts/AdminContext";
 
 const HomePage: React.FC = () => {
   const theme = useWorkoutTheme();
   const { workoutAccess } = useWorkoutAccessContext();
-  const { isAdminMode } = useAdmin();
 
   return (
     <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
@@ -41,37 +39,14 @@ const HomePage: React.FC = () => {
                   Currently training with: <span className="text-burnt-orange font-semibold block sm:inline mt-1 sm:mt-0">
                     {workoutAccess.workoutType.charAt(0).toUpperCase() + workoutAccess.workoutType.slice(1)} Program
                   </span>
-                  {isAdminMode && (
-                    <span className="block text-orange-400 text-sm mt-1">
-                      (Admin Mode Active)
-                    </span>
-                  )}
                 </p>
               </div>
               
-              {/* Compact Program Switcher - Always Available */}
+              {/* Compact Program Switcher */}
               <div className="flex justify-center lg:justify-end">
                 <ProgramSwitcher variant="compact" />
               </div>
             </div>
-
-            {/* Program Management Card - Always Available */}
-            <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 bg-stone-700/40">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-white font-playfair text-xl sm:text-2xl flex items-center gap-2">
-                  <Settings className="h-6 w-6 text-burnt-orange" />
-                  Program Selection
-                  {isAdminMode && (
-                    <span className="text-orange-400 text-sm font-normal ml-2">
-                      (Admin Mode Active)
-                    </span>
-                  )}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ProgramSwitcher />
-              </CardContent>
-            </Card>
 
             {/* Progress Overview with HF Logo Background */}
             <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden bg-transparent">

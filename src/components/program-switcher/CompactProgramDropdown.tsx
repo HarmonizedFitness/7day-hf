@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
 import { ChevronDown } from 'lucide-react';
 import { getAllPrograms, ProgramType } from '@/data/programs';
 import { cn } from '@/lib/utils';
@@ -14,7 +13,6 @@ import ProgramMenuItem from './ProgramMenuItem';
 
 interface CompactProgramDropdownProps {
   currentProgramType: ProgramType;
-  isAdminMode: boolean;
   isUpdating: boolean;
   className?: string;
   onProgramSwitch: (programType: ProgramType) => void;
@@ -23,7 +21,6 @@ interface CompactProgramDropdownProps {
 
 const CompactProgramDropdown: React.FC<CompactProgramDropdownProps> = ({
   currentProgramType,
-  isAdminMode,
   isUpdating,
   className,
   onProgramSwitch,
@@ -58,23 +55,17 @@ const CompactProgramDropdown: React.FC<CompactProgramDropdownProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-56 bg-stone-800/95 border-stone-600 backdrop-blur-md"
+        className="w-56 bg-stone-800/95 border-stone-600 backdrop-blur-md z-50"
       >
         {programs.map((program) => (
           <ProgramMenuItem
             key={program.id}
             program={program}
             currentProgramType={currentProgramType}
-            isAdminMode={isAdminMode}
             onSelect={handleProgramSelect}
             checkAccess={checkProgramAccess}
           />
         ))}
-        {isAdminMode && (
-          <div className="px-2 py-1 text-xs text-orange-400 border-t border-stone-600 mt-1">
-            Admin Mode Active
-          </div>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

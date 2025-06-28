@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
 import { ChevronDown } from 'lucide-react';
 import { getAllPrograms, ProgramType } from '@/data/programs';
 import { cn } from '@/lib/utils';
@@ -14,7 +13,6 @@ import ProgramMenuItem from './ProgramMenuItem';
 
 interface FullProgramSelectorProps {
   currentProgramType: ProgramType;
-  isAdminMode: boolean;
   isUpdating: boolean;
   className?: string;
   onProgramSwitch: (programType: ProgramType) => void;
@@ -23,7 +21,6 @@ interface FullProgramSelectorProps {
 
 const FullProgramSelector: React.FC<FullProgramSelectorProps> = ({
   currentProgramType,
-  isAdminMode,
   isUpdating,
   className,
   onProgramSwitch,
@@ -42,13 +39,8 @@ const FullProgramSelector: React.FC<FullProgramSelectorProps> = ({
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">
-          {isAdminMode ? 'Preview Program' : 'Active Program'}
+          Active Program
         </h3>
-        {isAdminMode && (
-          <Badge variant="outline" className="border-orange-400 text-orange-400">
-            Admin Mode
-          </Badge>
-        )}
       </div>
 
       <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -72,7 +64,7 @@ const FullProgramSelector: React.FC<FullProgramSelectorProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
-          className="w-full bg-stone-800/95 border-stone-600 backdrop-blur-md"
+          className="w-full bg-stone-800/95 border-stone-600 backdrop-blur-md z-50"
           style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
         >
           {programs.map((program) => (
@@ -80,7 +72,6 @@ const FullProgramSelector: React.FC<FullProgramSelectorProps> = ({
               key={program.id}
               program={program}
               currentProgramType={currentProgramType}
-              isAdminMode={isAdminMode}
               onSelect={handleProgramSelect}
               checkAccess={checkProgramAccess}
               isFullWidth
@@ -90,10 +81,7 @@ const FullProgramSelector: React.FC<FullProgramSelectorProps> = ({
       </DropdownMenu>
 
       <div className="text-sm text-gray-400">
-        {isAdminMode 
-          ? "Temporarily preview different programs (changes won't be saved)" 
-          : "Select a program to make it your active workout program"
-        }
+        Select a program to make it your active workout program
       </div>
     </div>
   );

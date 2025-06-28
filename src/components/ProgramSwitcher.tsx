@@ -2,7 +2,6 @@
 import React from 'react';
 import { ProgramType } from '@/data/programs';
 import { useWorkoutAccessContext } from '@/contexts/WorkoutAccessContext';
-import { useAdmin } from '@/contexts/AdminContext';
 import { useProgramUpdate } from '@/hooks/useProgramUpdate';
 import CompactProgramDropdown from './program-switcher/CompactProgramDropdown';
 import FullProgramSelector from './program-switcher/FullProgramSelector';
@@ -17,29 +16,22 @@ const ProgramSwitcher: React.FC<ProgramSwitcherProps> = ({
   className 
 }) => {
   const { workoutAccess, checkWorkoutAccess } = useWorkoutAccessContext();
-  const { isAdminMode, currentAdminProgram, setAdminProgram } = useAdmin();
   const { updateUserProgram, isUpdating } = useProgramUpdate();
 
-  const currentProgramType = isAdminMode ? currentAdminProgram : workoutAccess.workoutType;
+  const currentProgramType = workoutAccess.workoutType;
 
   const handleProgramSwitch = async (programType: ProgramType) => {
-    if (isAdminMode) {
-      // Admin mode: temporary switch
-      setAdminProgram(programType);
-    } else {
-      // Regular mode: permanent switch
-      const hasAccess = await checkWorkoutAccess(programType);
-      
-      if (!hasAccess) {
-        // Don't switch if user doesn't have access
-        return;
-      }
+    const hasAccess = await checkWorkoutAccess(programType);
+    
+    if (!hasAccess) {
+      // Don't switch if user doesn't have access
+      return;
+    }
 
-      const success = await updateUserProgram(programType);
-      if (success) {
-        // Reload the page to refresh all contexts with new program
-        window.location.reload();
-      }
+    const success = await updateUserProgram(programType);
+    if (success) {
+      // Reload the page to refresh all contexts with new program
+      window.location.reload();
     }
   };
 
@@ -51,7 +43,6 @@ const ProgramSwitcher: React.FC<ProgramSwitcherProps> = ({
     return (
       <CompactProgramDropdown
         currentProgramType={currentProgramType}
-        isAdminMode={isAdminMode}
         isUpdating={isUpdating}
         className={className}
         onProgramSwitch={handleProgramSwitch}
@@ -63,7 +54,6 @@ const ProgramSwitcher: React.FC<ProgramSwitcherProps> = ({
   return (
     <FullProgramSelector
       currentProgramType={currentProgramType}
-      isAdminMode={isAdminMode}
       isUpdating={isUpdating}
       className={className}
       onProgramSwitch={handleProgramSwitch}

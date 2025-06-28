@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 interface ProgramMenuItemProps {
   program: any;
   currentProgramType: ProgramType;
-  isAdminMode: boolean;
   onSelect: (programType: ProgramType) => void;
   checkAccess: (programType: ProgramType) => Promise<boolean>;
   isFullWidth?: boolean;
@@ -17,7 +16,6 @@ interface ProgramMenuItemProps {
 const ProgramMenuItem: React.FC<ProgramMenuItemProps> = ({ 
   program, 
   currentProgramType, 
-  isAdminMode, 
   onSelect, 
   checkAccess, 
   isFullWidth = false 
@@ -25,18 +23,16 @@ const ProgramMenuItem: React.FC<ProgramMenuItemProps> = ({
   const [hasAccess, setHasAccess] = React.useState<boolean | null>(null);
 
   React.useEffect(() => {
-    if (!isAdminMode) {
-      checkAccess(program.id).then(setHasAccess);
-    }
-  }, [program.id, isAdminMode, checkAccess]);
+    checkAccess(program.id).then(setHasAccess);
+  }, [program.id, checkAccess]);
 
   const handleClick = () => {
-    if (isAdminMode || hasAccess) {
+    if (hasAccess) {
       onSelect(program.id);
     }
   };
 
-  const isAccessible = isAdminMode || hasAccess;
+  const isAccessible = hasAccess;
   const isSelected = currentProgramType === program.id;
 
   return (
@@ -58,7 +54,7 @@ const ProgramMenuItem: React.FC<ProgramMenuItemProps> = ({
           <div>
             <div className="font-medium flex items-center gap-2">
               {program.name}
-              {!isAdminMode && hasAccess === false && (
+              {hasAccess === false && (
                 <Lock className="h-3 w-3 text-gray-400" />
               )}
             </div>
