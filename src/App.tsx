@@ -8,8 +8,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProgressProvider } from "@/contexts/ProgressContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { WorkoutAccessProvider } from "@/contexts/WorkoutAccessContext";
+import { AdminProvider } from "@/contexts/AdminContext";
 import ThemeProvider from "@/components/ThemeProvider";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminProgramSelector from "@/components/AdminProgramSelector";
 import SplashScreen from "@/pages/SplashScreen";
 import HomePage from "@/pages/HomePage";
 import WorkoutDayPage from "@/pages/WorkoutDayPage";
@@ -31,35 +33,38 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <WorkoutAccessProvider>
-          <ThemeProvider>
-            <ProgressProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<SplashScreen />} />
-                    <Route path="/auth" element={<AuthPage />} />
-                    <Route path="/preview" element={<PreviewPage />} />
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/profile" element={
-                      <ProtectedRoute>
-                        <UserProfilePage />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/day/:dayId" element={
-                      <ProtectedRoute>
-                        <WorkoutDayPage />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-              </TooltipProvider>
-            </ProgressProvider>
-          </ThemeProvider>
-        </WorkoutAccessProvider>
+        <AdminProvider>
+          <WorkoutAccessProvider>
+            <ThemeProvider>
+              <ProgressProvider>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                  <AdminProgramSelector />
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<SplashScreen />} />
+                      <Route path="/auth" element={<AuthPage />} />
+                      <Route path="/preview" element={<PreviewPage />} />
+                      <Route path="/home" element={<HomePage />} />
+                      <Route path="/profile" element={
+                        <ProtectedRoute>
+                          <UserProfilePage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/day/:dayId" element={
+                        <ProtectedRoute>
+                          <WorkoutDayPage />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </BrowserRouter>
+                </TooltipProvider>
+              </ProgressProvider>
+            </ThemeProvider>
+          </WorkoutAccessProvider>
+        </AdminProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

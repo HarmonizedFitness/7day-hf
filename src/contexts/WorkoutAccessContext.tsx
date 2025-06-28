@@ -1,10 +1,10 @@
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { useWorkoutAccess, WorkoutAccess } from '@/hooks/useWorkoutAccess';
+import { useAdminWorkoutAccess, AdminWorkoutAccess } from '@/hooks/useAdminWorkoutAccess';
 import { ProgramType } from '@/data/programs';
 
 interface WorkoutAccessContextType {
-  workoutAccess: WorkoutAccess;
+  workoutAccess: AdminWorkoutAccess;
   loading: boolean;
   checkWorkoutAccess: (workoutType: ProgramType) => Promise<boolean>;
 }
@@ -24,7 +24,7 @@ interface WorkoutAccessProviderProps {
 }
 
 export const WorkoutAccessProvider: React.FC<WorkoutAccessProviderProps> = ({ children }) => {
-  const workoutAccessData = useWorkoutAccess();
+  const workoutAccessData = useAdminWorkoutAccess();
 
   return (
     <WorkoutAccessContext.Provider value={workoutAccessData}>
