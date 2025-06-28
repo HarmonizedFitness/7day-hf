@@ -48,7 +48,11 @@ const App: React.FC = () => {
                         <UserProfilePage />
                       </ProtectedRoute>
                     } />
-                    <Route path="/day/:dayId" element={<WorkoutDayPage />} />
+                    <Route path="/day/:dayId" element={
+                      <ProtectedRoute>
+                        <WorkoutDayPage />
+                      </ProtectedRoute>
+                    } />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
