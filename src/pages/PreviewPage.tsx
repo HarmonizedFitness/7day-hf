@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -59,8 +58,20 @@ const PreviewPage: React.FC = () => {
   };
   
   return (
-    <AnimatedBackground variant="home" className="py-8">
-      <div className="w-full max-w-4xl mx-auto p-4">
+    <div className="min-h-screen relative bg-gradient-to-br from-stone-800 via-stone-700 to-stone-800 py-8">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+          filter: 'blur(2px)',
+          zIndex: 0
+        }}
+      />
+      
+      <AnimatedBackground variant="home" className="opacity-70" />
+      
+      <div className="w-full max-w-4xl mx-auto p-4 relative z-10">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -184,7 +195,7 @@ const PreviewPage: React.FC = () => {
           </motion.div>
         </motion.div>
       </div>
-    </AnimatedBackground>
+    </div>
   );
 };
 

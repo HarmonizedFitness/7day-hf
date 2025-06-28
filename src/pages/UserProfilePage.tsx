@@ -1,32 +1,50 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import UserProfile from "@/components/UserProfile";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+
 const UserProfilePage: React.FC = () => {
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
-  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-blue-950 my-[121px]">
-      <header className="flex items-center mb-8">
-        <Link to="/home">
-          <Button variant="ghost" className="p-0 mr-4 text-gray-200 hover:text-white">
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back
-          </Button>
-        </Link>
-        <div className="flex items-center">
-          <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />
-          <h1 className="text-2xl font-bold text-white">Your Profile</h1>
+  
+  return (
+    <div className="min-h-screen relative bg-gradient-to-br from-stone-800 via-stone-700 to-stone-800">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+          filter: 'blur(2px)',
+          zIndex: 0
+        }}
+      />
+      
+      <div className="container max-w-4xl mx-auto px-4 py-8 relative z-10 my-[121px]">
+        <header className="flex items-center mb-8">
+          <Link to="/home">
+            <Button variant="ghost" className="p-0 mr-4 text-gray-200 hover:text-white">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back
+            </Button>
+          </Link>
+          <div className="flex items-center">
+            <img src={logoUrl} alt="HF Logo" className="w-12 h-12 mr-4" />
+            <h1 className="text-2xl font-bold text-white">Your Profile</h1>
+          </div>
+        </header>
+
+        <div className="mb-8">
+          <UserProfile />
         </div>
-      </header>
 
-      <div className="mb-8">
-        <UserProfile />
+        <footer className="text-center text-sm text-gray-400 mt-12">
+          <p>© 7 Days of Harmony - Transformational Training Program</p>
+          <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
+        </footer>
       </div>
-
-      <footer className="text-center text-sm text-gray-400 mt-12">
-        <p>© 7 Days of Harmony - Transformational Training Program</p>
-        <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
-      </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default UserProfilePage;

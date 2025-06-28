@@ -34,7 +34,18 @@ const SplashScreen: React.FC = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-stone-800">
-      <AnimatedBackground />
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+          filter: 'blur(2px)',
+          zIndex: 0
+        }}
+      />
+      
+      <AnimatedBackground className="opacity-70" />
+      
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-playfair text-white mb-6 leading-tight">

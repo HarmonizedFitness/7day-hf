@@ -18,8 +18,20 @@ const AuthPage: React.FC = () => {
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
 
   return (
-    <AnimatedBackground variant="auth">
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen overflow-hidden bg-stone-800">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+          filter: 'blur(2px)',
+          zIndex: 0
+        }}
+      />
+      
+      <AnimatedBackground variant="auth" className="opacity-70" />
+      
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
         <motion.div 
           className="text-center mb-8"
           initial={{ opacity: 0, y: -20 }}
@@ -76,7 +88,7 @@ const AuthPage: React.FC = () => {
           </Link>
         </motion.p>
       </div>
-    </AnimatedBackground>
+    </div>
   );
 };
 

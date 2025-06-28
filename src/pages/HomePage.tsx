@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,12 +14,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
-      {/* Background Image with Blur */}
+      {/* Background Image with Subtle Blur */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
         style={{
-          backgroundImage: `url('/lovable-uploads/0e4dc9f1-cf0e-441c-b0f8-781700b38f39.png')`,
-          filter: 'blur(1px)',
+          backgroundImage: `url('/lovable-uploads/c15aa6ee-278f-4841-a501-5815be53ffd0.png')`,
+          filter: 'blur(2px)',
           zIndex: 0
         }}
       />
@@ -40,7 +41,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Progress Overview */}
-            <Card className="bg-stone-700/90 border-stone-600 backdrop-blur-sm mx-2 sm:mx-0">
+            <Card className="bg-stone-700/85 border-stone-600 backdrop-blur-sm mx-2 sm:mx-0">
               <CardHeader className="pb-4 sm:pb-6">
                 <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center">
                   Weekly Progress
