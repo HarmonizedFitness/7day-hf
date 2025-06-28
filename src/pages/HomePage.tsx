@@ -3,14 +3,17 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Calendar, User, BookOpen } from "lucide-react";
+import { Calendar, User, BookOpen, Settings } from "lucide-react";
 import WeekProgress from "@/components/WeekProgress";
+import ProgramSwitcher from "@/components/ProgramSwitcher";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
 import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
+import { useAdmin } from "@/contexts/AdminContext";
 
 const HomePage: React.FC = () => {
   const theme = useWorkoutTheme();
   const { workoutAccess } = useWorkoutAccessContext();
+  const { isAdminMode } = useAdmin();
 
   return (
     <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
@@ -28,17 +31,46 @@ const HomePage: React.FC = () => {
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-6 sm:py-8">
           <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
-            {/* Header */}
-            <div className="text-center px-2">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-playfair text-white mb-3 sm:mb-4 leading-tight">
-                Your Fitness Journey
-              </h1>
-              <p className="text-lg sm:text-xl text-gray-300 font-opensans px-2">
-                Currently training with: <span className="text-burnt-orange font-semibold block sm:inline mt-1 sm:mt-0">
-                  {workoutAccess.workoutType.charAt(0).toUpperCase() + workoutAccess.workoutType.slice(1)} Program
-                </span>
-              </p>
+            {/* Header with Program Switcher */}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              <div className="text-center lg:text-left px-2">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-playfair text-white mb-3 sm:mb-4 leading-tight">
+                  Your Fitness Journey
+                </h1>
+                <p className="text-lg sm:text-xl text-gray-300 font-opensans px-2">
+                  Currently training with: <span className="text-burnt-orange font-semibold block sm:inline mt-1 sm:mt-0">
+                    {workoutAccess.workoutType.charAt(0).toUpperCase() + workoutAccess.workoutType.slice(1)} Program
+                  </span>
+                  {isAdminMode && (
+                    <span className="block text-orange-400 text-sm mt-1">
+                      (Admin Mode Active)
+                    </span>
+                  )}
+                </p>
+              </div>
+              
+              {/* Compact Program Switcher for Admin Mode */}
+              {isAdminMode && (
+                <div className="flex justify-center lg:justify-end">
+                  <ProgramSwitcher variant="compact" />
+                </div>
+              )}
             </div>
+
+            {/* Program Management Card (only show in admin mode) */}
+            {isAdminMode && (
+              <Card className="border-orange-400/30 backdrop-blur-sm mx-2 sm:mx-0 bg-orange-900/20">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl flex items-center gap-2">
+                    <Settings className="h-6 w-6 text-orange-400" />
+                    Program Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ProgramSwitcher />
+                </CardContent>
+              </Card>
+            )}
 
             {/* Progress Overview with HF Logo Background */}
             <Card className="border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden bg-transparent">

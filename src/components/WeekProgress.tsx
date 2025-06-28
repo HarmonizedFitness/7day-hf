@@ -3,10 +3,12 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 import { useProgress } from "@/contexts/ProgressContext";
-import { workoutData } from "@/data/workoutData";
+import { getAdaptiveWorkoutData } from "@/data/adaptiveWorkoutData";
 import { CheckCircle, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
+import { useAdmin } from "@/contexts/AdminContext";
+import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
 
 // Define a type that includes both number keys and the 'overall' string key
 interface AnimateValues {
@@ -15,12 +17,20 @@ interface AnimateValues {
 }
 
 const WeekProgress: React.FC = () => {
-  const {
-    completedExercises
-  } = useProgress();
+  const { completedExercises } = useProgress();
   const theme = useWorkoutTheme();
+  const { isAdminMode, currentAdminProgram } = useAdmin();
+  const { workoutAccess } = useWorkoutAccessContext();
   const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
+  
+  // Get the current program type (admin mode takes precedence)
+  const currentProgramType = isAdminMode ? currentAdminProgram : workoutAccess.workoutType;
+  
+  // Get dynamic workout data based on current program
+  const workoutData = useMemo(() => {
+    return getAdaptiveWorkoutData(currentProgramType);
+  }, [currentProgramType]);
   
   const dayProgress = useMemo(() => {
     return workoutData.map(day => {
@@ -29,7 +39,8 @@ const WeekProgress: React.FC = () => {
       day.circuits.forEach(circuit => {
         circuit.exercises.forEach(exercise => {
           totalExercises++;
-          const key = `day-${day.id}-${circuit.title}-${exercise.name}`;
+          // Include program type in the completion key for independent tracking
+          const key = `${currentProgramType}-day-${day.id}-${circuit.title}-${exercise.name}`;
           if (completedExercises[key]) {
             completedCount++;
           }
@@ -51,7 +62,7 @@ const WeekProgress: React.FC = () => {
         isComplete: percentComplete === 100
       };
     });
-  }, [completedExercises]);
+  }, [completedExercises, workoutData, currentProgramType]);
   
   const overallProgress = useMemo(() => {
     if (dayProgress.length === 0) return 0;
