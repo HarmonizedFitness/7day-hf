@@ -1,6 +1,12 @@
-
 import { WorkoutDay, Exercise } from './types';
 import { exerciseDatabases, WorkoutType } from './exercises';
+
+export const workoutTemplates: Record<WorkoutType, string> = {
+  'bodyweight': 'bodyweight',
+  'gym': 'gym', 
+  'trx': 'trx',
+  'stretching': 'stretching'
+};
 
 export class WorkoutTemplateEngine {
   static generateWorkoutForType(baseWorkout: WorkoutDay, workoutType: WorkoutType): WorkoutDay {

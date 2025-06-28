@@ -11,6 +11,19 @@ export interface Exercise {
   tips?: string[];
 }
 
+export interface ProgramExercise {
+  name: string;
+  technicalCue?: string;
+  somaticCue?: string;
+  videoInfo?: {
+    title: string;
+    instructor: string;
+    duration: string;
+    url: string;
+  };
+  equipment?: string[];
+}
+
 export interface ExerciseDatabase {
-  [category: string]: Exercise[];
+  [exerciseName: string]: ProgramExercise;
 }
