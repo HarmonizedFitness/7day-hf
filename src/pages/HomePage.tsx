@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,7 +46,7 @@ const HomePage: React.FC = () => {
               <div 
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
                 style={{
-                  backgroundImage: `url('/lovable-uploads/9b19f095-04a9-4443-a090-cc8de580477d.png')`,
+                  backgroundImage: `url('/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png')`,
                   zIndex: 0
                 }}
               />
