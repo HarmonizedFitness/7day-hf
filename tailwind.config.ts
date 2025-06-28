@@ -25,10 +25,11 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Open Sans', 'sans-serif'],
+				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
 				serif: ['Playfair Display', 'serif'],
 				playfair: ['Playfair Display', 'serif'],
 				opensans: ['Open Sans', 'sans-serif'],
+				inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

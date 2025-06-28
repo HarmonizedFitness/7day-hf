@@ -1,5 +1,4 @@
 
-
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -7,6 +6,7 @@ import { useProgress } from "@/contexts/ProgressContext";
 import { workoutData } from "@/data/workoutData";
 import { CheckCircle, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
 
 // Define a type that includes both number keys and the 'overall' string key
 interface AnimateValues {
@@ -18,6 +18,7 @@ const WeekProgress: React.FC = () => {
   const {
     completedExercises
   } = useProgress();
+  const theme = useWorkoutTheme();
   const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
   
@@ -86,6 +87,9 @@ const WeekProgress: React.FC = () => {
       setAnimateValues(updatedValues);
     }, 500);
   }, [dayProgress, overallProgress]);
+
+  // Determine if we're on a dark theme background
+  const isDarkTheme = theme.background.includes('stone') || theme.background.includes('slate') || theme.background.includes('gray');
   
   return (
     <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
@@ -103,8 +107,9 @@ const WeekProgress: React.FC = () => {
             to={`/day/${day.dayId}`}
             key={day.dayId}
             className={cn(
-              "p-4 rounded-lg border border-gray-200 flex items-center hover:bg-gray-50 transition-all card-hover",
-              day.isComplete && "border-green-500 bg-green-50 hover:bg-green-50/80"
+              "p-4 rounded-lg border border-gray-200/30 flex items-center hover:bg-gray-50/10 transition-all card-hover backdrop-blur-sm",
+              "bg-white/70",
+              day.isComplete && "border-green-500/50 bg-green-50/80 hover:bg-green-50/90"
             )}
             style={{
               animationDelay: `${index * 0.1}s`
@@ -119,18 +124,24 @@ const WeekProgress: React.FC = () => {
             </div>
             <div className="flex-1 min-w-0 text-center">
               <div className="mb-2">
-                <h3 className="font-playfair text-orange-400 text-lg font-normal">
+                <h3 className={cn(
+                  "workout-day-title",
+                  isDarkTheme && "workout-day-title-dark"
+                )}>
                   DAY {day.dayId}: {day.mainTitle}
                 </h3>
                 {day.subtitle && (
-                  <p className="font-playfair text-orange-400 text-sm font-normal mt-1">
+                  <p className={cn(
+                    "workout-day-title text-sm mt-1",
+                    isDarkTheme && "workout-day-title-dark"
+                  )}>
                     {day.subtitle}
                   </p>
                 )}
               </div>
               <div className="flex items-center space-x-2">
                 <Progress value={animateValues[day.dayId] || 0} className="h-1.5 flex-1" />
-                <span className="text-xs text-gray-500 whitespace-nowrap">
+                <span className="text-xs text-gray-500 whitespace-nowrap font-inter font-medium">
                   {animateValues[day.dayId] || day.percentComplete}%
                 </span>
               </div>
