@@ -1,107 +1,73 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, LogIn, UserPlus } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import { motion } from "framer-motion";
+
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAdmin } from '@/contexts/AdminContext';
+import AnimatedBackground from '@/components/AnimatedBackground';
+import { Button } from '@/components/ui/button';
+
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
-  const [fadeOut, setFadeOut] = useState(false);
-  const {
-    user
-  } = useAuth();
+  const { user, loading } = useAuth();
+  const { isAdminMode } = useAdmin();
+
   useEffect(() => {
-    // If user is already logged in, redirect to home
-    if (user) {
+    // If admin mode is active, bypass authentication and go to home
+    if (isAdminMode) {
+      navigate('/home');
+      return;
+    }
+
+    // If user is authenticated, go to home
+    if (!loading && user) {
       navigate('/home');
     }
-  }, [user, navigate]);
+  }, [user, loading, isAdminMode, navigate]);
+
   const handleGetStarted = () => {
-    setFadeOut(true);
-    setTimeout(() => navigate('/preview'), 500);
-  };
-  const handleLoginClick = () => {
-    setFadeOut(true);
-    setTimeout(() => navigate('/auth'), 500);
-  };
-  const handleSignUpClick = () => {
     navigate('/auth');
   };
-  const containerVariants = {
-    hidden: {
-      opacity: 0
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        delay: 0.3,
-        staggerChildren: 0.2
-      }
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
+
+  const handlePreview = () => {
+    navigate('/preview');
   };
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut"
-      }
-    }
-  };
-  return <AnimatedBackground variant="default">
-      <div className={`min-h-screen flex flex-col items-center justify-center p-4 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
-        <motion.div className="w-full max-w-md text-center" initial="hidden" animate="visible" exit="exit" variants={containerVariants}>
-          <motion.img src="/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png" alt="Harmonized Fitness Logo" className="w-32 h-32 mx-auto mb-8" variants={itemVariants} animate={{
-          y: [0, -15, 0]
-        }} transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }} />
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-stone-800">
+      <AnimatedBackground />
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-playfair text-white mb-6 leading-tight">
+            Transform Your Body,
+            <span className="text-burnt-orange"> Elevate Your Life</span>
+          </h1>
           
-          <motion.h1 variants={itemVariants} className="font-bold text-burnt-orange mb-4 text-5xl">
-            7 Days of Harmony
-          </motion.h1>
-          <motion.h2 variants={itemVariants} className="text-2xl mb-8 font-normal text-zinc-50">
-            Transformational Program
-          </motion.h2>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 font-opensans">
+            Discover the power of movement with our comprehensive fitness programs designed for every body and every goal.
+          </p>
           
-          <motion.div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-lg mb-8" variants={itemVariants}>
-            <p className="text-lg mb-6 leading-relaxed">Enjoy this free 7 day preview of the Harmonized Fitness program! Experience a unique blend of strength training, somatic awareness, emotional integration, and mindfulness practices.</p>
-            
-            <p className="text-base mb-6 italic">
-              "True fitness is a harmony between physical strength, mental clarity, and emotional balance."
-            </p>
-          </motion.div>
-          
-          <motion.div className="space-y-4" variants={itemVariants}>
-            <Button onClick={handleGetStarted} size="lg" className="bg-burnt-orange hover:bg-burnt-orange/90 text-white px-8 w-full animated-button">
-              Preview <ArrowRight className="ml-2 h-4 w-4" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={handleGetStarted}
+              size="lg"
+              className="bg-burnt-orange hover:bg-burnt-orange/80 text-white font-opensans text-lg px-8 py-4"
+            >
+              Get Started
             </Button>
             
-            <div className="flex gap-4">
-              <Button onClick={handleLoginClick} variant="outline" size="lg" className="flex-1 bg-white/70 backdrop-blur-sm hover:bg-white/90">
-                <LogIn className="mr-2 h-4 w-4" /> Login
-              </Button>
-              <Button variant="outline" size="lg" className="flex-1 bg-white/70 backdrop-blur-sm hover:bg-white/90" onClick={handleSignUpClick}>
-                <UserPlus className="mr-2 h-4 w-4" /> Sign Up
-              </Button>
-            </div>
-          </motion.div>
-        </motion.div>
+            <Button 
+              onClick={handlePreview}
+              variant="outline"
+              size="lg"
+              className="border-white text-white hover:bg-white hover:text-stone-800 font-opensans text-lg px-8 py-4"
+            >
+              Preview Programs
+            </Button>
+          </div>
+        </div>
       </div>
-    </AnimatedBackground>;
+    </div>
+  );
 };
+
 export default SplashScreen;

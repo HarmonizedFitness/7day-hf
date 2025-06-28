@@ -46,7 +46,11 @@ const App: React.FC = () => {
                       <Route path="/" element={<SplashScreen />} />
                       <Route path="/auth" element={<AuthPage />} />
                       <Route path="/preview" element={<PreviewPage />} />
-                      <Route path="/home" element={<HomePage />} />
+                      <Route path="/home" element={
+                        <ProtectedRoute>
+                          <HomePage />
+                        </ProtectedRoute>
+                      } />
                       <Route path="/profile" element={
                         <ProtectedRoute>
                           <UserProfilePage />

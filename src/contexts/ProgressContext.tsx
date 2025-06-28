@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
 import { toast } from "@/hooks/use-toast";
 
 interface CompletedExercises {
@@ -19,6 +20,7 @@ interface ProgressContextType {
   saveJournalEntry: (dayId: number, entry: string) => void;
   getJournalEntry: (dayId: number) => string;
   journalEntries: JournalEntries;
+  clearAllProgress: () => Promise<void>;
   loading: boolean;
 }
 
@@ -29,6 +31,9 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
   const [journalEntries, setJournalEntries] = useState<JournalEntries>({});
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { workoutAccess } = useWorkoutAccessContext();
+
+  const currentProgram = workoutAccess.workoutType;
 
   // Load data from Supabase or localStorage based on authentication status
   useEffect(() => {
@@ -38,11 +43,12 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
       if (user) {
         // User is authenticated, load from Supabase
         try {
-          // Load completed exercises
+          // Load completed exercises for current program
           const { data: progressData, error: progressError } = await supabase
             .from('user_progress')
             .select('*')
-            .eq('user_id', user.id);
+            .eq('user_id', user.id)
+            .eq('program_type', currentProgram);
           
           if (progressError) {
             throw progressError;
@@ -56,11 +62,12 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
           
           setCompletedExercises(exercisesMap);
           
-          // Load journal entries
+          // Load journal entries for current program
           const { data: journalData, error: journalError } = await supabase
             .from('journal_entries')
             .select('*')
-            .eq('user_id', user.id);
+            .eq('user_id', user.id)
+            .eq('program_type', currentProgram);
           
           if (journalError) {
             throw journalError;
@@ -81,9 +88,9 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
           });
         }
       } else {
-        // User is not authenticated, load from localStorage
-        const savedExercises = localStorage.getItem('completedExercises');
-        const savedEntries = localStorage.getItem('journalEntries');
+        // User is not authenticated, load from localStorage with program scope
+        const savedExercises = localStorage.getItem(`completedExercises_${currentProgram}`);
+        const savedEntries = localStorage.getItem(`journalEntries_${currentProgram}`);
         
         if (savedExercises) {
           setCompletedExercises(JSON.parse(savedExercises));
@@ -98,7 +105,7 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
     };
 
     loadUserProgress();
-  }, [user]);
+  }, [user, currentProgram]);
 
   // Toggle exercise completion status
   const toggleExercise = async (dayId: number, circuitTitle: string, exerciseName: string) => {
@@ -121,10 +128,11 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
             day_id: dayId,
             circuit_title: circuitTitle,
             exercise_name: exerciseName,
+            program_type: currentProgram,
             completed: isCompleted,
             updated_at: new Date().toISOString()
           }, {
-            onConflict: 'user_id, day_id, circuit_title, exercise_name'
+            onConflict: 'user_id, day_id, circuit_title, exercise_name, program_type'
           });
         
         if (error) throw error;
@@ -143,8 +151,8 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     } else {
-      // User is not authenticated, save to localStorage
-      localStorage.setItem('completedExercises', JSON.stringify({
+      // User is not authenticated, save to localStorage with program scope
+      localStorage.setItem(`completedExercises_${currentProgram}`, JSON.stringify({
         ...completedExercises,
         [key]: isCompleted
       }));
@@ -173,10 +181,11 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
           .upsert({
             user_id: user.id,
             day_id: dayId,
+            program_type: currentProgram,
             entry: entry,
             updated_at: new Date().toISOString()
           }, {
-            onConflict: 'user_id, day_id'
+            onConflict: 'user_id, day_id, program_type'
           });
         
         if (error) throw error;
@@ -189,8 +198,8 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     } else {
-      // User is not authenticated, save to localStorage
-      localStorage.setItem('journalEntries', JSON.stringify({
+      // User is not authenticated, save to localStorage with program scope
+      localStorage.setItem(`journalEntries_${currentProgram}`, JSON.stringify({
         ...journalEntries,
         [dayId]: entry
       }));
@@ -202,6 +211,59 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
     return journalEntries[dayId] || '';
   };
 
+  // Clear all progress for current program
+  const clearAllProgress = async () => {
+    if (user) {
+      // Clear from Supabase
+      try {
+        // Clear exercise progress
+        const { error: progressError } = await supabase
+          .from('user_progress')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('program_type', currentProgram);
+        
+        if (progressError) throw progressError;
+        
+        // Clear journal entries
+        const { error: journalError } = await supabase
+          .from('journal_entries')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('program_type', currentProgram);
+        
+        if (journalError) throw journalError;
+        
+        // Clear local state
+        setCompletedExercises({});
+        setJournalEntries({});
+        
+        toast({
+          title: "Progress cleared",
+          description: `All progress for ${currentProgram} program has been cleared.`,
+        });
+      } catch (error) {
+        console.error("Error clearing progress:", error);
+        toast({
+          title: "Error clearing progress",
+          description: "There was an error clearing your progress. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      // Clear from localStorage
+      localStorage.removeItem(`completedExercises_${currentProgram}`);
+      localStorage.removeItem(`journalEntries_${currentProgram}`);
+      setCompletedExercises({});
+      setJournalEntries({});
+      
+      toast({
+        title: "Progress cleared",
+        description: `All progress for ${currentProgram} program has been cleared.`,
+      });
+    }
+  };
+
   return (
     <ProgressContext.Provider
       value={{
@@ -211,6 +273,7 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
         saveJournalEntry,
         getJournalEntry,
         journalEntries,
+        clearAllProgress,
         loading
       }}
     >

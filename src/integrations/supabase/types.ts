@@ -15,6 +15,7 @@ export type Database = {
           day_id: number
           entry: string
           id: string
+          program_type: string
           updated_at: string | null
           user_id: string
         }
@@ -23,6 +24,7 @@ export type Database = {
           day_id: number
           entry: string
           id?: string
+          program_type?: string
           updated_at?: string | null
           user_id: string
         }
@@ -31,6 +33,7 @@ export type Database = {
           day_id?: number
           entry?: string
           id?: string
+          program_type?: string
           updated_at?: string | null
           user_id?: string
         }
@@ -110,6 +113,7 @@ export type Database = {
           day_id: number
           exercise_name: string
           id: string
+          program_type: string
           updated_at: string | null
           user_id: string
         }
@@ -120,6 +124,7 @@ export type Database = {
           day_id: number
           exercise_name: string
           id?: string
+          program_type?: string
           updated_at?: string | null
           user_id: string
         }
@@ -130,6 +135,7 @@ export type Database = {
           day_id?: number
           exercise_name?: string
           id?: string
+          program_type?: string
           updated_at?: string | null
           user_id?: string
         }
