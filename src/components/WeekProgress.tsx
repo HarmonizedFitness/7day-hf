@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -88,13 +89,13 @@ const WeekProgress: React.FC = () => {
             <div className="mr-4 text-2xl">
               {day.isComplete ? <CheckCircle className="h-8 w-8 text-green-500" /> : <Circle className="h-8 w-8 text-gray-300" />}
             </div>
-            <div className="flex-1">
-              <h3 className="font-playfair text-orange-400 text-lg font-normal">
-                Day {day.dayId}: {day.title}
+            <div className="flex-1 min-w-0">
+              <h3 className="font-playfair text-orange-400 text-lg font-normal whitespace-nowrap overflow-hidden text-ellipsis">
+                DAY {day.dayId}: {day.title}
               </h3>
               <div className="flex items-center space-x-2 mt-1">
                 <Progress value={animateValues[day.dayId] || 0} className="h-1.5 flex-1" />
-                <span className="text-xs text-gray-500">{animateValues[day.dayId] || day.percentComplete}%</span>
+                <span className="text-xs text-gray-500 whitespace-nowrap">{animateValues[day.dayId] || day.percentComplete}%</span>
               </div>
             </div>
           </Link>)}
