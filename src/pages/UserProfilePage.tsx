@@ -1,15 +1,11 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import UserProfile from "@/components/UserProfile";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-
 const UserProfilePage: React.FC = () => {
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
-
-  return (
-    <div className="container max-w-4xl mx-auto px-4 py-8 bg-stone-800">
+  return <div className="container max-w-4xl mx-auto px-4 py-8 bg-blue-950 my-[121px]">
       <header className="flex items-center mb-8">
         <Link to="/home">
           <Button variant="ghost" className="p-0 mr-4 text-gray-200 hover:text-white">
@@ -31,8 +27,6 @@ const UserProfilePage: React.FC = () => {
         <p>© 7 Days of Harmony - Transformational Training Program</p>
         <p>Created by Kyle McCormick - Veteran, Elite Fitness Trainer, and Spiritual Practitioner</p>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default UserProfilePage;
