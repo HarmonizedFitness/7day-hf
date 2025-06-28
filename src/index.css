@@ -45,18 +45,47 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  html {
+    /* Prevent zoom on inputs in iOS Safari */
+    -webkit-text-size-adjust: 100%;
+    /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-off-white text-charcoal font-sans min-h-screen overflow-x-hidden;
+    /* Add safe area padding for mobile devices */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    /* Improve text rendering on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair font-semibold text-burnt-orange;
+    /* Prevent text from being too small on mobile */
+    line-height: 1.2;
+  }
+
+  /* Improve touch targets for mobile */
+  button, input, textarea, select {
+    @apply focus:outline-none focus:ring-2 focus:ring-burnt-orange focus:ring-opacity-50;
+    /* Minimum touch target size */
+    min-height: 44px;
+  }
+
+  /* Improve scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
 @layer components {
   .message-box {
-    @apply bg-charcoal text-off-white p-5 rounded-lg my-6 relative backdrop-blur-sm;
+    @apply bg-charcoal text-off-white p-4 sm:p-5 rounded-lg my-4 sm:my-6 relative backdrop-blur-sm;
   }
   
   .message-box h3 {
@@ -64,15 +93,15 @@
   }
   
   .exercise {
-    @apply p-4 mb-3 border-l-4 border-burnt-orange bg-off-white/50 rounded-r-md backdrop-blur-sm;
+    @apply p-3 sm:p-4 mb-3 border-l-4 border-burnt-orange bg-off-white/50 rounded-r-md backdrop-blur-sm;
   }
   
   .technical-cue {
-    @apply italic ml-4 mt-1 text-sm text-burnt-orange;
+    @apply italic ml-2 sm:ml-4 mt-1 text-sm text-burnt-orange;
   }
   
   .somatic-cue {
-    @apply italic ml-4 mt-1 text-sm text-charcoal;
+    @apply italic ml-2 sm:ml-4 mt-1 text-sm text-charcoal;
   }
   
   .intention {
@@ -80,11 +109,11 @@
   }
   
   .hidden-hint {
-    @apply mt-6 p-3 bg-charcoal text-white rounded-md italic;
+    @apply mt-4 sm:mt-6 p-3 bg-charcoal text-white rounded-md italic;
   }
   
   .day-divider {
-    @apply h-1 my-10 rounded-full bg-gradient-to-r from-burnt-orange to-charcoal;
+    @apply h-1 my-6 sm:my-10 rounded-full bg-gradient-to-r from-burnt-orange to-charcoal;
   }
 
   .checkbox-container {
@@ -92,7 +121,7 @@
   }
 
   .journal-prompt {
-    @apply mt-4 p-4 border border-gray-300 rounded-md bg-white/90 backdrop-blur-sm;
+    @apply mt-4 p-3 sm:p-4 border border-gray-300 rounded-md bg-white/90 backdrop-blur-sm;
   }
   
   /* Classes for animations and enhanced styling */
@@ -172,5 +201,34 @@
   
   .parallax-layer-3 {
     @apply translate-y-4;
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  .mobile-tap {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+/* Mobile-first responsive utilities */
+@media (max-width: 640px) {
+  .container {
+    @apply px-3;
+  }
+  
+  h1 {
+    @apply text-2xl;
+  }
+  
+  h2 {
+    @apply text-xl;
+  }
+  
+  .card {
+    @apply mx-2;
   }
 }
