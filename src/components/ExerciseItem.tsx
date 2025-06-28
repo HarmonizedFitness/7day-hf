@@ -37,32 +37,31 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   return (
     <div 
       className={cn(
-        "rounded-xl p-5 border transition-all duration-300 shadow-sm hover:shadow-md",
-        "max-w-full mx-auto bg-white/50 backdrop-blur-sm",
-        completed && "ring-2 ring-green-400 bg-green-50/50"
+        "rounded-xl p-6 transition-all duration-300 shadow-lg hover:shadow-xl",
+        "max-w-full mx-auto backdrop-blur-sm border",
+        "bg-white/10",
+        completed && "ring-2 ring-green-400 bg-green-50/20"
       )}
       style={{ 
-        borderLeftColor: theme.primary,
-        borderLeftWidth: '4px',
-        borderColor: completed ? '#22c55e' : theme.primary + '30'
+        borderColor: completed ? '#22c55e' : 'rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
       }}
     >
       {/* Exercise Header with Checkbox */}
-      <div className="flex items-start gap-3 mb-4">
+      <div className="flex items-start gap-4 mb-5">
         <Checkbox 
           id={`${dayId}-${circuitTitle}-${name}`} 
           checked={completed} 
           onCheckedChange={() => toggleExercise(dayId, circuitTitle, name)} 
-          className="mt-1" 
+          className="mt-1 border-2" 
           style={{ 
-            borderColor: theme.primary,
-            backgroundColor: completed ? theme.primary : 'transparent'
+            borderColor: completed ? '#22c55e' : '#60A5FA',
+            backgroundColor: completed ? '#22c55e' : 'transparent'
           }}
         />
         <label 
           htmlFor={`${dayId}-${circuitTitle}-${name}`} 
-          className="font-inter font-semibold text-lg cursor-pointer flex-1 leading-tight"
-          style={{ color: theme.text }}
+          className="font-inter font-semibold text-lg cursor-pointer flex-1 leading-tight text-white"
         >
           {name}
         </label>
@@ -70,18 +69,20 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       
       {/* Technical Cue */}
       {technicalCue && (
-        <div className="mb-3 pl-8">
-          <p className="font-inter text-sm italic leading-relaxed" style={{ color: theme.text + 'CC' }}>
-            <span className="font-medium not-italic" style={{ color: theme.accent }}>Technical cue:</span> {technicalCue}
+        <div className="mb-4 pl-10">
+          <p className="font-inter text-sm leading-relaxed">
+            <span className="font-medium text-gray-400">Technical cue:</span>{" "}
+            <span className="italic text-gray-300">{technicalCue}</span>
           </p>
         </div>
       )}
       
       {/* Somatic Cue */}
       {somaticCue && (
-        <div className="mb-4 pl-8">
-          <p className="font-inter text-sm leading-relaxed" style={{ color: theme.primary }}>
-            <span className="font-medium" style={{ color: theme.accent }}>Somatic cue:</span> {somaticCue}
+        <div className="mb-5 pl-10">
+          <p className="font-inter text-sm leading-relaxed">
+            <span className="font-medium text-orange-500">Somatic cue:</span>{" "}
+            <span className="text-orange-400">{somaticCue}</span>
           </p>
         </div>
       )}
@@ -89,30 +90,30 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       {/* Video Info */}
       {videoInfo && (
         <div 
-          className="mt-4 p-4 rounded-lg border"
+          className="mt-5 p-5 rounded-lg border backdrop-blur-sm"
           style={{ 
-            backgroundColor: theme.primary + '10',
-            borderColor: theme.primary + '30'
+            backgroundColor: 'rgba(59, 130, 246, 0.15)',
+            borderColor: 'rgba(59, 130, 246, 0.3)'
           }}
         >
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-3 mb-4">
             <span className="text-xl">📹</span>
-            <span className="font-inter font-semibold text-sm" style={{ color: theme.primary }}>
+            <span className="font-inter font-bold text-sm text-blue-400">
               INSTRUCTIONAL VIDEO
             </span>
           </div>
-          <div className="space-y-2 text-sm font-inter">
-            <p style={{ color: theme.text }}>
-              <span className="font-medium">Title:</span> {videoInfo.title}
+          <div className="space-y-3 text-sm font-inter">
+            <p>
+              <span className="font-medium text-gray-300">Title:</span>{" "}
+              <span className="text-white">{videoInfo.title}</span>
             </p>
-            <p style={{ color: theme.text }}>
-              <span className="font-medium">URL:</span>{" "}
+            <p>
+              <span className="font-medium text-gray-300">URL:</span>{" "}
               <a 
                 href={videoInfo.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="underline hover:no-underline transition-all duration-200"
-                style={{ color: theme.primary }}
+                className="text-sky-400 underline hover:text-sky-300 hover:no-underline transition-all duration-200"
               >
                 {videoInfo.url}
               </a>

@@ -1,4 +1,3 @@
-
 import React, { useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { getAdaptiveWorkoutDay } from "@/data/adaptiveWorkoutData";
@@ -182,7 +181,7 @@ const WorkoutDayPage: React.FC = () => {
             </div>
           )}
           
-          {/* STRENGTH & MOVEMENT CIRCUITS (40 MINUTES) - NEW COLLAPSIBLE DESIGN */}
+          {/* STRENGTH & MOVEMENT CIRCUITS (40 MINUTES) - UPDATED COLLAPSIBLE DESIGN */}
           <div className="glass-card p-6 mx-2 md:mx-0" style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
             {/* Title Block with Icon */}
             <div className="flex items-center justify-center mb-8 pb-4 border-b border-opacity-20" style={{ borderColor: theme.primary }}>
@@ -199,16 +198,16 @@ const WorkoutDayPage: React.FC = () => {
                   key={idx} 
                   value={`circuit-${idx}`}
                   className="border rounded-xl overflow-hidden"
-                  style={{ borderColor: theme.primary + '30' }}
+                  style={{ borderColor: 'rgba(255, 255, 255, 0.2)' }}
                 >
                   <AccordionTrigger 
-                    className="px-6 py-4 hover:no-underline transition-all duration-200 min-h-[50px]"
+                    className="px-6 py-4 hover:no-underline transition-all duration-200 min-h-[50px] group"
                     style={{ 
-                      backgroundColor: theme.primary + '10',
-                      color: theme.text
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backdropFilter: 'blur(8px)'
                     }}
                   >
-                    <h4 className="font-playfair font-bold text-lg md:text-xl text-left">
+                    <h4 className="font-playfair font-bold text-lg md:text-xl text-left text-sky-400 group-hover:text-sky-300 transition-colors duration-200">
                       {circuit.title}
                     </h4>
                   </AccordionTrigger>
