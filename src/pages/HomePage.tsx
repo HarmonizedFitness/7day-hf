@@ -40,16 +40,32 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            {/* Progress Overview */}
-            <Card className="bg-stone-700/85 border-stone-600 backdrop-blur-sm mx-2 sm:mx-0">
-              <CardHeader className="pb-4 sm:pb-6">
-                <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center">
-                  Weekly Progress
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <WeekProgress />
-              </CardContent>
+            {/* Progress Overview with HF Logo Background */}
+            <Card className="bg-stone-700/85 border-stone-600 backdrop-blur-sm mx-2 sm:mx-0 relative overflow-hidden">
+              {/* HF Logo Background */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+                style={{
+                  backgroundImage: `url('/lovable-uploads/9b19f095-04a9-4443-a090-cc8de580477d.png')`,
+                  filter: 'blur(1px)',
+                  zIndex: 0
+                }}
+              />
+              
+              {/* Dark Overlay for Readability */}
+              <div className="absolute inset-0 bg-stone-800/40 z-10" />
+              
+              {/* Card Content */}
+              <div className="relative z-20">
+                <CardHeader className="pb-4 sm:pb-6">
+                  <CardTitle className="text-white font-playfair text-xl sm:text-2xl text-center">
+                    Weekly Progress
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <WeekProgress />
+                </CardContent>
+              </div>
             </Card>
 
             {/* Quick Actions */}
