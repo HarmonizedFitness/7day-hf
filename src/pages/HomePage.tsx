@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,10 +12,7 @@ const HomePage: React.FC = () => {
   const { workoutAccess } = useWorkoutAccessContext();
 
   return (
-    <div 
-      className="min-h-screen relative"
-      style={{ backgroundColor: theme.background }}
-    >
+    <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
       {/* Background Image with Blur */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
