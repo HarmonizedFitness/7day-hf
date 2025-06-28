@@ -1,3 +1,4 @@
+
 import { WorkoutDay, Exercise } from './types';
 import { exerciseDatabases, WorkoutType } from './exercises';
 
@@ -47,8 +48,7 @@ export class WorkoutTemplateEngine {
       'bodyweight': 'Bodyweight Training',
       'trx': 'TRX Suspension Training',
       'gym': 'Full Gym Equipment',
-      'resistance-bands': 'Resistance Bands',
-      'home-minimal': 'Minimal Home Equipment'
+      'stretching': 'Flexibility & Mobility'
     };
     return displayNames[type];
   }
