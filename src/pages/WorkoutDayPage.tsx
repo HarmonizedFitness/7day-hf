@@ -9,7 +9,8 @@ import ExerciseItem from "@/components/ExerciseItem";
 import JournalPrompt from "@/components/JournalPrompt";
 import DayProgress from "@/components/DayProgress";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ArrowRight, Loader2, Dumbbell } from "lucide-react";
 
 const WorkoutDayPage: React.FC = () => {
   const { dayId } = useParams();
@@ -181,35 +182,55 @@ const WorkoutDayPage: React.FC = () => {
             </div>
           )}
           
-          {/* STRENGTH & MOVEMENT CIRCUITS (40 MINUTES) */}
+          {/* STRENGTH & MOVEMENT CIRCUITS (40 MINUTES) - NEW COLLAPSIBLE DESIGN */}
           <div className="glass-card p-6 mx-2 md:mx-0" style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
-            <h3 className="font-playfair text-2xl md:text-3xl font-semibold mb-6 text-center" style={{ color: theme.text }}>
-              🏋️‍♂️ Strength & Movement Circuits (40 Minutes)
-            </h3>
-            
-            <div className="space-y-6">
-              {day.circuits.map((circuit, idx) => (
-                <div key={idx} className="space-y-4">
-                  <h4 className="font-playfair font-semibold text-xl md:text-2xl text-center mb-4" style={{ color: theme.primary }}>
-                    {circuit.title}
-                  </h4>
-                  
-                  <div className="space-y-3">
-                    {circuit.exercises.map((exercise, eIdx) => (
-                      <ExerciseItem 
-                        key={eIdx} 
-                        dayId={day.id} 
-                        circuitTitle={circuit.title} 
-                        name={exercise.name} 
-                        technicalCue={exercise.technicalCue} 
-                        somaticCue={exercise.somaticCue} 
-                        videoInfo={exercise.videoInfo} 
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
+            {/* Title Block with Icon */}
+            <div className="flex items-center justify-center mb-8 pb-4 border-b border-opacity-20" style={{ borderColor: theme.primary }}>
+              <Dumbbell className="h-8 w-8 mr-3" style={{ color: theme.primary }} />
+              <h3 className="font-playfair text-2xl md:text-3xl font-bold text-center" style={{ color: theme.text }}>
+                Strength & Movement Circuits (40 Minutes)
+              </h3>
             </div>
+            
+            {/* Collapsible Circuits */}
+            <Accordion type="multiple" className="space-y-4">
+              {day.circuits.map((circuit, idx) => (
+                <AccordionItem 
+                  key={idx} 
+                  value={`circuit-${idx}`}
+                  className="border rounded-xl overflow-hidden"
+                  style={{ borderColor: theme.primary + '30' }}
+                >
+                  <AccordionTrigger 
+                    className="px-6 py-4 hover:no-underline transition-all duration-200 min-h-[50px]"
+                    style={{ 
+                      backgroundColor: theme.primary + '10',
+                      color: theme.text
+                    }}
+                  >
+                    <h4 className="font-playfair font-bold text-lg md:text-xl text-left">
+                      {circuit.title}
+                    </h4>
+                  </AccordionTrigger>
+                  
+                  <AccordionContent className="px-6 pb-6 pt-2">
+                    <div className="space-y-5">
+                      {circuit.exercises.map((exercise, eIdx) => (
+                        <ExerciseItem 
+                          key={eIdx} 
+                          dayId={day.id} 
+                          circuitTitle={circuit.title} 
+                          name={exercise.name} 
+                          technicalCue={exercise.technicalCue} 
+                          somaticCue={exercise.somaticCue} 
+                          videoInfo={exercise.videoInfo} 
+                        />
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
           
           {/* COOL DOWN & REFLECT (10 MINUTES) */}
