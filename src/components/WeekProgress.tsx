@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
@@ -13,14 +14,11 @@ interface AnimateValues {
   [key: number]: number;
   overall?: number;
 }
+
 const WeekProgress: React.FC = () => {
-  const {
-    completedExercises
-  } = useProgress();
+  const { completedExercises } = useProgress();
   const theme = useWorkoutTheme();
-  const {
-    workoutAccess
-  } = useWorkoutAccessContext();
+  const { workoutAccess } = useWorkoutAccessContext();
   const [animateValues, setAnimateValues] = useState<AnimateValues>({});
   const [loaded, setLoaded] = useState(false);
 
@@ -31,10 +29,12 @@ const WeekProgress: React.FC = () => {
   const workoutData = useMemo(() => {
     return getAdaptiveWorkoutData(currentProgramType);
   }, [currentProgramType]);
+
   const dayProgress = useMemo(() => {
     return workoutData.map(day => {
       let totalExercises = 0;
       let completedCount = 0;
+      
       day.circuits.forEach(circuit => {
         circuit.exercises.forEach(exercise => {
           totalExercises++;
@@ -45,12 +45,14 @@ const WeekProgress: React.FC = () => {
           }
         });
       });
-      const percentComplete = totalExercises > 0 ? Math.round(completedCount / totalExercises * 100) : 0;
+      
+      const percentComplete = totalExercises > 0 ? Math.round((completedCount / totalExercises) * 100) : 0;
 
       // Extract text in parentheses for second line
       const titleMatch = day.title.match(/^([^(]+)(\([^)]+\))?/);
       const mainTitle = titleMatch ? titleMatch[1].trim() : day.title;
       const subtitle = titleMatch && titleMatch[2] ? titleMatch[2] : '';
+      
       return {
         dayId: day.id,
         title: day.title,
@@ -61,11 +63,13 @@ const WeekProgress: React.FC = () => {
       };
     });
   }, [completedExercises, workoutData, currentProgramType]);
+
   const overallProgress = useMemo(() => {
     if (dayProgress.length === 0) return 0;
     const totalPercent = dayProgress.reduce((sum, day) => sum + day.percentComplete, 0);
     return Math.round(totalPercent / dayProgress.length);
   }, [dayProgress]);
+
   useEffect(() => {
     // Set initial values to zero
     const initialValues: AnimateValues = dayProgress.reduce((acc, day) => {
@@ -95,75 +99,102 @@ const WeekProgress: React.FC = () => {
     }, 500);
   }, [dayProgress, overallProgress]);
 
-  // Get theme colors for styling
-  const getThemeAccent = () => {
-    if (theme.background.includes('red')) return 'text-red-400';
-    if (theme.background.includes('blue')) return 'text-blue-400';
-    if (theme.background.includes('green')) return 'text-green-400';
-    return 'text-orange-400'; // Default burnt orange
-  };
-  const getThemeProgress = () => {
-    if (theme.background.includes('red')) return 'bg-red-500';
-    if (theme.background.includes('blue')) return 'bg-blue-500';
-    if (theme.background.includes('green')) return 'bg-green-500';
-    return 'bg-orange-500'; // Default burnt orange
-  };
-  return <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
-      {/* Overall Progress with Glassmorphism */}
-      <div className="glass-card p-6 py-[31px] my-0 px-[29px] bg-inherit">
+  return (
+    <div className={`space-y-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
+      {/* Overall Progress */}
+      <div 
+        className="p-6 rounded-xl border shadow-sm"
+        style={{ 
+          backgroundColor: theme.cardBg,
+          borderColor: theme.borderColor
+        }}
+      >
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-inter font-semibold text-shadow-soft text-zinc-950 text-2xl text-center">
+          <h3 className="font-inter font-bold text-xl text-gray-900">
             {theme.name} Program
           </h3>
-          <span className="font-inter font-medium text-shadow-soft text-zinc-950">
+          <span className="font-inter font-semibold text-gray-700 text-lg">
             {animateValues.overall || overallProgress}% Complete
           </span>
         </div>
         <div className="relative">
-          <Progress value={animateValues.overall || overallProgress} className="h-3 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden" />
-          <div className={`absolute top-0 left-0 h-full ${getThemeProgress()} rounded-full transition-all duration-700`} style={{
-          width: `${animateValues.overall || overallProgress}%`
-        }} />
+          <Progress 
+            value={animateValues.overall || overallProgress} 
+            className="h-3 bg-gray-200 rounded-full overflow-hidden"
+          />
+          <div 
+            className="absolute top-0 left-0 h-full rounded-full transition-all duration-700"
+            style={{
+              width: `${animateValues.overall || overallProgress}%`,
+              backgroundColor: theme.primary
+            }}
+          />
         </div>
       </div>
       
-      {/* Day Progress Grid with Glassmorphism */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 staggered-fade-in my-[27px] bg-inherit">
-        {dayProgress.map((day, index) => <Link to={`/day/${day.dayId}`} key={day.dayId} className={cn("glass-card p-4 flex flex-col items-center text-center hover:glass-card-hover transition-all duration-300 mobile-tap group bg-blue-900/20 backdrop-blur-sm", day.isComplete && "border-green-400/30")} style={{
-        animationDelay: `${index * 0.1}s`,
-        backgroundColor: 'rgba(30, 58, 138, 0.15)' // transparent light dark blue
-      }}>
+      {/* Day Progress Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 staggered-fade-in">
+        {dayProgress.map((day, index) => (
+          <Link
+            to={`/day/${day.dayId}`}
+            key={day.dayId}
+            className={cn(
+              "p-4 rounded-xl border shadow-sm flex flex-col items-center text-center hover:shadow-lg transition-all duration-300 mobile-tap group min-h-[160px]",
+              day.isComplete && "ring-2 ring-green-500"
+            )}
+            style={{
+              animationDelay: `${index * 0.1}s`,
+              backgroundColor: theme.cardBg,
+              borderColor: day.isComplete ? '#22c55e' : theme.borderColor
+            }}
+          >
             {/* Icon */}
             <div className="mb-3 flex-shrink-0">
-              {day.isComplete ? <CheckCircle className="h-8 w-8 text-green-400 drop-shadow-lg" /> : <Circle className="h-8 w-8 text-white/60 drop-shadow-lg bg-inherit" />}
+              {day.isComplete ? (
+                <CheckCircle className="h-8 w-8 text-green-500 drop-shadow-sm" />
+              ) : (
+                <Circle className="h-8 w-8 text-gray-400 drop-shadow-sm" />
+              )}
             </div>
             
-            {/* Title */}
-            <div className="mb-3 min-h-0">
-              <h4 className="font-inter font-semibold text-sm text-shadow-soft leading-tight text-zinc-950 sm:text-3xl">
+            {/* Title with Improved Typography */}
+            <div className="mb-3 flex-1">
+              <h4 className="font-inter font-bold text-lg text-gray-900 mb-1">
                 DAY {day.dayId}
               </h4>
-              <p className="font-inter text-xs text-shadow-soft mt-1 leading-tight text-zinc-950 font-semibold sm:text-lg">
+              <p className="font-inter font-medium text-sm text-gray-700 leading-tight">
                 {day.mainTitle}
               </p>
-              {day.subtitle && <p className="font-inter text-shadow-soft mt-1 text-zinc-950 font-normal text-lg">
+              {day.subtitle && (
+                <p className="font-inter text-xs text-gray-600 mt-1 leading-tight">
                   {day.subtitle}
-                </p>}
+                </p>
+              )}
             </div>
             
             {/* Progress */}
             <div className="w-full space-y-2">
-              <div className="relative h-2 overflow-hidden backdrop-blur-sm rounded-full bg-inherit">
-                <div className={`absolute top-0 left-0 h-full ${getThemeProgress()} rounded-full transition-all duration-700`} style={{
-              width: `${animateValues[day.dayId] || 0}%`
-            }} />
+              <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 h-full rounded-full transition-all duration-700"
+                  style={{
+                    width: `${animateValues[day.dayId] || 0}%`,
+                    backgroundColor: theme.primary
+                  }}
+                />
               </div>
-              <span className={cn("font-inter font-medium text-xs text-shadow-soft", getThemeAccent())}>
+              <span 
+                className="font-inter font-medium text-sm"
+                style={{ color: theme.primary }}
+              >
                 {animateValues[day.dayId] || day.percentComplete}%
               </span>
             </div>
-          </Link>)}
+          </Link>
+        ))}
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default WeekProgress;
