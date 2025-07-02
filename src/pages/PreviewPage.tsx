@@ -70,20 +70,20 @@ const PreviewPage: React.FC = () => {
       
       <AnimatedBackground variant="home" className="opacity-20" />
       
-      <div className="flex-1 flex items-center justify-center py-8 px-4 relative z-10">
+      <div className="flex-1 px-4 py-6 sm:py-8 relative z-10">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
           className="w-full max-w-7xl mx-auto"
         >
-          <div className="space-y-16">
-            {/* Hero Section - Centered */}
-            <motion.div variants={itemVariants} className="text-center space-y-8">
+          <div className="space-y-12 sm:space-y-16">
+            {/* Hero Section - Immediate visibility */}
+            <motion.div variants={itemVariants} className="text-center space-y-6 sm:space-y-8">
               <motion.img 
                 src={logoUrl} 
                 alt="Harmonized Fitness Logo" 
-                className="w-16 h-16 md:w-20 md:h-20 mx-auto" 
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto" 
                 animate={{ 
                   y: [0, -8, 0],
                 }}
@@ -94,8 +94,8 @@ const PreviewPage: React.FC = () => {
                 }}
               />
               
-              <div className="space-y-6">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter font-bold text-gray-900 leading-tight">
+              <div className="space-y-4 sm:space-y-6">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-inter font-bold text-gray-900 leading-tight">
                   Explore 4 Free
                   <br />
                   <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
@@ -103,16 +103,16 @@ const PreviewPage: React.FC = () => {
                   </span>
                 </h1>
                 
-                <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-inter leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto font-inter leading-relaxed px-4">
                   Discover your perfect fitness approach with our comprehensive preview of 
                   strength training, mobility work, and mindful movement practices.
                 </p>
               </div>
             </motion.div>
 
-            {/* Program Cards Grid - Centered */}
+            {/* Program Cards Grid */}
             <motion.div variants={itemVariants}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
                 {programs.map((program) => {
                   const IconComponent = programIcons[program.id];
                   const isSelected = selectedProgram === program.id;
@@ -131,7 +131,7 @@ const PreviewPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Sample Day Preview - Centered */}
+            {/* Sample Day Preview */}
             <motion.div variants={itemVariants} className="max-w-5xl mx-auto">
               <SampleDayPreview
                 theme={currentTheme}
@@ -140,20 +140,20 @@ const PreviewPage: React.FC = () => {
               />
             </motion.div>
 
-            {/* Call to Action - Centered */}
+            {/* Call to Action */}
             <motion.div variants={itemVariants} className="max-w-3xl mx-auto">
-              <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 shadow-xl rounded-2xl p-8">
-                <h2 className="text-2xl md:text-3xl font-inter font-bold text-gray-900 mb-4">
+              <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 shadow-xl rounded-2xl p-6 sm:p-8">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-inter font-bold text-gray-900 mb-3 sm:mb-4">
                   Ready to Start Your Journey?
                 </h2>
-                <p className="text-lg font-inter text-gray-700 mb-8 leading-relaxed">
+                <p className="text-base sm:text-lg font-inter text-gray-700 mb-6 sm:mb-8 leading-relaxed">
                   Begin your personalized 7-day transformation with {currentTheme.name}. 
                   Track your progress, access video guides, and join thousands in their fitness journey.
                 </p>
                 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <Button 
-                    className="text-lg font-inter font-bold py-4 px-10 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:glow min-w-[250px]" 
+                    className="text-base sm:text-lg font-inter font-bold py-3 sm:py-4 px-8 sm:px-10 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:glow min-w-[200px] sm:min-w-[250px]" 
                     onClick={() => navigate('/auth')}
                     style={{ backgroundColor: currentTheme.primary }}
                   >
@@ -164,7 +164,7 @@ const PreviewPage: React.FC = () => {
                     <Button 
                       asChild 
                       variant="outline"
-                      className="font-inter font-semibold text-base py-3 px-8 h-auto border-2 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 hover:scale-105" 
+                      className="font-inter font-semibold text-sm sm:text-base py-2 sm:py-3 px-6 sm:px-8 h-auto border-2 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 hover:scale-105" 
                     >
                       <a href="https://www.ptdistinction.com/harmonizedfitness" target="_blank" rel="noopener noreferrer">
                         Explore Full HF Experience <ExternalLink className="ml-2 h-4 w-4" />
@@ -172,7 +172,7 @@ const PreviewPage: React.FC = () => {
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-gray-500 font-inter">
+                  <p className="text-xs sm:text-sm text-gray-500 font-inter">
                     Already started? <button 
                       onClick={() => navigate('/auth')} 
                       className="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200"
@@ -184,11 +184,11 @@ const PreviewPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Back Button - Centered */}
-            <motion.div variants={itemVariants} className="text-center pb-8">
+            {/* Back Button */}
+            <motion.div variants={itemVariants} className="text-center">
               <Button 
                 variant="outline" 
-                className="font-inter font-semibold hover:bg-blue-50 border-2 hover:border-blue-300 transition-all duration-200 px-8 py-3 h-auto" 
+                className="font-inter font-semibold hover:bg-blue-50 border-2 hover:border-blue-300 transition-all duration-200 px-6 sm:px-8 py-2 sm:py-3 h-auto" 
                 onClick={() => navigate('/auth')}
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Return to Login

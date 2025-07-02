@@ -31,9 +31,9 @@ const AuthPage: React.FC = () => {
       
       <AnimatedBackground variant="auth" className="opacity-70" />
       
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
+      <div className="flex flex-col items-center justify-start p-4 pt-8 sm:pt-12 relative z-10 min-h-screen">
         <motion.div 
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -41,7 +41,7 @@ const AuthPage: React.FC = () => {
           <motion.img 
             src={logoUrl} 
             alt="Harmonized Fitness Logo" 
-            className="w-24 h-24 mx-auto mb-4"
+            className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
               scale: 1, 
@@ -59,23 +59,25 @@ const AuthPage: React.FC = () => {
               }
             }}
           />
-          <h1 className="text-3xl font-bold text-burnt-orange">Harmonized Fitness</h1>
-          <p className="text-lg text-gray-600">Your personal transformation journey</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
+          <p className="text-base sm:text-lg text-gray-300">Your personal transformation journey</p>
         </motion.div>
         
-        <AnimatePresence mode="wait">
-          {isLogin ? (
-            <LoginForm 
-              key="login"
-              onSwitchToSignup={() => setIsLogin(false)} 
-            />
-          ) : (
-            <SignupForm 
-              key="signup"
-              onSwitchToLogin={() => setIsLogin(true)} 
-            />
-          )}
-        </AnimatePresence>
+        <div className="w-full max-w-md mx-auto">
+          <AnimatePresence mode="wait">
+            {isLogin ? (
+              <LoginForm 
+                key="login"
+                onSwitchToSignup={() => setIsLogin(false)} 
+              />
+            ) : (
+              <SignupForm 
+                key="signup"
+                onSwitchToLogin={() => setIsLogin(true)} 
+              />
+            )}
+          </AnimatePresence>
+        </div>
         
         <motion.p 
           className="text-center mt-6 text-sm"
