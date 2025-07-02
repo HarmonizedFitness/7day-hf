@@ -46,6 +46,10 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
@@ -179,6 +183,11 @@
   .responsive-text-xl {
     @apply text-xl sm:text-2xl;
   }
+
+  /* Button enhancements */
+  .hover\:glow:hover {
+    box-shadow: 0 0 20px rgba(212, 84, 0, 0.4);
+  }
 }
 
 /* Mobile-first responsive utilities */
@@ -188,11 +197,11 @@
   }
   
   h1 {
-    @apply text-3xl;
+    @apply text-2xl sm:text-3xl;
   }
   
   h2 {
-    @apply text-2xl;
+    @apply text-xl sm:text-2xl;
   }
   
   .card {
