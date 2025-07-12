@@ -96,23 +96,23 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
                 style={{ cursor: 'pointer' }}
               >
                 {/* Front Side */}
-                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col items-center justify-center p-3 sm:p-4 [backface-visibility:hidden] overflow-hidden`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
-                  <span className="text-xl sm:text-2xl font-bold mb-3 text-center" style={{ color: program.theme.primary }}>{program.name}</span>
+                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 [backface-visibility:hidden] overflow-hidden`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
+                  <span className="text-xl sm:text-2xl font-bold text-center" style={{ color: program.theme.primary }}>{program.name}</span>
                   <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                 </div>
                 {/* Back Side */}
-                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col items-center justify-center p-3 sm:p-4 [backface-visibility:hidden] rotate-y-180 overflow-hidden" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
-                  <span className="text-base sm:text-lg font-semibold mb-2 text-center" style={{ color: program.theme.primary }}>{program.name}</span>
-                  <p className="text-sm sm:text-base text-gray-100 text-center mb-4 max-w-[90%]">{program.description}</p>
+                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 [backface-visibility:hidden] rotate-y-180 overflow-hidden" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
+                  <p className="text-sm sm:text-base text-gray-100 text-center max-w-[90%]">{program.description}</p>
+                  <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                   <Button
                     onClick={e => { e.stopPropagation(); handleSelectProgram(program.id); }}
                     disabled={loading}
-                    className="w-full mt-1"
+                    className="w-full"
                     style={{ backgroundColor: program.theme.primary, color: program.theme.text }}
                   >
                     {loading ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Starting Program...</>) : 'Start This Program FREE'}
                   </Button>
-                  <Button size="sm" variant="outline" className="text-xs mt-2" onClick={e => { e.stopPropagation(); setFlipped(false); }}>
+                  <Button size="sm" variant="outline" className="text-xs" onClick={e => { e.stopPropagation(); setFlipped(false); }}>
                     Back
                   </Button>
                 </div>
