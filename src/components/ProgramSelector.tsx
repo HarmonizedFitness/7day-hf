@@ -85,9 +85,9 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
           >
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
-          <div className="relative w-full max-w-xs min-h-[14rem] sm:min-h-[16rem] flex items-center justify-center">
+          <div className="relative w-full max-w-xs min-h-[14rem] sm:min-h-[16rem] flex items-center justify-center overflow-hidden">
             <div
-              className="relative w-full h-full perspective"
+              className="relative w-full h-full"
               style={{ perspective: '1200px', minHeight: '14rem', maxHeight: '22rem' }}
             >
               <div
@@ -96,12 +96,12 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
                 style={{ cursor: 'pointer' }}
               >
                 {/* Front Side */}
-                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 [backface-visibility:hidden] overflow-hidden`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
+                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 [backface-visibility:hidden]`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)`, backfaceVisibility: 'hidden' }}>
                   <span className="text-xl sm:text-2xl font-bold text-center" style={{ color: program.theme.primary }}>{program.name}</span>
                   <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                 </div>
                 {/* Back Side */}
-                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 [backface-visibility:hidden] rotate-y-180 overflow-hidden" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
+                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col items-center justify-center gap-y-3 p-3 sm:p-4 rotate-y-180" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)`, backfaceVisibility: 'hidden' }}>
                   <p className="text-sm sm:text-base text-gray-100 text-center max-w-[90%]">{program.description}</p>
                   <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                   <Button
