@@ -8,9 +8,11 @@ import { getWorkoutTheme } from "@/data/workoutThemes";
 import ProgramPreviewCard from "@/components/ProgramPreviewCard";
 import SampleDayPreview from "@/components/SampleDayPreview";
 import { motion } from "framer-motion";
+import { useAuth } from '@/contexts/AuthContext';
 
 const PreviewPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const logoUrl = "/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png";
   const [selectedProgram, setSelectedProgram] = useState<ProgramType>('gym');
   
@@ -74,6 +76,18 @@ const PreviewPage: React.FC = () => {
           className="w-full max-w-7xl mx-auto"
         >
           <div className="space-y-12 sm:space-y-16">
+            {/* Back Button for signed-in users */}
+            {user && (
+              <div className="text-left mb-4">
+                <Button
+                  variant="outline"
+                  className="font-inter font-semibold hover:bg-blue-50 border-2 hover:border-blue-300 transition-all duration-200 px-6 sm:px-8 py-2 sm:py-3 h-auto"
+                  onClick={() => navigate(-1)}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                </Button>
+              </div>
+            )}
             {/* Hero Section - Immediate visibility */}
             <motion.div variants={itemVariants} className="text-center space-y-6 sm:space-y-8">
               <motion.img 
