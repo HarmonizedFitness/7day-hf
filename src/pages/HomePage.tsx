@@ -8,10 +8,27 @@ import WeekProgress from "@/components/WeekProgress";
 import ProgramSwitcher from "@/components/ProgramSwitcher";
 import { useWorkoutTheme } from "@/hooks/useWorkoutTheme";
 import { useWorkoutAccessContext } from "@/contexts/WorkoutAccessContext";
+import FirstProgramModal from '@/components/FirstProgramModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 const HomePage: React.FC = () => {
   const theme = useWorkoutTheme();
-  const { workoutAccess } = useWorkoutAccessContext();
+  const { workoutAccess, loading } = useWorkoutAccessContext();
+  const { user } = useAuth();
+  const [showModal, setShowModal] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!loading && user && !workoutAccess.firstProgram) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [user, workoutAccess, loading]);
+
+  const handleProgramSelected = () => {
+    setShowModal(false);
+    // Optionally, refresh user data here
+  };
 
   return (
     <div className={`min-h-screen relative bg-gradient-to-br ${theme.background}`}>
@@ -168,6 +185,11 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
+      <FirstProgramModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onProgramSelected={handleProgramSelected}
+      />
     </div>
   );
 };
