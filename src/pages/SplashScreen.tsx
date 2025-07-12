@@ -55,13 +55,13 @@ const SplashScreen: React.FC = () => {
               <path d="M30 130 V20 H60 V60 H90 V20 H120 V130 H90 V90 H60 V130 Z" fill="#FF6600" stroke="#B33C00" strokeWidth="4"/>
               <path d="M140 130 V20 H220 V50 H170 V70 H210 V100 H170 V130 Z" fill="#FF6600" stroke="#B33C00" strokeWidth="4"/>
             </g>
-            {/* Dumbbell (centered at base) */}
+            {/* Dumbbell (shifted right) */}
             <g>
-              <rect x="110" y="135" width="80" height="10" rx="3" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
-              <rect x="105" y="130" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
-              <rect x="185" y="130" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
-              <line x1="120" y1="137" x2="180" y2="143" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
-              <line x1="120" y1="143" x2="180" y2="137" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
+              <rect x="160" y="135" width="80" height="10" rx="3" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <rect x="155" y="130" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <rect x="235" y="130" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <line x1="170" y1="137" x2="230" y2="143" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
+              <line x1="170" y1="143" x2="230" y2="137" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
             </g>
           </svg>
         </div>
