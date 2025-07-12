@@ -69,7 +69,8 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Change from grid to vertical stack */}
+        <div className="flex flex-col gap-4">
           {programs.map((program) => (
             <Card 
               key={program.id}
@@ -77,7 +78,7 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
                 selectedProgram === program.id 
                   ? 'border-white shadow-2xl' 
                   : 'border-gray-600 hover:border-gray-400'
-              }`}
+              } w-full`}
               style={{
                 background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)`
               }}
