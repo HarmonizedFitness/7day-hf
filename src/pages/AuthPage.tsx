@@ -26,7 +26,15 @@ const AuthPage: React.FC = () => {
           filter: 'blur(2px)'
         }}
       />
-      
+      {/* Blurred HF Logo Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: `url('/lovable-uploads/79288eb0-6c71-453c-a0c8-e54d7bb15f4e.png')`,
+          filter: 'blur(1px)',
+          zIndex: 1
+        }}
+      />
       {/* Subtle animated gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-stone-800/90 via-stone-700/80 to-stone-800/90 animate-gradient-flow" />
       
@@ -40,7 +48,7 @@ const AuthPage: React.FC = () => {
           <motion.img 
             src={logoUrl} 
             alt="Harmonized Fitness Logo" 
-            className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4"
+            className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
               scale: 1, 
@@ -58,8 +66,8 @@ const AuthPage: React.FC = () => {
               }
             }}
           />
-          <h1 className="text-2xl sm:text-3xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
-          <p className="text-base sm:text-lg text-gray-300">Your personal transformation journey</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-burnt-orange mb-2">Harmonized Fitness</h1>
+          <p className="text-lg sm:text-2xl text-gray-300">Your personal transformation journey</p>
         </motion.div>
         
         <div className="w-full max-w-md mx-auto">
