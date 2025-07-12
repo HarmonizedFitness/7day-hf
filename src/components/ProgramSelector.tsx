@@ -85,10 +85,10 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
           >
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
-          <div className="relative w-full max-w-xs min-h-[20rem] sm:min-h-[22rem] flex items-center justify-center">
+          <div className="relative w-full max-w-xs min-h-[14rem] sm:min-h-[16rem] flex items-center justify-center">
             <div
               className="relative w-full h-full perspective"
-              style={{ perspective: '1200px', minHeight: '20rem', maxHeight: '28rem' }}
+              style={{ perspective: '1200px', minHeight: '14rem', maxHeight: '22rem' }}
             >
               <div
                 className={`absolute inset-0 w-full h-full transition-transform duration-500 [transform-style:preserve-3d] ${flipped ? 'rotate-y-180' : ''}`}
@@ -96,41 +96,25 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
                 style={{ cursor: 'pointer' }}
               >
                 {/* Front Side */}
-                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col justify-between p-3 sm:p-4 [backface-visibility:hidden] overflow-hidden`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
-                  <div className="flex flex-col gap-y-2 flex-1 overflow-y-auto">
-                    <div className="flex justify-between items-start mb-1">
-                      <span className="text-lg sm:text-xl font-bold" style={{ color: program.theme.primary }}>{program.name}</span>
-                      <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
-                    </div>
-                    <CardDescription className="text-gray-300 text-sm sm:text-base max-h-24 overflow-y-auto">
-                      {program.description}
-                    </CardDescription>
-                  </div>
-                  <div className="flex flex-col gap-y-1 mt-2">
-                    <span className="text-xs text-gray-400 text-right">Tap to flip for more info</span>
-                    <Button
-                      onClick={e => { e.stopPropagation(); handleSelectProgram(program.id); }}
-                      disabled={loading}
-                      className="w-full mt-1"
-                      style={{ backgroundColor: program.theme.primary, color: program.theme.text }}
-                    >
-                      {loading ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Starting Program...</>) : 'Start This Program FREE'}
-                    </Button>
-                  </div>
+                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col items-center justify-center p-3 sm:p-4 [backface-visibility:hidden] overflow-hidden`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
+                  <span className="text-xl sm:text-2xl font-bold mb-3 text-center" style={{ color: program.theme.primary }}>{program.name}</span>
+                  <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                 </div>
                 {/* Back Side */}
-                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col justify-between p-3 sm:p-4 [backface-visibility:hidden] rotate-y-180 overflow-hidden" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
-                  <div className="flex flex-col gap-y-2 flex-1 overflow-y-auto">
-                    <span className="text-base sm:text-lg font-bold" style={{ color: program.theme.primary }}>{program.name} — Is This For You?</span>
-                    <p className="mt-1 text-xs sm:text-sm text-gray-100 whitespace-pre-line">
-                      {PROGRAM_DESCRIPTIONS[program.id]}
-                    </p>
-                  </div>
-                  <div className="flex justify-end mt-2">
-                    <Button size="sm" variant="outline" className="text-xs" onClick={e => { e.stopPropagation(); setFlipped(false); }}>
-                      Back
-                    </Button>
-                  </div>
+                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col items-center justify-center p-3 sm:p-4 [backface-visibility:hidden] rotate-y-180 overflow-hidden" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
+                  <span className="text-base sm:text-lg font-semibold mb-2 text-center" style={{ color: program.theme.primary }}>{program.name}</span>
+                  <p className="text-sm sm:text-base text-gray-100 text-center mb-4 max-w-[90%]">{program.description}</p>
+                  <Button
+                    onClick={e => { e.stopPropagation(); handleSelectProgram(program.id); }}
+                    disabled={loading}
+                    className="w-full mt-1"
+                    style={{ backgroundColor: program.theme.primary, color: program.theme.text }}
+                  >
+                    {loading ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Starting Program...</>) : 'Start This Program FREE'}
+                  </Button>
+                  <Button size="sm" variant="outline" className="text-xs mt-2" onClick={e => { e.stopPropagation(); setFlipped(false); }}>
+                    Back
+                  </Button>
                 </div>
               </div>
               {selectedProgram === program.id && (
