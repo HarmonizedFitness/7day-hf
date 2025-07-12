@@ -22,18 +22,20 @@ const PROGRAM_DESCRIPTIONS: Record<ProgramType, string> = {
 
 const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) => {
   const [selectedProgram, setSelectedProgram] = useState<ProgramType | null>(null);
-  const [flipped, setFlipped] = useState<ProgramType | null>(null);
+  const [flipped, setFlipped] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
   const programs = getAllPrograms();
+  const program = programs[currentIndex];
+  const isFirst = currentIndex === 0;
+  const isLast = currentIndex === programs.length - 1;
 
   const handleSelectProgram = async (programType: ProgramType) => {
     if (!user) return;
-
     setLoading(true);
     try {
-      // Update user's profile with their first (free) program choice
       const { error } = await supabase
         .from('profiles')
         .update({ 
@@ -41,17 +43,12 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
           workout_type: programType 
         })
         .eq('id', user.id);
-
       if (error) throw error;
-
       toast({
         title: "Program Selected!",
         description: `You've chosen ${programs.find(p => p.id === programType)?.name} as your free program.`,
       });
-
-      // Force reload to update access state everywhere
       window.location.reload();
-      // onProgramSelected(programType); // No longer needed since reload will update state
     } catch (error) {
       console.error('Error selecting program:', error);
       toast({
@@ -66,7 +63,7 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
 
   return (
     <div className="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-2 sm:p-4 rounded-lg">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-md mx-auto">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-white mb-2">
             Choose Your FREE Workout Program
@@ -78,68 +75,77 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
             Additional programs available for $19.99 each
           </p>
         </div>
-
-        {/* Change from grid to vertical stack */}
-        <div className="flex flex-col gap-4">
-          {programs.map((program) => {
-            const isFlipped = flipped === program.id;
-            return (
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <button
+            className="rounded-full p-2 bg-stone-800 text-white disabled:opacity-30"
+            onClick={() => { setFlipped(false); setCurrentIndex(i => Math.max(0, i - 1)); }}
+            disabled={isFirst}
+            aria-label="Previous program"
+          >
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <div className="relative w-full max-w-xs min-h-[18rem] flex items-center justify-center">
+            <div
+              className={`relative w-full h-full perspective`}
+              style={{ perspective: '1200px' }}
+            >
               <div
-                key={program.id}
-                className="relative w-full h-48 perspective"
-                style={{ perspective: '1200px' }}
+                className={`absolute inset-0 w-full h-full transition-transform duration-500 [transform-style:preserve-3d] ${flipped ? 'rotate-y-180' : ''}`}
+                onClick={() => setFlipped(f => !f)}
+                style={{ cursor: 'pointer' }}
               >
-                <div
-                  className={`absolute inset-0 w-full h-full transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? 'rotate-y-180' : ''}`}
-                  onClick={() => setFlipped(isFlipped ? null : program.id)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {/* Front Side */}
-                  <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col justify-between p-4 [backface-visibility:hidden]`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
-                    <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-xl font-bold" style={{ color: program.theme.primary }}>{program.name}</span>
-                        <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
-                      </div>
-                      <CardDescription className="text-gray-300 min-h-[2rem]">
-                        {program.description}
-                      </CardDescription>
+                {/* Front Side */}
+                <div className={`absolute inset-0 w-full h-full bg-white/5 rounded-lg shadow-lg border-2 ${selectedProgram === program.id ? 'border-white shadow-2xl' : 'border-gray-600 hover:border-gray-400'} flex flex-col justify-between p-4 [backface-visibility:hidden]`} style={{ background: `linear-gradient(135deg, ${program.theme.primary}15, ${program.theme.accent}10)` }}>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-xl font-bold" style={{ color: program.theme.primary }}>{program.name}</span>
+                      <Badge variant="secondary" className="bg-green-600 text-white font-semibold">FREE</Badge>
                     </div>
-                    <div className="flex justify-end">
-                      <span className="text-xs text-gray-400">Click for more info</span>
-                    </div>
-                    {selectedProgram === program.id && (
-                      <Button
-                        onClick={e => { e.stopPropagation(); handleSelectProgram(program.id); }}
-                        disabled={loading}
-                        className="w-full mt-2"
-                        style={{ backgroundColor: program.theme.primary, color: program.theme.text }}
-                      >
-                        {loading ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Starting Program...</>) : 'Start This Program FREE'}
-                      </Button>
-                    )}
+                    <CardDescription className="text-gray-300 min-h-[2rem]">
+                      {program.description}
+                    </CardDescription>
                   </div>
-                  {/* Back Side */}
-                  <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col justify-between p-4 [backface-visibility:hidden] rotate-y-180" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
-                    <div>
-                      <span className="text-lg font-bold" style={{ color: program.theme.primary }}>{program.name} — Is This For You?</span>
-                      <p className="mt-2 text-sm text-gray-100 whitespace-pre-line">{PROGRAM_DESCRIPTIONS[program.id]}</p>
-                    </div>
-                    <div className="flex justify-end mt-2">
-                      <Button size="sm" variant="outline" className="text-xs" onClick={e => { e.stopPropagation(); setFlipped(null); }}>
-                        Back
-                      </Button>
-                    </div>
+                  <div className="flex justify-end">
+                    <span className="text-xs text-gray-400">Click to flip for more info</span>
+                  </div>
+                  {selectedProgram === program.id && (
+                    <Button
+                      onClick={e => { e.stopPropagation(); handleSelectProgram(program.id); }}
+                      disabled={loading}
+                      className="w-full mt-2"
+                      style={{ backgroundColor: program.theme.primary, color: program.theme.text }}
+                    >
+                      {loading ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Starting Program...</>) : 'Start This Program FREE'}
+                    </Button>
+                  )}
+                </div>
+                {/* Back Side */}
+                <div className="absolute inset-0 w-full h-full bg-white/10 rounded-lg shadow-lg border-2 border-gray-400 flex flex-col justify-between p-4 [backface-visibility:hidden] rotate-y-180" style={{ background: `linear-gradient(135deg, ${program.theme.primary}10, ${program.theme.accent}05)` }}>
+                  <div>
+                    <span className="text-lg font-bold" style={{ color: program.theme.primary }}>{program.name} — Is This For You?</span>
+                    <p className="mt-2 text-sm text-gray-100 whitespace-pre-line">{PROGRAM_DESCRIPTIONS[program.id]}</p>
+                  </div>
+                  <div className="flex justify-end mt-2">
+                    <Button size="sm" variant="outline" className="text-xs" onClick={e => { e.stopPropagation(); setFlipped(false); }}>
+                      Back
+                    </Button>
                   </div>
                 </div>
-                {selectedProgram === program.id && (
-                  <div className="absolute inset-0 border-4 border-white rounded-lg pointer-events-none" style={{ boxShadow: `0 0 20px ${program.theme.primary}50` }} />
-                )}
               </div>
-            );
-          })}
+              {selectedProgram === program.id && (
+                <div className="absolute inset-0 border-4 border-white rounded-lg pointer-events-none" style={{ boxShadow: `0 0 20px ${program.theme.primary}50` }} />
+              )}
+            </div>
+          </div>
+          <button
+            className="rounded-full p-2 bg-stone-800 text-white disabled:opacity-30"
+            onClick={() => { setFlipped(false); setCurrentIndex(i => Math.min(programs.length - 1, i + 1)); }}
+            disabled={isLast}
+            aria-label="Next program"
+          >
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
         </div>
-
         <div className="text-center mt-4">
           <p className="text-gray-400 text-xs">
             After selecting your free program, you can unlock additional programs for $19.99 each
