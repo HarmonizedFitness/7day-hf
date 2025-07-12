@@ -11,7 +11,7 @@ interface FirstProgramModalProps {
 
 const FirstProgramModal: React.FC<FirstProgramModalProps> = ({ open, onClose, onProgramSelected }) => (
   <Dialog open={open} onOpenChange={onClose}>
-    <DialogContent className="max-h-[80vh] overflow-y-auto">
+    <DialogContent className="w-full max-w-xs sm:max-w-md max-h-[90vh] overflow-y-auto p-2 sm:p-6">
       <DialogHeader>
         <DialogTitle>Choose Your Free Program</DialogTitle>
       </DialogHeader>
