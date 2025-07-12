@@ -35,6 +35,36 @@ const SplashScreen: React.FC = () => {
       <AnimatedBackground className="opacity-40" />
       
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center">
+        {/* Animated HF Logo */}
+        <div className="flex justify-center mb-8">
+          <svg width="180" height="90" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="fillClip">
+                <rect id="fillRect" x="0" y="150" width="300" height="150">
+                  <animate attributeName="y" from="150" to="0" dur="2s" fill="freeze" />
+                </rect>
+              </clipPath>
+            </defs>
+            {/* HF Letters (background, empty) */}
+            <g>
+              <path d="M30 130 V20 H60 V60 H90 V20 H120 V130 H90 V90 H60 V130 Z" fill="#222" stroke="#B33C00" strokeWidth="4"/>
+              <path d="M140 130 V20 H220 V50 H170 V70 H210 V100 H170 V130 Z" fill="#222" stroke="#B33C00" strokeWidth="4"/>
+            </g>
+            {/* HF Letters (orange fill, animated) */}
+            <g clipPath="url(#fillClip)">
+              <path d="M30 130 V20 H60 V60 H90 V20 H120 V130 H90 V90 H60 V130 Z" fill="#FF6600" stroke="#B33C00" strokeWidth="4"/>
+              <path d="M140 130 V20 H220 V50 H170 V70 H210 V100 H170 V130 Z" fill="#FF6600" stroke="#B33C00" strokeWidth="4"/>
+            </g>
+            {/* Dumbbell */}
+            <g>
+              <rect x="230" y="90" width="40" height="10" rx="3" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <rect x="225" y="85" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <rect x="270" y="85" width="10" height="20" rx="2" fill="#FF6600" stroke="#B33C00" strokeWidth="2"/>
+              <line x1="240" y1="92" x2="268" y2="98" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
+              <line x1="240" y1="98" x2="268" y2="92" stroke="#B33C00" strokeWidth="2" strokeDasharray="2,2"/>
+            </g>
+          </svg>
+        </div>
         <div className="max-w-3xl mx-auto space-y-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfair text-white mb-6 leading-tight">
             Transform Your Body,

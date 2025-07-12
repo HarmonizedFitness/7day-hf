@@ -41,7 +41,9 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
         description: `You've chosen ${programs.find(p => p.id === programType)?.name} as your free program.`,
       });
 
-      onProgramSelected(programType);
+      // Force reload to update access state everywhere
+      window.location.reload();
+      // onProgramSelected(programType); // No longer needed since reload will update state
     } catch (error) {
       console.error('Error selecting program:', error);
       toast({
@@ -55,16 +57,16 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">
+    <div className="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-2 sm:p-4 rounded-lg">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-white mb-2">
             Choose Your FREE Workout Program
           </h1>
-          <p className="text-xl text-gray-300 mb-2">
+          <p className="text-lg text-gray-300 mb-1">
             Select one program to start your fitness journey at no cost
           </p>
-          <p className="text-lg text-gray-400">
+          <p className="text-base text-gray-400">
             Additional programs available for $19.99 each
           </p>
         </div>
@@ -171,8 +173,8 @@ const ProgramSelector: React.FC<ProgramSelectorProps> = ({ onProgramSelected }) 
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-400 text-sm">
+        <div className="text-center mt-4">
+          <p className="text-gray-400 text-xs">
             After selecting your free program, you can unlock additional programs for $19.99 each
           </p>
         </div>
